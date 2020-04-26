@@ -17,7 +17,6 @@
 
 package org.uno.engine;
 
-import org.uno.exceptions.InvalidCommandException;
 import org.uno.exceptions.engineExceptions.*;
 import org.uno.util.Stack;
 import org.uno.util.Vector;
@@ -28,10 +27,6 @@ import org.uno.enums.WildCardSymbols;
 import org.uno.engine.objects.*;
 
 import java.util.Random;
-
-// TODO
-// Make this package public. New instances are to be instantiated by the
-// Game factory
 
 /**
  * A uno game abstraction.
@@ -49,7 +44,7 @@ public class Game {
   private static final int N_OF_STARTING_CARDS = 7;
   private Player winner;
 
-  public Game(Player[] players) {
+  Game(Player[] players) {
     this.deck = new DeckGenerator().next();
     this.table = new Stack<>();
     this.players = new Player[players.length];
@@ -62,6 +57,10 @@ public class Game {
     start();
   }
 
+  public int getNumberOfPlayers() {
+    return players.length;
+  }
+
   public Player getPlayer(int index) {
     return players[index];
   }
@@ -71,12 +70,11 @@ public class Game {
    *
    * @param id id of the player
    * @return Player object, null if no player with this id was found
-   * @deprecated
    */
   public Player getPlayer(String id) {
     Player returnValue = null;
     for (int i = 0; i < nOfPlayers; i++) {
-      if (players[i].getId() == id)
+      if (players[i].getId().equals(id))
         returnValue = players[i];
     }
     return returnValue;
@@ -93,6 +91,7 @@ public class Game {
   /**
    * @deprecated
    */
+  @Deprecated(forRemoval = true)
   public int getTurn() {
     return this.turn;
   }
@@ -144,9 +143,9 @@ public class Game {
    * card on the table.
    */
   private void distributeAndFlip() {
-    for (int i = 0; i < players.length; i++) {
+    for (Player player : players) {
       for (int j = 0; j < N_OF_STARTING_CARDS; j++) {
-        players[i].addToHand(deck.pop());
+        player.addToHand(deck.pop());
       }
     }
 
@@ -155,7 +154,7 @@ public class Game {
       table.push(deck.pop());
 
     else {
-      Stack<Card> temp = new Stack<Card>();
+      Stack<Card> temp = new Stack<>();
       while (deck.peek().getType() == CardTypes.WILD)
         temp.push(deck.pop());
       table.push(deck.pop());
@@ -176,9 +175,6 @@ public class Game {
    * @param command command of the move
    * @return 0 if the play was successfully executed, 1 if the move is invalid
    */
-  // TODO
-  // return more specific results (eg. missing colour argument for wild card,
-  // index out of bounds...)
   public int executeMove(GameCommand command) throws
       InvalidOptionException,
       CardIndexOutOfHandBoundsException, MissingColourForWildCardException {
@@ -308,17 +304,17 @@ public class Game {
    * @return bot player move code.
    */
   public GameCommand goBot() {
-    GameCommand move = null;
+    GameCommand command = null;
     if (getPlayerInTurn().getClass() == BotPlayer.class) {
-      move = getPlayerInTurn().makeMove(this);
+      command = getPlayerInTurn().makeMove(this);
       try {
-        executeMove(move);
+        executeMove(command);
       } catch (EngineException e) {
         // Bot should not cause game exceptions
         e.printStackTrace();
       }
     }
-    return move;
+    return command;
   }
 
   private void makeSureDeckDoesntGetEmpty() {
@@ -337,51 +333,68 @@ public class Game {
 
   public boolean isCardValid(Card card) {
     CardTypes tableTopType = table.peek().getType();
-    boolean returnValue = false;
+    boolean isValid;
 
     if (tableTopType == CardTypes.NUMERIC) {
-      NumericCard tableTop = (NumericCard) table.peek();
-      if (card.getType() == CardTypes.SPECIAL || card.getType() == CardTypes.NUMERIC) {
-        if (card.getType() == CardTypes.SPECIAL) {
-          SpecialCard card_ = (SpecialCard) card;
-          returnValue = card_.getColour() == tableTop.getColour();
-        } else {
-          NumericCard card_ = (NumericCard) card;
-          returnValue = card_.getColour() == tableTop.getColour()
-              || card_.getNumber() == tableTop.getNumber();
-        }
-      } else { // wild card
-        returnValue = true;
-      }
+      isValid = checkValidityForNumericTop(card);
     } else if (tableTopType == CardTypes.SPECIAL) {
-      SpecialCard tableTop = (SpecialCard) table.peek();
-
-      if (card.getType() == CardTypes.NUMERIC) {
-        NumericCard card_ = (NumericCard) card;
-        returnValue = card_.getColour() == tableTop.getColour();
-      } else if (card.getType() == CardTypes.SPECIAL) {
-        SpecialCard card_ = (SpecialCard) card;
-        returnValue = card_.getColour() == tableTop.getColour() || card_.getSymbol() == tableTop.getSymbol();
-      } else {
-        // No restrictions for wild card playing
-        returnValue = true;
-      }
-
+      isValid = checkValidityForSpecialTop(card);
     } else { // wild in table
-      WildCard tableTop = (WildCard) table.peek();
-      if (card.getType() == CardTypes.NUMERIC) {
-        NumericCard card_ = (NumericCard) card;
-        returnValue = card_.getColour() == tableTop.getPickedColour();
-      } else if (card.getType() == CardTypes.SPECIAL) {
-        SpecialCard card_ = (SpecialCard) card;
-        returnValue = card_.getColour() == tableTop.getPickedColour();
-      } else if (card.getType() == CardTypes.WILD) {
-        returnValue = true;
+      isValid = checkValidityForWildTop(card);
+    }
+    return isValid;
+  }
+
+  private boolean checkValidityForNumericTop(Card card) {
+    boolean returnValue;
+    NumericCard tableTop = (NumericCard) table.peek();
+
+    if (card.getType() == CardTypes.SPECIAL || card.getType() == CardTypes.NUMERIC) {
+      if (card.getType() == CardTypes.SPECIAL) {
+        SpecialCard numericCard = (SpecialCard) card;
+        returnValue = numericCard.getColour() == tableTop.getColour();
+      } else {
+        NumericCard numericCard = (NumericCard) card;
+        returnValue = numericCard.getColour() == tableTop.getColour()
+            || numericCard.getNumber() == tableTop.getNumber();
       }
+    } else { // wild card
+      returnValue = true;
     }
     return returnValue;
   }
 
+  private boolean checkValidityForSpecialTop(Card card) {
+    SpecialCard tableTop = (SpecialCard) table.peek();
+    boolean returnValue;
+
+    if (card.getType() == CardTypes.NUMERIC) {
+      NumericCard specialCard = (NumericCard) card;
+      returnValue = specialCard.getColour() == tableTop.getColour();
+    } else if (card.getType() == CardTypes.SPECIAL) {
+      SpecialCard specialCard = (SpecialCard) card;
+      returnValue = specialCard.getColour() == tableTop.getColour() || specialCard.getSymbol() == tableTop.getSymbol();
+    } else {
+      // No restrictions for wild card
+      returnValue = true;
+    }
+    return returnValue;
+  }
+  private boolean checkValidityForWildTop(Card card) {
+    WildCard tableTop = (WildCard) table.peek();
+    boolean returnValue = false;
+
+    if (card.getType() == CardTypes.NUMERIC) {
+      NumericCard numericCard = (NumericCard) card;
+      returnValue = numericCard.getColour() == tableTop.getPickedColour();
+    } else if (card.getType() == CardTypes.SPECIAL) {
+      SpecialCard specialCard = (SpecialCard) card;
+      returnValue = specialCard.getColour() == tableTop.getPickedColour();
+    } else if (card.getType() == CardTypes.WILD) {
+      returnValue = true;
+    }
+    return returnValue;
+  }
   private void moveToNextPlayer() {
     if (move > 0 && turn == nOfPlayers - 1)
       turn = 0;
