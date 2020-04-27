@@ -18,6 +18,7 @@
 package org.uno.cli;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -34,19 +35,19 @@ class CliUtils {
    */
   static int readValueInRange(int beginning, int end) {
     int choice = 0;
-    try {
-      do {
+    do {
+      try {
         Scanner scanner = new Scanner(System.in);
-        choice = Integer.parseInt(scanner.next());
+        choice = scanner.nextInt();
         if (choice < beginning || choice > end)
           System.out.printf("Invalid value, insert a number between %d and %d: ",
               beginning, end);
-      } while (choice < beginning || choice > end);
-    } catch (NumberFormatException e) {
-      System.out.printf(
-          "Invalid input, insert a number between %d and %d: ", beginning, end);
-      readValueInRange(beginning, end);
-    }
+      } catch (InputMismatchException e) {
+        System.out.printf(
+            "Invalid input, insert a number between %d and %d: ", beginning, end);
+        readValueInRange(beginning, end);
+      }
+    } while (choice < beginning || choice > end);
     return choice;
   }
 
