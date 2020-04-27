@@ -46,6 +46,7 @@ public class CLI implements CommandLineReader {
       "The index %d is not valid for your hand";
   private static final String INVALID_MOVE_ERROR_MESSAGE =
       "The move you chose is not valid";
+  private String humanPlayerName;
 
   public CLI() {
     gameFactory = new GameFactory();
@@ -53,6 +54,7 @@ public class CLI implements CommandLineReader {
 
   public void start(String humanPlayerName) {
     System.out.printf("%nWelcome to UNO!!%n%n");
+    this.humanPlayerName = humanPlayerName;
     try {
       this.game = gameFactory.newGame(askForNumberOfPlayers() - 1, humanPlayerName);
       System.out.println();
@@ -230,19 +232,23 @@ public class CLI implements CommandLineReader {
 
     for (int i = 0; i < numberOfPlayers; i++) {
       Player player = game.getPlayer(i);
-      Vector<Card> hand = player.getHand();
-       if (hand.length() > 1)
-        System.out.printf("%s -> %d %s left%n",
-            player.getId(), player.getHand().length(), cards);
-      else
-        System.out.printf("%s -> %d %s left%n",
-            player.getId(), player.getHand().length(), card);
-      System.out.println();
+      if(!player.getId().equals(humanPlayerName)) {
+        Vector<Card> hand = player.getHand();
+        if (hand.length() > 1)
+          System.out.printf("%s -> %d %s left%n",
+              player.getId(), player.getHand().length(), cards);
+        else
+          System.out.printf("%s -> %d %s left%n",
+              player.getId(), player.getHand().length(), card);
+        System.out.println();
+      }
     }
   }
 
   private void warnIfRivalIsAboutToWin() {
-    if (game.getPlayerInTurn().getHand().length() == 1)
+
+    if (game.getPlayerInTurn().getHand().length() == 1 &&
+        !game.getPreviousPlayer().getId().equals(humanPlayerName))
       System.out.printf("CAREFUL: %s has only one card left",
           game.getPlayerInTurn().getId());
   }

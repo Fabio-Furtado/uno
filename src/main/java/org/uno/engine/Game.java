@@ -80,6 +80,10 @@ public class Game {
     return returnValue;
   }
 
+  public Player getPreviousPlayer() {
+    return players[previous];
+  }
+
   public Vector<Card> getPlayerHand(String id) {
     for (Player player: players) {
       if (player.getId().equals(id))
@@ -96,6 +100,10 @@ public class Game {
     return this.turn;
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated(forRemoval = true)
   public String getPlayerInTurnId() {
     return players[turn].getId();
   }
