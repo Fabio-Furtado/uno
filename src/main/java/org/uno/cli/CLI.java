@@ -133,7 +133,8 @@ public class CLI implements CommandLineReader {
     else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
       keepPlaying = false;
     else
-      System.out.printf("Invalid command, type <%s> to see the available ones%n%n",
+      System.out.printf("Invalid command <%s>, type <%s> to see the available ones%n%n",
+                                  cliCommand,
                                   CommandValuesKeeper.getValue(Command.HELP));
     return keepPlaying;
   }
