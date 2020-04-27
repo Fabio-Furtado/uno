@@ -37,6 +37,7 @@ class CommandValuesKeeper {
     commands.put(Command.PRINT_RIVALS_HAND_LENGTH, "pl");
     commands.put(Command.HELP, "help");
     commands.put(Command.EXIT, "exit");
+    commands.put(Command.RESTART, "restart");
 
     colours.put(CardColour.BLUE, "blue");
     colours.put(CardColour.GREEN, "green");

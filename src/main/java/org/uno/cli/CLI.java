@@ -121,6 +121,9 @@ public class CLI implements CommandLineReader {
     else if(cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))) {
       printNumberOfCardsEachRivalPlayerHas();
     }
+    else if(cliCommand.equals(CommandValuesKeeper.getValue(Command.RESTART))) {
+      restart();
+    }
     else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
       keepPlaying = false;
     else
@@ -273,6 +276,10 @@ public class CLI implements CommandLineReader {
       sb.append(String.format(messages[i]));
     }
     return sb.toString();
+  }
+
+  private void restart() {
+    start(humanPlayerName);
   }
 
   public static void close() {
