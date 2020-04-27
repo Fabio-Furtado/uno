@@ -121,9 +121,7 @@ public class CLI implements CommandLineReader {
         e.printStackTrace();
       }
     }
-    else if (cliCommand.startsWith(
-        CommandValuesKeeper.getValue(Command.PLAY_A_CARD) + " "
-    )) {
+    else if (cliCommand.startsWith(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
       playACard(cliCommand);
     }
     else if(cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))) {
