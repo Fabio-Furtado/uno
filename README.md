@@ -7,7 +7,7 @@ This is simple uno engine with a CLI interface.
 
 ## Build/Run
 
-***Requirements***a
+***Requirements***
 
 * JDK of your preference (_11 or higher_)
   * [OpenJDK](https://openjdk.java.net/)
