@@ -85,6 +85,7 @@ public class CLI implements CommandLineReader {
         GameCommand move = game.goBot();
         reportMove(move);
       }
+      warnIfRivalIsAboutToWin();
       if (game.isOver()) {
         System.out.printf("%nGAME OVER!!!%n%s Won%n!", game.getWinner().getId());
         run = false;
@@ -238,6 +239,12 @@ public class CLI implements CommandLineReader {
             player.getId(), player.getHand().length(), card);
       System.out.println();
     }
+  }
+
+  private void warnIfRivalIsAboutToWin() {
+    if (game.getPlayerInTurn().getHand().length() == 1)
+      System.out.printf("CAREFUL: %s has only one card left",
+          game.getPlayerInTurn().getId());
   }
 
   private static String buildCommandsHelpString() {
