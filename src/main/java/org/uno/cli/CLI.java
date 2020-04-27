@@ -263,14 +263,18 @@ public class CLI implements CommandLineReader {
   }
 
   private static String buildCommandsHelpString() {
-    final int columnsForPrefix = 10;
+    final int columnsForPrefix = 18;
     StringBuilder sb = new StringBuilder();
     Command[] commands = new Command[] {Command.PRINT_HAND, Command.PLAY_A_CARD,
-                                        Command.DRAW, Command.HELP};
+                                        Command.DRAW, Command.PRINT_RIVALS_HAND_LENGTH,
+                                        Command.RESTART, Command.EXIT, Command.HELP};
     String[] messages = new String[] {
         "Print your hand%n",
         "Play a card%n",
         "Draw a card%n",
+        "Check how many cards your opponents have%n",
+        "Restart the game%n",
+        "Exit the game%n",
         "Print this helper%n"};
 
     for (int i = 0; i < commands.length; i++) {
