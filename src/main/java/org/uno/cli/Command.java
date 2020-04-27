@@ -22,5 +22,5 @@ package org.uno.cli;
  */
 enum Command {
 
-  PRINT_HAND, PLAY_A_CARD, DRAW, HELP, EXIT
+  PRINT_HAND, PLAY_A_CARD, DRAW, PRINT_RIVALS_HAND_LENGTH, HELP, EXIT
 }

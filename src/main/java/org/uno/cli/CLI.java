@@ -22,6 +22,7 @@ import org.uno.engine.GameCommand;
 import org.uno.engine.GameFactory;
 import org.uno.engine.objects.Card;
 import org.uno.engine.objects.HumanPlayer;
+import org.uno.engine.objects.Player;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
 import org.uno.exceptions.CommandFormatException;
@@ -101,7 +102,8 @@ public class CLI implements CommandLineReader {
       System.out.println(COMMANDS_HELP);
     else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_HAND))) {
       printHand(game.getPlayerInTurnId());
-    } else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW))) {
+    }
+    else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW))) {
       try {
         GameCommand move = CLItoEngineCommandConverter.convert(cliCommand);
         game.executeMove(move);
@@ -109,9 +111,14 @@ public class CLI implements CommandLineReader {
       } catch (CommandFormatException | EngineException e) {
         e.printStackTrace();
       }
-    } else if (cliCommand.startsWith(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
+    }
+    else if (cliCommand.startsWith(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
       playACard(cliCommand);
-    } else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
+    }
+    else if(cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))) {
+      printNumberOfCardsEachRivalPlayerHas();
+    }
+    else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
       keepPlaying = false;
     else
       System.out.printf("Invalid command, type <%s> to see the available ones%n%n",
@@ -215,6 +222,23 @@ public class CLI implements CommandLineReader {
     System.out.println();
   }
 
+  private void printNumberOfCardsEachRivalPlayerHas() {
+    final int numberOfPlayers = game.getNumberOfPlayers();
+    final String card = "card";
+    final String cards = "cards";
+
+    for (int i = 0; i < numberOfPlayers; i++) {
+      Player player = game.getPlayer(i);
+      Vector<Card> hand = player.getHand();
+       if (hand.length() > 1)
+        System.out.printf("%s -> %d %s left%n",
+            player.getId(), player.getHand().length(), cards);
+      else
+        System.out.printf("%s -> %d %s left%n",
+            player.getId(), player.getHand().length(), card);
+      System.out.println();
+    }
+  }
 
   private static String buildCommandsHelpString() {
     final int columnsForPrefix = 10;

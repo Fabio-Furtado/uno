@@ -34,6 +34,7 @@ class CommandValuesKeeper {
     commands.put(Command.DRAW, "d");
     commands.put(Command.PLAY_A_CARD, "ph");
     commands.put(Command.PRINT_HAND, "p");
+    commands.put(Command.PRINT_RIVALS_HAND_LENGTH, "pl");
     commands.put(Command.HELP, "help");
     commands.put(Command.EXIT, "exit");
 
