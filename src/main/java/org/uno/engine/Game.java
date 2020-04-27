@@ -187,7 +187,7 @@ public class Game {
       InvalidOptionException,
       CardIndexOutOfHandBoundsException, MissingColourForWildCardException {
     if (!isOver()) {
-      makeSureDeckDoesntGetEmpty();
+      makeSureDeckDoesNotGetEmpty();
       int returnValue = 1;
       checkCommandValidity(command);
 
@@ -325,7 +325,7 @@ public class Game {
     return command;
   }
 
-  private void makeSureDeckDoesntGetEmpty() {
+  private void makeSureDeckDoesNotGetEmpty() {
     if (deck.size() < 4) {
       Card tableTop = table.pop();
       Vector<Card> temp = new Vector<>(table.size());

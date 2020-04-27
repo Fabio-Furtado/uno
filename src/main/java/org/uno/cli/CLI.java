@@ -89,7 +89,7 @@ public class CLI implements CommandLineReader {
       }
       warnIfRivalIsAboutToWin();
       if (game.isOver()) {
-        System.out.printf("%nGAME OVER!!!%n%s Won%n!", game.getWinner().getId());
+        System.out.printf("%nGAME OVER!!!%n%s Won!%n", game.getWinner().getId());
         run = false;
       }
     }
@@ -249,7 +249,7 @@ public class CLI implements CommandLineReader {
 
     if (game.getPlayerInTurn().getHand().length() == 1 &&
         !game.getPreviousPlayer().getId().equals(humanPlayerName))
-      System.out.printf("CAREFUL: %s has only one card left",
+      System.out.printf("CAREFUL: %s has only one card left%n%n",
           game.getPlayerInTurn().getId());
   }
 
