@@ -40,6 +40,8 @@ class CLItoEngineCommandConverter {
   private static final String TOO_MANY_ARGUMENTS_EXCEPTION =
       "Too many arguments for the <%s> command";
 
+  private CLItoEngineCommandConverter() {}
+
   static GameCommand convert(String cliCommand) throws CommandFormatException {
     int option;
     int index;
@@ -52,8 +54,6 @@ class CLItoEngineCommandConverter {
     }
   }
 
-  // TODO
-  // throw exception for to much arguments
   private static GameCommand doIfLikelyPlayingFromHand(String cliCommand) throws CommandFormatException {
     int option;
     int index;
