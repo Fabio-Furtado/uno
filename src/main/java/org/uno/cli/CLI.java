@@ -33,6 +33,8 @@ import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 import org.uno.util.Vector;
 
+import java.util.Random;
+
 /**
  * @author Fábio Furtado
  */
@@ -47,9 +49,11 @@ public class CLI implements CommandLineReader {
   private static final String INVALID_MOVE_ERROR_MESSAGE =
       "The move you chose is not valid";
   private String humanPlayerName;
+  private boolean botThinkingDelayEnabled;
 
   public CLI() {
     gameFactory = new GameFactory();
+    this.botThinkingDelayEnabled = true;
   }
 
   public void start(String humanPlayerName) {
@@ -85,6 +89,8 @@ public class CLI implements CommandLineReader {
           run = false;
       } else {
         GameCommand move = game.goBot();
+        if (botThinkingDelayEnabled)
+          addBotThinkingDelay();
         reportMove(move);
       }
       warnIfRivalIsAboutToWin();
@@ -280,6 +286,14 @@ public class CLI implements CommandLineReader {
 
   private void restart() {
     start(humanPlayerName);
+  }
+
+  private void addBotThinkingDelay() {
+    try {
+      Thread.sleep(((new Random().nextInt(4) - 2) + 2) * 1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void close() {
