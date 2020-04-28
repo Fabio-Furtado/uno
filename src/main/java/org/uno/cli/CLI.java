@@ -17,6 +17,7 @@
 
 package org.uno.cli;
 
+import org.uno.data.Settings;
 import org.uno.engine.Game;
 import org.uno.engine.GameCommand;
 import org.uno.engine.GameFactory;
@@ -41,19 +42,25 @@ import java.util.Random;
 public class CLI implements CommandLineReader {
 
   private Game game;
-  private static final String PROMPT_SYMBOL = "> ";
+  private String humanPlayerName;
   private final GameFactory gameFactory;
+  private static final boolean ENABLE_BOT_DELAY;
+  private static final String PROMPT_SYMBOL;
   private static final String COMMANDS_HELP = buildCommandsHelpString();
   private static final String INVALID_CARD_INDEX_ERROR_MESSAGE =
       "The index %d is not valid for your hand";
   private static final String INVALID_MOVE_ERROR_MESSAGE =
       "The move you chose is not valid";
-  private String humanPlayerName;
-  private boolean botThinkingDelayEnabled;
+
+  static {
+    Object sym = Settings.get(String.class,"cli", "prompt_symbol");
+    PROMPT_SYMBOL = sym != null? (String) sym : "> ";
+    Object delay = Settings.get(Boolean.class,"bot_delay");
+    ENABLE_BOT_DELAY = delay != null? (Boolean) delay : true;
+  }
 
   public CLI() {
     gameFactory = new GameFactory();
-    this.botThinkingDelayEnabled = true;
   }
 
   public void start(String humanPlayerName) {
@@ -89,7 +96,7 @@ public class CLI implements CommandLineReader {
           run = false;
       } else {
         GameCommand move = game.goBot();
-        if (botThinkingDelayEnabled)
+        if (ENABLE_BOT_DELAY)
           addBotThinkingDelay();
         reportMove(move);
       }
