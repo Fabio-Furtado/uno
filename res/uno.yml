@@ -2,4 +2,3 @@ bot_delay: False
 
 cli:
   prompt_symbol: "> "
-  enable: True

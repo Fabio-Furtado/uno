@@ -3,6 +3,7 @@ package org.uno.data;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.File;
@@ -25,33 +26,40 @@ public class Settings {
         return sub.get(keys[1]);
     }
     toReturn = format(toReturn);
-    if (toReturn.getClass() != cls)
+    try {
+      if (toReturn.getClass() != cls)
+        toReturn = null;
+    } catch (NullPointerException e) {
       toReturn = null;
+    }
     return toReturn;
   }
 
   private static Object format(Object value) {
-    if (value.getClass() == String.class) {
-      if (value == "True")
-        return true;
-      if (value == "False")
-        return false;
-    }
+    try {
+      if (value.getClass() != null) {
+        if (value.getClass() == String.class) {
+          if (value == "True")
+            return true;
+          if (value == "False")
+            return false;
+        }
+      }
+    } catch (NullPointerException suppressed) {}
     return value;
   }
 
   private static Map<String, Object> load() {
     File file = new File(CONFIGURATIONS_FILE_LOCATION);
     StringBuilder sb = new StringBuilder();
+    Map<String, Object> map = new HashMap<>();
     try (Scanner reader = new Scanner(file);) {
       while (reader.hasNextLine())
         sb.append(reader.nextLine() + "\n");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-    Yaml yaml = new Yaml();
-    return (Map<String, Object>) yaml.load(sb.toString());
+      Yaml yaml = new Yaml();
+      map = (Map<String, Object>) yaml.load(sb.toString());
+    } catch (FileNotFoundException suppressed) {}
+    return map;
 
   }
 }
