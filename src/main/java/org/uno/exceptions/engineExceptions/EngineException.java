@@ -7,11 +7,11 @@ package org.uno.exceptions.engineExceptions;
  */
 public class EngineException extends Exception {
 
-  public EngineException() {
-    super();
-  }
+    public EngineException() {
+        super();
+    }
 
-  public EngineException(String detailMessage) {
-    super(detailMessage);
-  }
+    public EngineException(String detailMessage) {
+        super(detailMessage);
+    }
 }

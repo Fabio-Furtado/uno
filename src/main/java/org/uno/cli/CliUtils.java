@@ -26,50 +26,53 @@ import java.util.Scanner;
  */
 class CliUtils {
 
-  /**
-   * Makes sure the user inputs a value within the given range.
-   *
-   * @param beginning beginning of the range
-   * @param end       end of the range
-   * @return valid value imputed by user
-   */
-  static int readValueInRange(int beginning, int end) {
-    int choice = 0;
-    do {
-      try {
+    /**
+     * Makes sure the user inputs a value within the given range.
+     *
+     * @param beginning beginning of the range
+     * @param end       end of the range
+     * @return valid value imputed by user
+     */
+    static int readValueInRange(int beginning, int end) {
+        int choice = 0;
+        do {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                choice = scanner.nextInt();
+                if (choice < beginning || choice > end)
+                    System.out.printf(
+                            "Invalid value, insert a number between %d and %d: ",
+                            beginning, end);
+            } catch (InputMismatchException e) {
+                System.out.printf(
+                        "Invalid input, insert a number between %d and %d: ",
+                        beginning, end);
+                readValueInRange(beginning, end);
+            }
+        } while (choice < beginning || choice > end);
+        return choice;
+    }
+
+    /**
+     * Reads a valid option from {@code System.in}.
+     * 
+     * @param valid array with the valid options
+     * @return chosen valid option
+     */
+    static String readValidOption(String... valid) {
         Scanner scanner = new Scanner(System.in);
-        choice = scanner.nextInt();
-        if (choice < beginning || choice > end)
-          System.out.printf("Invalid value, insert a number between %d and %d: ",
-              beginning, end);
-      } catch (InputMismatchException e) {
-        System.out.printf(
-            "Invalid input, insert a number between %d and %d: ", beginning, end);
-        readValueInRange(beginning, end);
-      }
-    } while (choice < beginning || choice > end);
-    return choice;
-  }
+        String choice = "";
+        boolean isValid = false;
 
-  /**
-   * Reads a valid option from {@code System.in}.
-   * @param valid array with the valid options
-   * @return chosen valid option
-   */
-  static String readValidOption(String... valid) {
-    Scanner scanner = new Scanner(System.in);
-    String choice = "";
-    boolean isValid = false;
-
-    do {
-      choice = scanner.next();
-      for (String element : valid) {
-        if (element.equals(choice)) {
-          isValid = true;
-          break;
-        }
-      }
-    } while (!isValid);
-    return choice;
-  }
+        do {
+            choice = scanner.next();
+            for (String element : valid) {
+                if (element.equals(choice)) {
+                    isValid = true;
+                    break;
+                }
+            }
+        } while (!isValid);
+        return choice;
+    }
 }

@@ -25,34 +25,34 @@ import org.uno.enums.CardTypes;
  */
 public class NumericCard extends Card {
 
-  private CardColour colour;
-  private int number;
+    private CardColour colour;
+    private int number;
 
-  public NumericCard(CardColour colour, int number) {
-    this.type = CardTypes.NUMERIC;
-    this.colour = colour;
-    this.number = number;
-  }
+    public NumericCard(CardColour colour, int number) {
+        this.type = CardTypes.NUMERIC;
+        this.colour = colour;
+        this.number = number;
+    }
 
-  public CardTypes getType() {
-    return this.type;
-  }
+    public CardTypes getType() {
+        return this.type;
+    }
 
-  public CardColour getColour() {
-    return colour;
-  }
+    public CardColour getColour() {
+        return colour;
+    }
 
-  public int getNumber() {
-    return number;
-  }
+    public int getNumber() {
+        return number;
+    }
 
-  /**
-   * Checks the equality between this card and the given one.
-   *
-   * @param other other object to compare.
-   * @return true if the cards are equal, false if not
-   */
-  public boolean equals(NumericCard other) {
-    return this.type == other.getType() && this.colour == other.getColour() && this.number == other.getNumber();
-  }
+    /**
+     * Checks the equality between this card and the given one.
+     *
+     * @param other other object to compare.
+     * @return true if the cards are equal, false if not
+     */
+    public boolean equals(NumericCard other) {
+        return this.type == other.getType() && this.colour == other.getColour() && this.number == other.getNumber();
+    }
 }

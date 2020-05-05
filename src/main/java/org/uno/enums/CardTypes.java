@@ -19,5 +19,5 @@ package org.uno.enums;
 
 public enum CardTypes {
 
-  NUMERIC, WILD, SPECIAL;
+    NUMERIC, WILD, SPECIAL;
 }

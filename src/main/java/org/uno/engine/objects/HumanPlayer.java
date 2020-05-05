@@ -23,39 +23,40 @@ import org.uno.util.Vector;
 
 /**
  * Abstracts a human player.
+ * 
  * @author Fábio Furtado
  */
 public class HumanPlayer extends Player {
 
-  private GameCommand nextMove;
-  private static final String type = "human";
+    private GameCommand nextMove;
+    private static final String type = "human";
 
-  public HumanPlayer(String id) {
-    this.hand = new Vector<>();
-    this.handSize = 0;
-    this.id = id;
-  }
+    public HumanPlayer(String id) {
+        this.hand = new Vector<>();
+        this.handSize = 0;
+        this.id = id;
+    }
 
-  public void setNextMove(GameCommand nextMove) {
-    this.nextMove = nextMove;
-  }
+    public void setNextMove(GameCommand nextMove) {
+        this.nextMove = nextMove;
+    }
 
-  @Override
-  public GameCommand makeMove(Game game) {
-    return nextMove;
-  }
+    @Override
+    public GameCommand makeMove(Game game) {
+        return nextMove;
+    }
 
-  @Override
-  public void addToHand(Card card) {
-    hand.add(card);
-    handSize++;
-  }
+    @Override
+    public void addToHand(Card card) {
+        hand.add(card);
+        handSize++;
+    }
 
-  @Override
-  public Card takeFromHand(int index) {
-    Card returnValue = this.hand.get(index);
-    hand.remove(index);
-    handSize--;
-    return returnValue;
-  }
+    @Override
+    public Card takeFromHand(int index) {
+        Card returnValue = this.hand.get(index);
+        hand.remove(index);
+        handSize--;
+        return returnValue;
+    }
 }

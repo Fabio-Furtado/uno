@@ -5,7 +5,7 @@ package org.uno.exceptions.engineExceptions;
  */
 public class MissingColourForWildCardException extends EngineException {
 
-  public MissingColourForWildCardException() {
-    super();
-  }
+    public MissingColourForWildCardException() {
+        super();
+    }
 }

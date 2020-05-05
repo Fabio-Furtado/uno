@@ -18,5 +18,6 @@
 package org.uno.enums;
 
 public enum WildCardSymbols {
-	CHANGE_COLOUR, DRAW_4;
+    
+    CHANGE_COLOUR, DRAW_4;
 }

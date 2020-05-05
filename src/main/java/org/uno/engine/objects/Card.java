@@ -24,11 +24,11 @@ import org.uno.enums.CardTypes;
  */
 public abstract class Card {
 
-  CardTypes type;
+    CardTypes type;
 
-  /**
-   * Retuns the type of the card.
-   */
-  public abstract CardTypes getType();
+    /**
+     * Retuns the type of the card.
+     */
+    public abstract CardTypes getType();
 
 }

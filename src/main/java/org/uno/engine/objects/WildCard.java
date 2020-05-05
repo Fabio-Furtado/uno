@@ -23,38 +23,38 @@ import org.uno.enums.WildCardSymbols;
 
 public class WildCard extends Card {
 
-  private WildCardSymbols symbol;
-  private CardColour pickedColour;
+    private WildCardSymbols symbol;
+    private CardColour pickedColour;
 
-  public WildCard(WildCardSymbols symbol) {
-    this.type = CardTypes.WILD;
-    this.symbol = symbol;
-  }
+    public WildCard(WildCardSymbols symbol) {
+        this.type = CardTypes.WILD;
+        this.symbol = symbol;
+    }
 
-  @Override
-  public CardTypes getType() {
-    return this.type;
-  }
+    @Override
+    public CardTypes getType() {
+        return this.type;
+    }
 
-  public void setPickedColour(CardColour colour) {
-    this.pickedColour = colour;
-  }
+    public void setPickedColour(CardColour colour) {
+        this.pickedColour = colour;
+    }
 
-  public CardColour getPickedColour() {
-    return pickedColour;
-  }
+    public CardColour getPickedColour() {
+        return pickedColour;
+    }
 
-  /**
-   * Checks the equality between this card and the given one.
-   *
-   * @param other other object to compare.
-   * @return true if the cards are equal, false if not
-   */
-  public boolean equals(WildCard other) {
-    return this.type == other.getType() && this.symbol == other.getSymbol();
-  }
+    /**
+     * Checks the equality between this card and the given one.
+     *
+     * @param other other object to compare.
+     * @return true if the cards are equal, false if not
+     */
+    public boolean equals(WildCard other) {
+        return this.type == other.getType() && this.symbol == other.getSymbol();
+    }
 
-  public WildCardSymbols getSymbol() {
-    return this.symbol;
-  }
+    public WildCardSymbols getSymbol() {
+        return this.symbol;
+    }
 }

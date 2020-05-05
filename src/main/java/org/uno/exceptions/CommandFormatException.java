@@ -22,7 +22,7 @@ package org.uno.exceptions;
  */
 public class CommandFormatException extends Exception {
 
-  public CommandFormatException(String detailMessage) {
-    super(detailMessage);
-  }
+    public CommandFormatException(String detailMessage) {
+        super(detailMessage);
+    }
 }

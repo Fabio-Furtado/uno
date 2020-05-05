@@ -24,5 +24,5 @@ import java.util.Scanner;
  */
 interface CommandLineReader {
 
-  Scanner reader = new Scanner(System.in);
+    Scanner reader = new Scanner(System.in);
 }

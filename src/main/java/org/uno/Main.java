@@ -24,8 +24,8 @@ import org.uno.cli.CLI;
  */
 public class Main {
 
-  public static void main(String[] args) {
-    CLI cli = new CLI();
-    cli.start("Fábio");
-  }
+    public static void main(String[] args) {
+        CLI cli = new CLI();
+        cli.start("Fábio");
+    }
 }

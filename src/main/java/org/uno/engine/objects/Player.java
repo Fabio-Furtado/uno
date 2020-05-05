@@ -23,25 +23,25 @@ import org.uno.util.Vector;
 
 public abstract class Player {
 
-  protected Vector<Card> hand;
-  protected String id;
-  protected int handSize;
+    protected Vector<Card> hand;
+    protected String id;
+    protected int handSize;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public Vector<Card> getHand() {
-    return hand;
-  }
+    public Vector<Card> getHand() {
+        return hand;
+    }
 
-  public abstract GameCommand makeMove(Game game);
+    public abstract GameCommand makeMove(Game game);
 
-  public abstract void addToHand(Card card);
+    public abstract void addToHand(Card card);
 
-  public abstract Card takeFromHand(int index);
+    public abstract Card takeFromHand(int index);
 }

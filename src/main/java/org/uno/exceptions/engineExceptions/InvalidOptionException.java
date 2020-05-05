@@ -5,10 +5,10 @@ package org.uno.exceptions.engineExceptions;
  */
 public class InvalidOptionException extends EngineException {
 
-  public InvalidOptionException() {
-  }
+    public InvalidOptionException() {
+    }
 
-  public InvalidOptionException(String detailMessage) {
-    super(detailMessage);
-  }
+    public InvalidOptionException(String detailMessage) {
+        super(detailMessage);
+    }
 }

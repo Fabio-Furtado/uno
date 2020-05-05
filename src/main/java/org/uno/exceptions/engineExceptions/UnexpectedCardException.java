@@ -18,11 +18,12 @@
 package org.uno.exceptions.engineExceptions;
 
 /**
- * This Exception expresses the expectation of a different card than the found one.
+ * This Exception expresses the expectation of a different card than the found
+ * one.
  */
 public class UnexpectedCardException extends EngineException {
 
-  public UnexpectedCardException(String msg) {
-    super(msg);
-  }
+    public UnexpectedCardException(String msg) {
+        super(msg);
+    }
 }

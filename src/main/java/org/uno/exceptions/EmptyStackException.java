@@ -19,11 +19,11 @@ package org.uno.exceptions;
 
 public class EmptyStackException extends RuntimeException {
 
-  public EmptyStackException() {
-    super();
-  }
+    public EmptyStackException() {
+        super();
+    }
 
-  public EmptyStackException(String errorMessage) {
-    super(errorMessage);
-  }
+    public EmptyStackException(String errorMessage) {
+        super(errorMessage);
+    }
 }

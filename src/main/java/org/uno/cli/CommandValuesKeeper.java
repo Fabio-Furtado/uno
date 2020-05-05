@@ -27,29 +27,29 @@ import java.util.Map;
  */
 class CommandValuesKeeper {
 
-  private static final Map<Command, String> commands = new HashMap<>();
-  private static final Map<CardColour, String> colours = new HashMap<>();
+    private static final Map<Command, String> commands = new HashMap<>();
+    private static final Map<CardColour, String> colours = new HashMap<>();
 
-  static {
-    commands.put(Command.DRAW, "d");
-    commands.put(Command.PLAY_A_CARD, "ph");
-    commands.put(Command.PRINT_HAND, "p");
-    commands.put(Command.PRINT_RIVALS_HAND_LENGTH, "pl");
-    commands.put(Command.HELP, "help");
-    commands.put(Command.EXIT, "exit");
-    commands.put(Command.RESTART, "restart");
+    static {
+        commands.put(Command.DRAW, "d");
+        commands.put(Command.PLAY_A_CARD, "ph");
+        commands.put(Command.PRINT_HAND, "p");
+        commands.put(Command.PRINT_RIVALS_HAND_LENGTH, "pl");
+        commands.put(Command.HELP, "help");
+        commands.put(Command.EXIT, "exit");
+        commands.put(Command.RESTART, "restart");
 
-    colours.put(CardColour.BLUE, "blue");
-    colours.put(CardColour.GREEN, "green");
-    colours.put(CardColour.RED, "red");
-    colours.put(CardColour.YELLOW, "yellow");
-  }
+        colours.put(CardColour.BLUE, "blue");
+        colours.put(CardColour.GREEN, "green");
+        colours.put(CardColour.RED, "red");
+        colours.put(CardColour.YELLOW, "yellow");
+    }
 
-  static String getValue(Command command) {
-    return commands.get(command);
-  }
+    static String getValue(Command command) {
+        return commands.get(command);
+    }
 
-  static String getValue(CardColour cardColour) {
-    return colours.get(cardColour);
-  }
+    static String getValue(CardColour cardColour) {
+        return colours.get(cardColour);
+    }
 }

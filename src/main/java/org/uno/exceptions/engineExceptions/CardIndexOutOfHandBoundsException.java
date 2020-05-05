@@ -5,11 +5,11 @@ package org.uno.exceptions.engineExceptions;
  */
 public class CardIndexOutOfHandBoundsException extends EngineException {
 
-  public CardIndexOutOfHandBoundsException() {
-    super();
-  }
+    public CardIndexOutOfHandBoundsException() {
+        super();
+    }
 
-  public CardIndexOutOfHandBoundsException(String detailMessage) {
-    super(detailMessage);
-  }
+    public CardIndexOutOfHandBoundsException(String detailMessage) {
+        super(detailMessage);
+    }
 }

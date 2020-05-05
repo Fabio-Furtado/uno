@@ -23,45 +23,45 @@ import org.uno.enums.SpecialCardSymbols;
 
 public class SpecialCard extends Card {
 
-  private CardColour colour;
-  private SpecialCardSymbols symbol;
+    private CardColour colour;
+    private SpecialCardSymbols symbol;
 
-  public SpecialCard(CardColour colour, SpecialCardSymbols symbol) {
-    this.type = CardTypes.SPECIAL;
-    this.colour = colour;
-    this.symbol = symbol;
-  }
+    public SpecialCard(CardColour colour, SpecialCardSymbols symbol) {
+        this.type = CardTypes.SPECIAL;
+        this.colour = colour;
+        this.symbol = symbol;
+    }
 
-  @Override
-  public CardTypes getType() {
-    return this.type;
-  }
+    @Override
+    public CardTypes getType() {
+        return this.type;
+    }
 
-  /**
-   * Retrns the colour of the card.
-   *
-   * @return colour of thte card
-   */
-  public CardColour getColour() {
-    return this.colour;
-  }
+    /**
+     * Retrns the colour of the card.
+     *
+     * @return colour of thte card
+     */
+    public CardColour getColour() {
+        return this.colour;
+    }
 
-  /**
-   * Returns the symbols of the card.
-   *
-   * @return symbols of the card
-   */
-  public SpecialCardSymbols getSymbol() {
-    return this.symbol;
-  }
+    /**
+     * Returns the symbols of the card.
+     *
+     * @return symbols of the card
+     */
+    public SpecialCardSymbols getSymbol() {
+        return this.symbol;
+    }
 
-  /**
-   * Checks the equality between this card and the given one.
-   *
-   * @param other other object to compare.
-   * @return true if the cards are equal, false if not
-   */
-  public boolean equals(SpecialCard other) {
-    return this.type == other.getType() && this.colour == other.getColour() && this.symbol == other.getSymbol();
-  }
+    /**
+     * Checks the equality between this card and the given one.
+     *
+     * @param other other object to compare.
+     * @return true if the cards are equal, false if not
+     */
+    public boolean equals(SpecialCard other) {
+        return this.type == other.getType() && this.colour == other.getColour() && this.symbol == other.getSymbol();
+    }
 }

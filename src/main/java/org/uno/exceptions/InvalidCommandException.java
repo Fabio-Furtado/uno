@@ -22,11 +22,11 @@ package org.uno.exceptions;
  */
 public class InvalidCommandException extends Exception {
 
-  public InvalidCommandException() {
-    super();
-  }
+    public InvalidCommandException() {
+        super();
+    }
 
-  public InvalidCommandException(String detailMessage) {
-    super(detailMessage);
-  }
+    public InvalidCommandException(String detailMessage) {
+        super(detailMessage);
+    }
 }

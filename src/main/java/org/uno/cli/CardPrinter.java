@@ -29,44 +29,44 @@ import org.uno.engine.objects.WildCard;
  */
 class CardPrinter {
 
-  /**
-   * Prints String description of the card.
-   *
-   * @param card card to be printed
-   */
-  static void printCard(Card card) {
+    /**
+     * Prints String description of the card.
+     *
+     * @param card card to be printed
+     */
+    static void printCard(Card card) {
 
-    switch (card.getType()) {
+        switch (card.getType()) {
 
-      case NUMERIC:
-        NumericCard numerical = (NumericCard) card;
-        printNumerical(numerical);
-        break;
+        case NUMERIC:
+            NumericCard numerical = (NumericCard) card;
+            printNumerical(numerical);
+            break;
 
-      case WILD:
-        WildCard wild = (WildCard) card;
-        printWild(wild);
-        break;
+        case WILD:
+            WildCard wild = (WildCard) card;
+            printWild(wild);
+            break;
 
-      case SPECIAL:
-        SpecialCard special = (SpecialCard) card;
-        printSpecial(special);
-        break;
+        case SPECIAL:
+            SpecialCard special = (SpecialCard) card;
+            printSpecial(special);
+            break;
+        }
     }
-  }
 
-  private static void printNumerical(NumericCard numCard) {
-    System.out.printf("%s %d", numCard.getColour(), numCard.getNumber());
-  }
+    private static void printNumerical(NumericCard numCard) {
+        System.out.printf("%s %d", numCard.getColour(), numCard.getNumber());
+    }
 
-  private static void printSpecial(SpecialCard specialCard) {
-    System.out.printf("%s %s", specialCard.getColour(), specialCard.getSymbol());
-  }
+    private static void printSpecial(SpecialCard specialCard) {
+        System.out.printf("%s %s", specialCard.getColour(), specialCard.getSymbol());
+    }
 
-  private static void printWild(WildCard wildCard) {
-    if (wildCard.getPickedColour() == null)
-      System.out.printf("Wild %s", wildCard.getSymbol());
-    else
-      System.out.printf("%s %s", wildCard.getPickedColour(), wildCard.getSymbol());
-  }
+    private static void printWild(WildCard wildCard) {
+        if (wildCard.getPickedColour() == null)
+            System.out.printf("Wild %s", wildCard.getSymbol());
+        else
+            System.out.printf("%s %s", wildCard.getPickedColour(), wildCard.getSymbol());
+    }
 }

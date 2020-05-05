@@ -23,19 +23,19 @@ package org.uno.util;
  */
 class SingleLinkNode<E> {
 
-  private final E element;
-  private final SingleLinkNode<E> next;
+    private final E element;
+    private final SingleLinkNode<E> next;
 
-  public SingleLinkNode(E element, SingleLinkNode next) {
-    this.element = element;
-    this.next = next;
-  }
+    public SingleLinkNode(E element, SingleLinkNode next) {
+        this.element = element;
+        this.next = next;
+    }
 
-  public SingleLinkNode<E> next() {
-    return next;
-  }
+    public SingleLinkNode<E> next() {
+        return next;
+    }
 
-  public E getNodeContent() {
-    return element;
-  }
+    public E getNodeContent() {
+        return element;
+    }
 }
