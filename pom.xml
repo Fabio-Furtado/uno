@@ -22,7 +22,7 @@
 
   <groupId>uno</groupId>
   <artifactId>uno</artifactId>
-  <version>1.0</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>UNO</name>
@@ -47,7 +47,19 @@
       </roles>
       </developer>
   </developers>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.4</version>
+    </dependency>
+  </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -64,24 +76,15 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
         <configuration>
           <archive>
             <manifest>
-              <mainClass>
-                org.uno.Main
-              </mainClass>
+              <mainClass>org.uno.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-      <version>1.4</version>
-    </dependency>
-  </dependencies>
 </project>
