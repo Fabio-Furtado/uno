@@ -23,6 +23,7 @@ import org.uno.engine.objects.HumanPlayer;
 import org.uno.exceptions.GameRulesException;
 
 /**
+ * Creates new instances of the game class
  * @author Fábio Furtado
  */
 public class GameFactory {

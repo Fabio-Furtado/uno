@@ -45,7 +45,7 @@ public class Settings {
             return false;
         }
       }
-    } catch (NullPointerException suppressed) {}
+    } catch (NullPointerException ignored) {}
     return value;
   }
 
@@ -58,7 +58,7 @@ public class Settings {
         sb.append(reader.nextLine() + "\n");
       Yaml yaml = new Yaml();
       map = (Map<String, Object>) yaml.load(sb.toString());
-    } catch (FileNotFoundException suppressed) {}
+    } catch (FileNotFoundException ignored) {}
     return map;
 
   }
