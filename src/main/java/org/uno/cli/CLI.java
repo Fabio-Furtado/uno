@@ -125,7 +125,7 @@ public class CLI implements CommandLineReader {
         if (cliCommand.equals(CommandValuesKeeper.getValue(Command.HELP)))
             System.out.println(COMMANDS_HELP);
         else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_HAND))) {
-            printHand(game.getPlayerInTurnId());
+            printHand(game.getPlayerInTurn().getId());
         } else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW))) {
             try {
                 GameCommand move = CLItoEngineCommandConverter.convert(cliCommand);
@@ -218,7 +218,7 @@ public class CLI implements CommandLineReader {
     }
 
     private void printTurn() {
-        System.out.printf("It's %s's turn%n", game.getPlayerInTurnId());
+        System.out.printf("It's %s's turn%n", game.getPlayerInTurn().getId());
     }
 
     /**
@@ -277,8 +277,11 @@ public class CLI implements CommandLineReader {
     }
 
     private void warnIfRivalIsAboutToWin() {
-        if (game.getPlayerInTurn().getHand().length() == 1 && !game.getPreviousPlayer().getId().equals(humanPlayerName))
-            System.out.printf("CAREFUL: %s has only one card left%n%n", game.getPlayerInTurn().getId());
+        if (game.getPlayerInTurn().getHand().length() == 1 &&
+            !game.getPreviousPlayer().getId().equals(humanPlayerName)
+        )
+            System.out.printf("CAREFUL: %s has only one card left%n%n",
+                game.getPlayerInTurn().getId());
     }
 
     private static String buildCommandsHelpString() {
