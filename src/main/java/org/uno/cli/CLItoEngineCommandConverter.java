@@ -37,10 +37,26 @@ class CLItoEngineCommandConverter {
         "Expected an index after the <%s> command";
     private static final String INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE =
         "Not enough arguments for the <%s> command";
-    private static final String TOO_MANY_ARGUMENTS_EXCEPTION =
+    private static final String TOO_MANY_ARGUMENTS_ERROR_MESSAGE =
         "Too many arguments for the <%s> command";
 
     private CLItoEngineCommandConverter() {
+    }
+
+    public static String getUnknownCommandErrorMessage() {
+        return UNKNOWN_COMMAND_ERROR_MESSAGE;
+    }
+
+    public static String getUnknownArgumentErrorMessage() {
+        return UNKNOWN_ARGUMENT_ERROR_MESSAGE;
+    }
+
+    public static String getInsufficientArgumentsErrorMessage() {
+        return INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE;
+    }
+
+    public static String getTooManyArgumentsErrorMessage() {
+        return TOO_MANY_ARGUMENTS_ERROR_MESSAGE;
     }
 
     static GameCommand convert(String cliCommand) throws CommandFormatException {
@@ -96,7 +112,7 @@ class CLItoEngineCommandConverter {
                 colour = engineCardColourCode;
         } else if (commandElements.length > 3)
             throw new CommandFormatException(String.format(
-                TOO_MANY_ARGUMENTS_EXCEPTION, commandElements[0])
+                TOO_MANY_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
             );
         return new GameCommand(option, index, colour);
     }

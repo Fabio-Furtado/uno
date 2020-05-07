@@ -169,8 +169,17 @@ public class CLI implements CommandLineReader {
             else if (executionResult == 1)
                 System.out.println(INVALID_MOVE_ERROR_MESSAGE);
         } catch (CommandFormatException e) {
-            System.out.println(e.getMessage());
-            System.out.println();
+            if (e.getMessage().equals(
+                String.format(
+                    CLItoEngineCommandConverter.getInsufficientArgumentsErrorMessage(),
+                    cliCommand
+                ))
+            ) {
+                playACard(cliCommand + " " + pickIndex());
+            } else {
+                System.out.println(e.getMessage());
+                System.out.println();
+            }
         } catch (InvalidOptionException invalidOptionException) {
 
             // The exception above already prevents this exception
@@ -191,6 +200,17 @@ public class CLI implements CommandLineReader {
                 e.printStackTrace();
             }
         }
+    }
+
+    private int pickIndex() {
+        int index;
+        Player playerInTurn = game.getPlayerInTurn();
+        System.out.printf("You have to choose the index of the card you wish " +
+            "to play%n");
+        printHand(playerInTurn.getId());
+        System.out.print("Choose please: ");
+        index = CliUtils.readValueInRange(1, playerInTurn.getHand().length());
+        return index;
     }
 
     private CardColour pickWildCardColour() {
