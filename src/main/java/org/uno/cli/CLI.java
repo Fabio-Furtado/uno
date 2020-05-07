@@ -277,11 +277,14 @@ public class CLI implements CommandLineReader {
     }
 
     private void warnIfRivalIsAboutToWin() {
-        if (game.getPlayerInTurn().getHand().length() == 1 &&
-            !game.getPreviousPlayer().getId().equals(humanPlayerName)
+        Player playerInTurn = game.getPlayerInTurn();
+        if (playerInTurn.getHand().length() == 1 &&
+            !playerInTurn.getId().equals(humanPlayerName)
         )
-            System.out.printf("CAREFUL: %s has only one card left%n%n",
-                game.getPlayerInTurn().getId());
+            System.out.printf(
+                "CAREFUL: %s has only one card left%n%n",
+                game.getPlayerInTurn().getId()
+            );
     }
 
     private static String buildCommandsHelpString() {
