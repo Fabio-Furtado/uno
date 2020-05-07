@@ -188,7 +188,7 @@ public class CLI implements CommandLineReader {
             System.out.printf("Invalid card index%n%n");
         } catch (MissingColourForWildCardException e) {
             GameCommand corrected = new GameCommand(
-                move.getOption(), move.getIndex(), pickWildCardColour()
+                move.getIndex(), pickWildCardColour()
             );
             reportMove(corrected);
             try {

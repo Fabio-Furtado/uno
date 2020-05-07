@@ -19,6 +19,8 @@ package org.uno.engine;
 
 import org.uno.enums.CardColour;
 
+import java.io.InputStream;
+
 /**
  * @author Fábio Furtado
  */
@@ -28,32 +30,61 @@ public class GameCommand {
     private final int index;
     private final CardColour colour;
 
-    public GameCommand(int option, int index, CardColour colour) {
-        this.option = option;
+    /**
+     * Creates a new instance for a command to play a wild card.
+     *
+     * @param index index of the card to play
+     * @param colour colour to choose for the wild card
+     * @requires {@code colour != null && index > -1}
+     */
+    public GameCommand(int index, CardColour colour) {
+        this.option = 1;
         this.index = index;
         this.colour = colour;
     }
 
-    public GameCommand(int option) {
-        this.option = option;
+    /**
+     * Creates a new instance for a command to draw a card.
+     */
+    public GameCommand() {
+        this.option = 0;
         this.index = -1;
         this.colour = null;
     }
 
-    public GameCommand(int option, int index) {
-        this.option = option;
+    /**
+     * Creates a new instance for a command to play a non wild from the given
+     * index.
+     * @param index index of the card to play
+     * @requires {@code index > -1}
+     */
+    public GameCommand(int index) {
+        this.option = 1;
         this.index = index;
         this.colour = null;
     }
 
+    /**
+     * Gets the option of this command.
+     * @return 0 if the option is draw, 1 if it is to play
+     */
     public int getOption() {
         return option;
     }
 
+    /**
+     * Gets the index of the card this command plays.
+     * @return index of the card this command plays, -1 this command is for
+     * drawing
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Gets the colour chosen for the wild card this command wants to play.
+     * @return {@link CardColour} if this command plays a wild card, null if not
+     */
     public CardColour getColour() {
         return colour;
     }

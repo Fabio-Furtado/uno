@@ -175,12 +175,7 @@ public class Game {
     }
 
     /**
-     * Executes the move made by the player. {@code code} consists of an integer
-     * with 3 numbers at the most, being the first the move ('0' to draw a card, '1'
-     * to play from the hand), the second the chosen colour in case of an wild card
-     * ('0' for blue, '1' for red, '2' from green and '3' for yellow) and the last
-     * being the index of the card the player wishes to play in case he chose to do
-     * so.
+     * Executes the given command for the player currently in turn.
      *
      * @param command command of the move
      * @return 0 if the play was successfully executed, 1 if the move is invalid

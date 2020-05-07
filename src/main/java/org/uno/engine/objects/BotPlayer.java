@@ -18,6 +18,7 @@
 package org.uno.engine.objects;
 
 import org.uno.engine.GameCommand;
+import org.uno.engine.GameFactory;
 import org.uno.util.Vector;
 
 import org.uno.engine.Game;
@@ -54,7 +55,8 @@ public class BotPlayer extends Player {
         int option = 0;
         int index = -1;
         CardColour colour = null;
-        int returnValue = 0; // draw
+        GameCommand command;
+
         for (int i = 0; i < hand.length(); i++) {
             if (game.isCardValid(hand.get(i))) {
                 if (hand.get(i).getType() == CardTypes.WILD) {
@@ -71,7 +73,12 @@ public class BotPlayer extends Player {
                 break;
             }
         }
-        return new GameCommand(option, index, colour);
+        if (option == 0)
+            command = new GameCommand();
+        else
+            command = colour == null? new GameCommand(index) :
+                                      new GameCommand(index, colour);
+        return command;
     }
 
     private CardColour chooseColour() {

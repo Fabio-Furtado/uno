@@ -29,8 +29,6 @@ import org.uno.exceptions.CommandFormatException;
 class CLItoEngineCommandConverter {
 
     private static final String SEPARATOR_SYMBOL = " ";
-    private static final int ENGINE_DRAW_COMMAND = 0;
-    private static final int ENGINE_PlAY_COMMAND = 1;
     private static final String UNKNOWN_COMMAND_ERROR_MESSAGE =
         "Unknown command: %s";
     private static final String UNKNOWN_ARGUMENT_ERROR_MESSAGE =
@@ -65,7 +63,7 @@ class CLItoEngineCommandConverter {
         CardColour colour;
 
         if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW)))
-            return new GameCommand(ENGINE_DRAW_COMMAND);
+            return new GameCommand();
         else {
             return doIfLikelyPlayingFromHand(cliCommand);
         }
@@ -73,13 +71,11 @@ class CLItoEngineCommandConverter {
 
     private static GameCommand doIfLikelyPlayingFromHand(String cliCommand)
         throws CommandFormatException {
-        int option;
         int index;
         CardColour colour = null;
         String[] commandElements = cliCommand.split(SEPARATOR_SYMBOL);
 
         if (commandElements[0].equals(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
-            option = ENGINE_PlAY_COMMAND;
             try {
                 index = (Integer.parseInt(commandElements[1]) - 1);
             } catch (NumberFormatException e) {
@@ -114,6 +110,6 @@ class CLItoEngineCommandConverter {
             throw new CommandFormatException(String.format(
                 TOO_MANY_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
             );
-        return new GameCommand(option, index, colour);
+        return new GameCommand(index, colour);
     }
 }
