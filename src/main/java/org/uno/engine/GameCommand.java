@@ -19,7 +19,6 @@ package org.uno.engine;
 
 import org.uno.enums.CardColour;
 
-import java.io.InputStream;
 
 /**
  * @author Fábio Furtado

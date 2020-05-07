@@ -29,7 +29,6 @@ import org.uno.util.Vector;
 public class HumanPlayer extends Player {
 
     private GameCommand nextMove;
-    private static final String type = "human";
 
     public HumanPlayer(String id) {
         this.hand = new Vector<>();
@@ -37,9 +36,6 @@ public class HumanPlayer extends Player {
         this.id = id;
     }
 
-    public void setNextMove(GameCommand nextMove) {
-        this.nextMove = nextMove;
-    }
 
     @Override
     public GameCommand makeMove(Game game) {
