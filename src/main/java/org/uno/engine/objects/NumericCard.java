@@ -53,6 +53,9 @@ public class NumericCard extends Card {
      * @return true if the cards are equal, false if not
      */
     public boolean equals(NumericCard other) {
-        return this.type == other.getType() && this.colour == other.getColour() && this.number == other.getNumber();
+        return
+            this.type == other.getType() &&
+            this.colour == other.getColour() &&
+            this.number == other.getNumber();
     }
 }

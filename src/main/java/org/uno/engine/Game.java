@@ -182,7 +182,8 @@ public class Game {
      * @return 0 if the play was successfully executed, 1 if the move is invalid
      */
     public int executeMove(GameCommand command)
-            throws InvalidOptionException, CardIndexOutOfHandBoundsException, MissingColourForWildCardException {
+            throws InvalidOptionException, CardIndexOutOfHandBoundsException,
+        MissingColourForWildCardException {
         if (!isOver()) {
             makeSureDeckDoesNotGetEmpty();
             int returnValue = 1;
@@ -239,17 +240,23 @@ public class Game {
     }
 
     private void checkCommandValidity(GameCommand command)
-            throws MissingColourForWildCardException, CardIndexOutOfHandBoundsException, InvalidOptionException {
+            throws MissingColourForWildCardException,
+        CardIndexOutOfHandBoundsException, InvalidOptionException {
         if (command.getOption() == 0) {
             if (command.getIndex() != -1 || command.getColour() != null) {
-                throw new IllegalStateException("Not expecting values for index and colour" + "when option is 0");
+                throw new IllegalStateException(
+                    "Not expecting values for index and colour" +
+                        "when option is 0"
+                );
             }
         } else if (command.getOption() == 1) {
             if (command.getIndex() > players[turn].getHand().length() - 1)
-                throw new CardIndexOutOfHandBoundsException(String.format("%d is out of hand range of %d",
-                        command.getIndex(), players[turn].getHand().length()));
-            if (players[turn].getHand().get(command.getIndex()).getClass() == WildCard.class
-                    && command.getColour() == null) {
+                throw new CardIndexOutOfHandBoundsException(
+                    String.format("%d is out of hand range of %d",
+                        command.getIndex(), players[turn].getHand().length())
+                );
+            if (players[turn].getHand().get(command.getIndex()).getClass() ==
+                    WildCard.class && command.getColour() == null) {
                 throw new MissingColourForWildCardException();
             }
         } else
@@ -410,9 +417,9 @@ public class Game {
      */
     private void jumpAPlayer() {
 
-        // The turnBackup variable is needed to store the current turn in order to
-        // get right value to previous turn, otherwise the value in previous will be
-        // incorrect
+        // The turnBackup variable is needed to store the current turn in order
+        // to get right value to previous turn, otherwise the value in previous
+        // will be incorrect
         moveToNextPlayer();
         moveToNextPlayer();
     }

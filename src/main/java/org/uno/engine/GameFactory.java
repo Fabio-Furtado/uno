@@ -48,7 +48,8 @@ public class GameFactory {
      * @param humanPlayersNames array with the name of each human player
      * @return a new {@code Game} instance
      */
-    public Game newGame(int numberOfBots, String... humanPlayersNames) throws GameRulesException {
+    public Game newGame(int numberOfBots, String... humanPlayersNames)
+        throws GameRulesException {
         Player[] players = new Player[numberOfBots + humanPlayersNames.length];
 
         checkIfNumberOfPlayersIsLegal(players.length);
@@ -67,15 +68,20 @@ public class GameFactory {
      * @param numberOfPlayers number of players to test
      * @throws GameRulesException if the given number of players is illegal
      */
-    private void checkIfNumberOfPlayersIsLegal(int numberOfPlayers) throws GameRulesException {
+    private void checkIfNumberOfPlayersIsLegal(int numberOfPlayers)
+        throws GameRulesException {
         String exceptionMessage = null;
 
         if (numberOfPlayers > MAX_NUMBER_OF_PLAYERS)
-            exceptionMessage = String.format("%d players exceed the players limit of %d", numberOfPlayers,
-                    MAX_NUMBER_OF_PLAYERS);
+            exceptionMessage = String.format(
+                "%d players exceed the players limit of %d",
+                numberOfPlayers, MAX_NUMBER_OF_PLAYERS
+            );
         else if (numberOfPlayers < MIN_NUMBER_OF_PLAYERS) {
-            exceptionMessage = String.format("%d players is not enough to start a game, minimum of %d is needed",
-                    numberOfPlayers, MIN_NUMBER_OF_PLAYERS);
+            exceptionMessage = String.format(
+                "%d players is not enough to start a game, minimum of %d is needed",
+                numberOfPlayers, MIN_NUMBER_OF_PLAYERS
+            );
         }
         if (exceptionMessage != null)
             throw new GameRulesException(exceptionMessage);

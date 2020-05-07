@@ -62,6 +62,9 @@ public class SpecialCard extends Card {
      * @return true if the cards are equal, false if not
      */
     public boolean equals(SpecialCard other) {
-        return this.type == other.getType() && this.colour == other.getColour() && this.symbol == other.getSymbol();
+        return
+            this.type == other.getType() &&
+            this.colour == other.getColour() &&
+            this.symbol == other.getSymbol();
     }
 }
