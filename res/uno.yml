@@ -1,4 +1,11 @@
+# Configuration file for the UNO game.
+
+# If True, when it's a bot's turn to play, a delay will be applied
+# to simulate the thinking delay.
 bot_delay: False
 
+# Settings specific to the Command Line Interface
 cli:
+
+  ## The symbol used on the command line interface prompt
   prompt_symbol: "> "
