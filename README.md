@@ -4,6 +4,7 @@ This is simple uno engine with a CLI interface.
 
 ## Features
 * A CLI interface
+* Configurations available thru a yaml file
 
 ## Build/Run
 
@@ -23,3 +24,10 @@ In project root run:
 mvn install
 cd target
 java -jar hello.jar 
+``` 
+
+## Configuration
+A configuration file won't be created for you, but the program will look for one
+at the same directory where the executable _jar_ is. This file has to go by the
+name of _uno.yml_. You can find a sample at the project's _resources_ directory.
+Bear in mind that at this point the available settings are somewhat limited.
