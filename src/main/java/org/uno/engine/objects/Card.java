@@ -19,6 +19,7 @@ package org.uno.engine.objects;
 
 import org.uno.enums.CardTypes;
 
+
 /**
  * Represents a general uno card.
  */

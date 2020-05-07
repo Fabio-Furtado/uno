@@ -20,43 +20,49 @@ package org.uno.util;
 /**
  * A a collection of objects that are inserted and removed according to the
  * last-in first-out principle.
+ *
  * @param <E> data type which this Stack will work with
  * @author Fábio Furtado
  */
 interface MutableStack<E> {
 
-  /**
-   * Adds element to the top of the stack.
-   * @param element data to be added
-   */
-  void push(E element);
+    /**
+     * Adds element to the top of the stack.
+     *
+     * @param element data to be added
+     */
+    void push(E element);
 
-  /**
-   * Removes and returns the element at the top of the Stack.
-   * @return element at the top
-   */
-  E pop();
+    /**
+     * Removes and returns the element at the top of the Stack.
+     *
+     * @return element at the top
+     */
+    E pop();
 
-  /**
-   * Returns the element at the top of the Stack.
-   * @return element at the top
-   */
-  E peek();
+    /**
+     * Returns the element at the top of the Stack.
+     *
+     * @return element at the top
+     */
+    E peek();
 
-  /**
-   * Returns the current size of the stack.
-   * @return int with the stack's size
-   */
-  int size();
+    /**
+     * Returns the current size of the stack.
+     *
+     * @return int with the stack's size
+     */
+    int size();
 
-  /**
-   * Checks if the Stack is empty.
-   * @return true if the Stack is empty, false otherwise
-   */
-  boolean isEmpty();
+    /**
+     * Checks if the Stack is empty.
+     *
+     * @return true if the Stack is empty, false otherwise
+     */
+    boolean isEmpty();
 
-  /**
-   * Returns a String representation of the Stack
-   */
-  String toString();
+    /**
+     * Returns a String representation of the Stack
+     */
+    String toString();
 }

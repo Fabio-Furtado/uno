@@ -21,6 +21,7 @@ import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
 import org.uno.enums.SpecialCardSymbols;
 
+
 public class SpecialCard extends Card {
 
     private CardColour colour;
@@ -63,8 +64,8 @@ public class SpecialCard extends Card {
      */
     public boolean equals(SpecialCard other) {
         return
-            this.type == other.getType() &&
-            this.colour == other.getColour() &&
-            this.symbol == other.getSymbol();
+                this.type == other.getType() &&
+                        this.colour == other.getColour() &&
+                        this.symbol == other.getSymbol();
     }
 }

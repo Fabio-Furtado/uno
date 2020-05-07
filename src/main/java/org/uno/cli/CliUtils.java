@@ -17,9 +17,9 @@
 
 package org.uno.cli;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 /**
  * @author Fábio Furtado
@@ -55,7 +55,7 @@ class CliUtils {
 
     /**
      * Reads a valid option from {@code System.in}.
-     * 
+     *
      * @param valid array with the valid options
      * @return chosen valid option
      */

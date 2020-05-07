@@ -17,14 +17,14 @@
 
 package org.uno.engine.objects;
 
-import org.uno.engine.GameCommand;
-import org.uno.util.Vector;
-
 import org.uno.engine.Game;
+import org.uno.engine.GameCommand;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
+import org.uno.util.Vector;
 
 import java.util.Random;
+
 
 public class BotPlayer extends Player {
 
@@ -75,8 +75,8 @@ public class BotPlayer extends Player {
         if (option == 0)
             command = new GameCommand();
         else
-            command = colour == null? new GameCommand(index) :
-                                      new GameCommand(index, colour);
+            command = colour == null ? new GameCommand(index) :
+                    new GameCommand(index, colour);
         return command;
     }
 
@@ -91,36 +91,36 @@ public class BotPlayer extends Player {
             CardTypes type = hand.get(i).getType();
 
             switch (type) {
-            case NUMERIC:
-                NumericCard card = (NumericCard) hand.get(i);
-                if (card.getColour() == CardColour.BLUE)
-                    bluesInHand++;
-                else if (card.getColour() == CardColour.RED)
-                    redsInHand++;
-                else if (card.getColour() == CardColour.GREEN)
-                    greensInHand++;
-                else if (card.getColour() == CardColour.YELLOW)
-                    yellowsInHand++;
-                break;
+                case NUMERIC:
+                    NumericCard card = (NumericCard) hand.get(i);
+                    if (card.getColour() == CardColour.BLUE)
+                        bluesInHand++;
+                    else if (card.getColour() == CardColour.RED)
+                        redsInHand++;
+                    else if (card.getColour() == CardColour.GREEN)
+                        greensInHand++;
+                    else if (card.getColour() == CardColour.YELLOW)
+                        yellowsInHand++;
+                    break;
 
-            case SPECIAL:
-                SpecialCard card_2 = (SpecialCard) hand.get(i);
-                if (card_2.getColour() == CardColour.BLUE)
-                    bluesInHand++;
-                else if (card_2.getColour() == CardColour.RED)
-                    redsInHand++;
-                else if (card_2.getColour() == CardColour.GREEN)
-                    greensInHand++;
-                else if (card_2.getColour() == CardColour.YELLOW)
-                    yellowsInHand++;
-                break;
+                case SPECIAL:
+                    SpecialCard card_2 = (SpecialCard) hand.get(i);
+                    if (card_2.getColour() == CardColour.BLUE)
+                        bluesInHand++;
+                    else if (card_2.getColour() == CardColour.RED)
+                        redsInHand++;
+                    else if (card_2.getColour() == CardColour.GREEN)
+                        greensInHand++;
+                    else if (card_2.getColour() == CardColour.YELLOW)
+                        yellowsInHand++;
+                    break;
 
-            default: // Wild
-                break;
+                default: // Wild
+                    break;
             }
         }
 
-        int[] arr = { bluesInHand, redsInHand, greensInHand, yellowsInHand };
+        int[] arr = {bluesInHand, redsInHand, greensInHand, yellowsInHand};
         int biggerValue = arr[new Random().nextInt(4)];
 
         if (bluesInHand > biggerValue) {

@@ -17,20 +17,19 @@
 
 package org.uno.engine;
 
-import org.uno.util.Vector;
+import org.uno.engine.objects.Card;
+import org.uno.engine.objects.NumericCard;
+import org.uno.engine.objects.SpecialCard;
+import org.uno.engine.objects.WildCard;
 import org.uno.enums.CardColour;
 import org.uno.enums.SpecialCardSymbols;
 import org.uno.enums.WildCardSymbols;
-import org.uno.engine.objects.Card;
-import org.uno.engine.objects.NumericCard;
-import org.uno.engine.objects.WildCard;
-import org.uno.engine.objects.SpecialCard;
 import org.uno.util.Stack;
+import org.uno.util.Vector;
+
 
 /**
- * 
  * @author Fábio Furtado
- *
  */
 class DeckGenerator {
 

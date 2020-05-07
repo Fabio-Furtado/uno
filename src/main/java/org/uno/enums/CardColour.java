@@ -18,6 +18,6 @@
 package org.uno.enums;
 
 public enum CardColour {
-    
+
     RED, BLUE, GREEN, YELLOW;
 }

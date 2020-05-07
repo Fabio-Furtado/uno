@@ -17,16 +17,20 @@
 
 package org.uno.engine;
 
-import org.uno.exceptions.engineExceptions.*;
-import org.uno.util.Stack;
-import org.uno.util.Vector;
+import org.uno.engine.objects.*;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
 import org.uno.enums.SpecialCardSymbols;
 import org.uno.enums.WildCardSymbols;
-import org.uno.engine.objects.*;
+import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
+import org.uno.exceptions.engineExceptions.EngineException;
+import org.uno.exceptions.engineExceptions.InvalidOptionException;
+import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
+import org.uno.util.Stack;
+import org.uno.util.Vector;
 
 import java.util.Random;
+
 
 /**
  * A uno game abstraction. Use the {@link GameFactory} class the get instances
@@ -110,7 +114,7 @@ public class Game {
 
     /**
      * Returns the id of the player who played in the previous move.
-     * 
+     *
      * @return id of the player
      */
     public String getPreviousPlayerId() {
@@ -119,7 +123,7 @@ public class Game {
 
     /**
      * Gets the player in turn.
-     * 
+     *
      * @return Player class with the abstraction of the player in turn
      */
     public Player getPlayerInTurn() {
@@ -182,7 +186,7 @@ public class Game {
      */
     public int executeMove(GameCommand command)
             throws InvalidOptionException, CardIndexOutOfHandBoundsException,
-        MissingColourForWildCardException {
+            MissingColourForWildCardException {
         if (!isOver()) {
             makeSureDeckDoesNotGetEmpty();
             int returnValue = 1;
@@ -219,19 +223,19 @@ public class Game {
 
             // execute the action demanded by the played card
             switch (table.peek().getType()) {
-            case SPECIAL:
-                doCaseSpecial();
-                break;
+                case SPECIAL:
+                    doCaseSpecial();
+                    break;
 
-            case WILD:
-                doCaseWild(gameCommand);
-                break;
+                case WILD:
+                    doCaseWild(gameCommand);
+                    break;
 
-            case NUMERIC:
-                // No special interactions to do in case of an numeral card so
-                // we just have to move to the next player
-                moveToNextPlayer();
-                break;
+                case NUMERIC:
+                    // No special interactions to do in case of an numeral card so
+                    // we just have to move to the next player
+                    moveToNextPlayer();
+                    break;
             }
             returnValue = 0;
         }
@@ -240,19 +244,19 @@ public class Game {
 
     private void checkCommandValidity(GameCommand command)
             throws MissingColourForWildCardException,
-        CardIndexOutOfHandBoundsException, InvalidOptionException {
+            CardIndexOutOfHandBoundsException, InvalidOptionException {
         if (command.getOption() == 0) {
             if (command.getIndex() != -1 || command.getColour() != null) {
                 throw new IllegalStateException(
-                    "Not expecting values for index and colour" +
-                        "when option is 0"
+                        "Not expecting values for index and colour" +
+                                "when option is 0"
                 );
             }
         } else if (command.getOption() == 1) {
             if (command.getIndex() > players[turn].getHand().length() - 1)
                 throw new CardIndexOutOfHandBoundsException(
-                    String.format("%d is out of hand range of %d",
-                        command.getIndex(), players[turn].getHand().length())
+                        String.format("%d is out of hand range of %d",
+                                command.getIndex(), players[turn].getHand().length())
                 );
             if (players[turn].getHand().get(command.getIndex()).getClass() ==
                     WildCard.class && command.getColour() == null) {

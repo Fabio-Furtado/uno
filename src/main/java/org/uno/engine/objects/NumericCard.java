@@ -20,6 +20,7 @@ package org.uno.engine.objects;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
 
+
 /**
  * These cards have a number between 0 and 9 associated with them
  */
@@ -54,8 +55,8 @@ public class NumericCard extends Card {
      */
     public boolean equals(NumericCard other) {
         return
-            this.type == other.getType() &&
-            this.colour == other.getColour() &&
-            this.number == other.getNumber();
+                this.type == other.getType() &&
+                        this.colour == other.getColour() &&
+                        this.number == other.getNumber();
     }
 }

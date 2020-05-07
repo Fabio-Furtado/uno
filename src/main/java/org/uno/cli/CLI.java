@@ -36,6 +36,7 @@ import org.uno.util.Vector;
 
 import java.util.Random;
 
+
 /**
  * @author Fábio Furtado
  */
@@ -48,9 +49,9 @@ public class CLI implements CommandLineReader {
     private static final String PROMPT_SYMBOL;
     private static final String COMMANDS_HELP = buildCommandsHelpString();
     private static final String INVALID_CARD_INDEX_ERROR_MESSAGE =
-        "The index %d is not valid for your hand";
+            "The index %d is not valid for your hand";
     private static final String INVALID_MOVE_ERROR_MESSAGE =
-        "The move you chose is not valid";
+            "The move you chose is not valid";
 
     static {
         Object sym = Settings.get(String.class, "cli", "prompt_symbol");
@@ -68,8 +69,8 @@ public class CLI implements CommandLineReader {
         this.humanPlayerName = humanPlayerName;
         try {
             this.game = gameFactory.newGame(
-                askForNumberOfPlayers() - 1,
-                humanPlayerName
+                    askForNumberOfPlayers() - 1,
+                    humanPlayerName
             );
             System.out.println();
         } catch (GameRulesException e) {
@@ -82,8 +83,8 @@ public class CLI implements CommandLineReader {
     private int askForNumberOfPlayers() {
         System.out.print("How many players will your game have?: ");
         return CliUtils.readValueInRange(
-            GameFactory.getMinNumberOfPlayers(),
-            GameFactory.getMaxNumberOfPlayers()
+                GameFactory.getMinNumberOfPlayers(),
+                GameFactory.getMaxNumberOfPlayers()
         );
     }
 
@@ -108,8 +109,8 @@ public class CLI implements CommandLineReader {
             warnIfRivalIsAboutToWin();
             if (game.isOver()) {
                 System.out.printf(
-                    "%nGAME OVER!!!%n%s Won!%n",
-                    game.getWinner().getId()
+                        "%nGAME OVER!!!%n%s Won!%n",
+                        game.getWinner().getId()
                 );
                 run = false;
             }
@@ -135,24 +136,24 @@ public class CLI implements CommandLineReader {
                 e.printStackTrace();
             }
         } else if (cliCommand.startsWith(
-            CommandValuesKeeper.getValue(Command.PLAY_A_CARD))
+                CommandValuesKeeper.getValue(Command.PLAY_A_CARD))
         ) {
             playACard(cliCommand);
         } else if (cliCommand.equals(
-            CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))
+                CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))
         ) {
             printNumberOfCardsEachRivalPlayerHas();
         } else if (cliCommand.equals(
-            CommandValuesKeeper.getValue(Command.RESTART))
+                CommandValuesKeeper.getValue(Command.RESTART))
         ) {
             restart();
         } else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
             keepPlaying = false;
         else
             System.out.printf(
-                "Invalid command <%s>, type <%s> to see the available ones%n%n",
-                cliCommand,
-                CommandValuesKeeper.getValue(Command.HELP)
+                    "Invalid command <%s>, type <%s> to see the available ones%n%n",
+                    cliCommand,
+                    CommandValuesKeeper.getValue(Command.HELP)
             );
         return keepPlaying;
     }
@@ -170,10 +171,10 @@ public class CLI implements CommandLineReader {
                 System.out.println(INVALID_MOVE_ERROR_MESSAGE);
         } catch (CommandFormatException e) {
             if (e.getMessage().equals(
-                String.format(
-                    CLItoEngineCommandConverter.getInsufficientArgumentsErrorMessage(),
-                    cliCommand
-                ))
+                    String.format(
+                            CLItoEngineCommandConverter.getInsufficientArgumentsErrorMessage(),
+                            cliCommand
+                    ))
             ) {
                 playACard(cliCommand + " " + pickIndex());
             } else {
@@ -188,7 +189,7 @@ public class CLI implements CommandLineReader {
             System.out.printf("Invalid card index%n%n");
         } catch (MissingColourForWildCardException e) {
             GameCommand corrected = new GameCommand(
-                move.getIndex(), pickWildCardColour()
+                    move.getIndex(), pickWildCardColour()
             );
             reportMove(corrected);
             try {
@@ -206,7 +207,7 @@ public class CLI implements CommandLineReader {
         int index;
         Player playerInTurn = game.getPlayerInTurn();
         System.out.printf("You have to choose the index of the card you wish " +
-            "to play%n");
+                "to play%n");
         printHand(playerInTurn.getId());
         System.out.print("Choose please: ");
         index = CliUtils.readValueInRange(1, playerInTurn.getHand().length());
@@ -216,9 +217,9 @@ public class CLI implements CommandLineReader {
     private CardColour pickWildCardColour() {
         CardColour colour;
         System.out.printf(
-            "You have to pick a colour for your wild card,%n"
-                + "1) Blue%n" + "2) Red%n" + "3) Green%n"
-                + "4) Yellow%n" + "please choose a colour: ");
+                "You have to pick a colour for your wild card,%n"
+                        + "1) Blue%n" + "2) Red%n" + "3) Green%n"
+                        + "4) Yellow%n" + "please choose a colour: ");
         int choice = CliUtils.readValueInRange(1, 4);
         System.out.println();
         if (choice == 1)
@@ -283,13 +284,13 @@ public class CLI implements CommandLineReader {
                 Vector<Card> hand = player.getHand();
                 if (hand.length() > 1)
                     System.out.printf(
-                        "%s -> %d %s left%n",
-                        player.getId(), player.getHand().length(), cards
+                            "%s -> %d %s left%n",
+                            player.getId(), player.getHand().length(), cards
                     );
                 else
                     System.out.printf(
-                        "%s -> %d %s left%n",
-                        player.getId(), player.getHand().length(), card
+                            "%s -> %d %s left%n",
+                            player.getId(), player.getHand().length(), card
                     );
                 System.out.println();
             }
@@ -299,30 +300,30 @@ public class CLI implements CommandLineReader {
     private void warnIfRivalIsAboutToWin() {
         Player playerInTurn = game.getPlayerInTurn();
         if (playerInTurn.getHand().length() == 1 &&
-            !playerInTurn.getId().equals(humanPlayerName)
+                !playerInTurn.getId().equals(humanPlayerName)
         )
             System.out.printf(
-                "CAREFUL: %s has only one card left%n%n",
-                game.getPlayerInTurn().getId()
+                    "CAREFUL: %s has only one card left%n%n",
+                    game.getPlayerInTurn().getId()
             );
     }
 
     private static String buildCommandsHelpString() {
         final int columnsForPrefix = 18;
         StringBuilder sb = new StringBuilder();
-        Command[] commands = new Command[] {
-            Command.PRINT_HAND, Command.PLAY_A_CARD, Command.DRAW,
-            Command.PRINT_RIVALS_HAND_LENGTH, Command.RESTART, Command.EXIT,
-            Command.HELP };
-        String[] messages = new String[] {
-            "Print your hand%n", "Play a card%n", "Draw a card%n",
-            "Check how many cards your opponents have%n", "Restart the game%n",
-            "Exit the game%n", "Print this helper%n" };
+        Command[] commands = new Command[]{
+                Command.PRINT_HAND, Command.PLAY_A_CARD, Command.DRAW,
+                Command.PRINT_RIVALS_HAND_LENGTH, Command.RESTART, Command.EXIT,
+                Command.HELP};
+        String[] messages = new String[]{
+                "Print your hand%n", "Play a card%n", "Draw a card%n",
+                "Check how many cards your opponents have%n", "Restart the game%n",
+                "Exit the game%n", "Print this helper%n"};
 
         for (int i = 0; i < commands.length; i++) {
             String commandValue = CommandValuesKeeper.getValue(commands[i]);
             sb.append(commandValue.concat(
-                ".".repeat(columnsForPrefix - commandValue.length()))
+                    ".".repeat(columnsForPrefix - commandValue.length()))
             );
 
             // The IDE may say this String.format is redundant although it's

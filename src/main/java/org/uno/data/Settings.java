@@ -19,17 +19,18 @@ package org.uno.data;
 
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.io.File;
+
 
 /**
  * @author Fábio Furtado
  */
 public class Settings {
-    
+
     private static final Map<String, Object> settings = load();
     private static final String CONFIGURATIONS_FILE_LOCATION = "uno.yml";
 

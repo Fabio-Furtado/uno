@@ -22,6 +22,7 @@ import org.uno.engine.objects.NumericCard;
 import org.uno.engine.objects.SpecialCard;
 import org.uno.engine.objects.WildCard;
 
+
 /**
  * Print information about a card in the console.
  *
@@ -38,20 +39,20 @@ class CardPrinter {
 
         switch (card.getType()) {
 
-        case NUMERIC:
-            NumericCard numerical = (NumericCard) card;
-            printNumerical(numerical);
-            break;
+            case NUMERIC:
+                NumericCard numerical = (NumericCard) card;
+                printNumerical(numerical);
+                break;
 
-        case WILD:
-            WildCard wild = (WildCard) card;
-            printWild(wild);
-            break;
+            case WILD:
+                WildCard wild = (WildCard) card;
+                printWild(wild);
+                break;
 
-        case SPECIAL:
-            SpecialCard special = (SpecialCard) card;
-            printSpecial(special);
-            break;
+            case SPECIAL:
+                SpecialCard special = (SpecialCard) card;
+                printSpecial(special);
+                break;
         }
     }
 

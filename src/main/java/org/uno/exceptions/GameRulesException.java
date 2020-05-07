@@ -19,7 +19,7 @@ package org.uno.exceptions;
 
 /**
  * Thrown when a game rule is broken.
- * 
+ *
  * @author Fábio Furtado
  */
 public class GameRulesException extends Exception {
@@ -33,7 +33,7 @@ public class GameRulesException extends Exception {
 
     /**
      * Create a new GameRulesException with the given detail message.
-     * 
+     *
      * @param message detail message
      */
     public GameRulesException(String message) {

@@ -21,6 +21,7 @@ import org.uno.engine.Game;
 import org.uno.engine.GameCommand;
 import org.uno.util.Vector;
 
+
 public abstract class Player {
 
     protected Vector<Card> hand;

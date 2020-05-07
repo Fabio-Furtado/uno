@@ -19,8 +19,8 @@ package org.uno.util;
 
 import java.util.Random;
 
+
 /**
- *
  * @param <E> data type
  * @author Fábio Furtado
  */
@@ -41,7 +41,7 @@ public class Vector<E> {
 
     /**
      * Adds a new element at the given index.
-     * 
+     *
      * @param index index where to put the element
      * @param e     element to be inserted
      */
@@ -53,7 +53,7 @@ public class Vector<E> {
     /**
      * Increments the size of the vector and adds a new element at the end of the
      * vector.
-     * 
+     *
      * @param e element to be inserted
      */
     public void add(E e) {
@@ -63,7 +63,7 @@ public class Vector<E> {
     /**
      * Removes the element at the given index from the vector and decrements its
      * size.
-     * 
+     *
      * @param index index of the element to be removed
      */
     public void remove(int index) {
@@ -105,7 +105,7 @@ public class Vector<E> {
 
     /**
      * Decrements the size of the array removing the element at the given index.
-     * 
+     *
      * @param indexToRemove index of the element witch will be removed
      */
     private void decrementSize(int indexToRemove) {
@@ -126,7 +126,7 @@ public class Vector<E> {
 
     /**
      * Returns the value at the given index.
-     * 
+     *
      * @param index index of the value
      * @return value found at the given index
      */
@@ -144,7 +144,7 @@ public class Vector<E> {
 
     /**
      * Checks if the vector is empty.
-     * 
+     *
      * @return true if it is, false if not
      */
     public boolean isEmpty() {
@@ -178,7 +178,7 @@ public class Vector<E> {
 
     /**
      * Returns an array with all the elements in the vector in the same order.
-     * 
+     *
      * @return array with the elements
      */
     public Object[] toArray() {

@@ -19,10 +19,10 @@ package org.uno.util;
 
 import org.uno.exceptions.EmptyStackException;
 
+
 /**
- * @see org.uno.util.MutableStack
- *
  * @author Fábio Furtado
+ * @see org.uno.util.MutableStack
  */
 public class Stack<E> implements org.uno.util.MutableStack<E> {
 

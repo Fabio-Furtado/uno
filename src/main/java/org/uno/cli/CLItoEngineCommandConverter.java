@@ -21,6 +21,7 @@ import org.uno.engine.GameCommand;
 import org.uno.enums.CardColour;
 import org.uno.exceptions.CommandFormatException;
 
+
 /**
  * Translates cli commands into engine commands.
  *
@@ -30,13 +31,13 @@ class CLItoEngineCommandConverter {
 
     private static final String SEPARATOR_SYMBOL = " ";
     private static final String UNKNOWN_COMMAND_ERROR_MESSAGE =
-        "Unknown command: %s";
+            "Unknown command: %s";
     private static final String UNKNOWN_ARGUMENT_ERROR_MESSAGE =
-        "Expected an index after the <%s> command";
+            "Expected an index after the <%s> command";
     private static final String INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE =
-        "Not enough arguments for the <%s> command";
+            "Not enough arguments for the <%s> command";
     private static final String TOO_MANY_ARGUMENTS_ERROR_MESSAGE =
-        "Too many arguments for the <%s> command";
+            "Too many arguments for the <%s> command";
 
     private CLItoEngineCommandConverter() {
     }
@@ -70,7 +71,7 @@ class CLItoEngineCommandConverter {
     }
 
     private static GameCommand doIfLikelyPlayingFromHand(String cliCommand)
-        throws CommandFormatException {
+            throws CommandFormatException {
         int index;
         CardColour colour = null;
         String[] commandElements = cliCommand.split(SEPARATOR_SYMBOL);
@@ -80,17 +81,17 @@ class CLItoEngineCommandConverter {
                 index = (Integer.parseInt(commandElements[1]) - 1);
             } catch (NumberFormatException e) {
                 throw new CommandFormatException(
-                    String.format(UNKNOWN_ARGUMENT_ERROR_MESSAGE,
-                        commandElements[0])
+                        String.format(UNKNOWN_ARGUMENT_ERROR_MESSAGE,
+                                commandElements[0])
                 );
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new CommandFormatException(String.format(
-                    INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
+                        INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
                 );
             }
         } else {
             throw new CommandFormatException(String.format(
-                UNKNOWN_COMMAND_ERROR_MESSAGE, commandElements[0])
+                    UNKNOWN_COMMAND_ERROR_MESSAGE, commandElements[0])
             );
         }
         if (commandElements.length == 3) {
@@ -108,7 +109,7 @@ class CLItoEngineCommandConverter {
                 colour = engineCardColourCode;
         } else if (commandElements.length > 3)
             throw new CommandFormatException(String.format(
-                TOO_MANY_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
+                    TOO_MANY_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
             );
         return new GameCommand(index, colour);
     }

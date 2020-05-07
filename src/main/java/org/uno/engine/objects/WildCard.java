@@ -21,6 +21,7 @@ import org.uno.enums.CardColour;
 import org.uno.enums.CardTypes;
 import org.uno.enums.WildCardSymbols;
 
+
 public class WildCard extends Card {
 
     private WildCardSymbols symbol;
