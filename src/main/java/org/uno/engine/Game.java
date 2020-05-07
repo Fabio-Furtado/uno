@@ -100,10 +100,6 @@ public class Game {
         return this.turn;
     }
 
-    /**
-     * @deprecated
-     */
-    @Deprecated(forRemoval = true)
     public String getPlayerInTurnId() {
         return players[turn].getId();
     }
