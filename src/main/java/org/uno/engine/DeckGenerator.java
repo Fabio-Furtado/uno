@@ -22,8 +22,8 @@ import org.uno.engine.objects.NumericCard;
 import org.uno.engine.objects.SpecialCard;
 import org.uno.engine.objects.WildCard;
 import org.uno.enums.CardColour;
-import org.uno.enums.SpecialCardSymbols;
-import org.uno.enums.WildCardSymbols;
+import org.uno.enums.SpecialCardSymbol;
+import org.uno.enums.WildCardSymbol;
 import org.uno.util.Stack;
 import org.uno.util.Vector;
 
@@ -54,10 +54,10 @@ class DeckGenerator {
      */
     private void addWilds() {
         for (int i = 0; i < N_WILD_SIMPLE; i++)
-            temporaryDeck.add(this.index++, new WildCard(WildCardSymbols.CHANGE_COLOUR));
+            temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.CHANGE_COLOUR));
 
         for (int i = 0; i < N_WILD_DRAW_FOUR; i++)
-            temporaryDeck.add(this.index++, new WildCard(WildCardSymbols.DRAW_4));
+            temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.DRAW_4));
     }
 
     /**
@@ -106,32 +106,32 @@ class DeckGenerator {
     private void addSpecials() {
         // blue
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbols.SKIP));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbols.REVERSE));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbols.DRAW_2));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.DRAW_2));
         // red
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbols.SKIP));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbols.REVERSE));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbols.DRAW_2));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.DRAW_2));
         // green
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbols.SKIP));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbols.REVERSE));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbols.DRAW_2));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.DRAW_2));
         // yellow
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbols.SKIP));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbols.REVERSE));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbols.DRAW_2));
+            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.DRAW_2));
     }
 
     /**

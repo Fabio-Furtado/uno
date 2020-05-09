@@ -17,7 +17,7 @@
 
 package org.uno.enums;
 
-public enum WildCardSymbols {
+public enum CardType {
 
-    CHANGE_COLOUR, DRAW_4;
+    NUMERIC, WILD, SPECIAL;
 }

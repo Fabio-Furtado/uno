@@ -19,9 +19,9 @@ package org.uno.engine;
 
 import org.uno.engine.objects.*;
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
-import org.uno.enums.SpecialCardSymbols;
-import org.uno.enums.WildCardSymbols;
+import org.uno.enums.CardType;
+import org.uno.enums.SpecialCardSymbol;
+import org.uno.enums.WildCardSymbol;
 import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
 import org.uno.exceptions.engineExceptions.EngineException;
 import org.uno.exceptions.engineExceptions.InvalidOptionException;
@@ -164,12 +164,12 @@ public class Game {
         }
 
         // Making sure the first card to be flipped is not a wild one
-        if (deck.peek().getType() != CardTypes.WILD)
+        if (deck.peek().getType() != CardType.WILD)
             table.push(deck.pop());
 
         else {
             Stack<Card> temp = new Stack<>();
-            while (deck.peek().getType() == CardTypes.WILD)
+            while (deck.peek().getType() == CardType.WILD)
                 temp.push(deck.pop());
             table.push(deck.pop());
             for (int i = 0; i < temp.size(); i++) {
@@ -268,12 +268,12 @@ public class Game {
 
     private void doCaseSpecial() {
         SpecialCard tableTop = (SpecialCard) table.peek();
-        if (tableTop.getSymbol() == SpecialCardSymbols.DRAW_2) {
+        if (tableTop.getSymbol() == SpecialCardSymbol.DRAW_2) {
             moveToNextPlayer();
             for (int i = 0; i < 2; i++)
                 players[turn].addToHand(deck.pop());
             moveToNextPlayer();
-        } else if (tableTop.getSymbol() == SpecialCardSymbols.REVERSE) {
+        } else if (tableTop.getSymbol() == SpecialCardSymbol.REVERSE) {
             revert();
             if (nOfPlayers > 2)
                 moveToNextPlayer();
@@ -296,7 +296,7 @@ public class Game {
         table.push(c);
 
         WildCard tableTop = (WildCard) table.peek();
-        if (tableTop.getSymbol() == WildCardSymbols.DRAW_4) {
+        if (tableTop.getSymbol() == WildCardSymbol.DRAW_4) {
             moveToNextPlayer();
             for (int i = 0; i < 4; i++)
                 players[turn].addToHand(deck.pop());
@@ -340,12 +340,12 @@ public class Game {
     }
 
     public boolean isCardValid(Card card) {
-        CardTypes tableTopType = table.peek().getType();
+        CardType tableTopType = table.peek().getType();
         boolean isValid;
 
-        if (tableTopType == CardTypes.NUMERIC) {
+        if (tableTopType == CardType.NUMERIC) {
             isValid = checkValidityForNumericTop(card);
-        } else if (tableTopType == CardTypes.SPECIAL) {
+        } else if (tableTopType == CardType.SPECIAL) {
             isValid = checkValidityForSpecialTop(card);
         } else { // wild in table
             isValid = checkValidityForWildTop(card);
@@ -357,8 +357,8 @@ public class Game {
         boolean returnValue;
         NumericCard tableTop = (NumericCard) table.peek();
 
-        if (card.getType() == CardTypes.SPECIAL || card.getType() == CardTypes.NUMERIC) {
-            if (card.getType() == CardTypes.SPECIAL) {
+        if (card.getType() == CardType.SPECIAL || card.getType() == CardType.NUMERIC) {
+            if (card.getType() == CardType.SPECIAL) {
                 SpecialCard numericCard = (SpecialCard) card;
                 returnValue = numericCard.getColour() == tableTop.getColour();
             } else {
@@ -376,10 +376,10 @@ public class Game {
         SpecialCard tableTop = (SpecialCard) table.peek();
         boolean returnValue;
 
-        if (card.getType() == CardTypes.NUMERIC) {
+        if (card.getType() == CardType.NUMERIC) {
             NumericCard specialCard = (NumericCard) card;
             returnValue = specialCard.getColour() == tableTop.getColour();
-        } else if (card.getType() == CardTypes.SPECIAL) {
+        } else if (card.getType() == CardType.SPECIAL) {
             SpecialCard specialCard = (SpecialCard) card;
             returnValue = specialCard.getColour() == tableTop.getColour()
                     || specialCard.getSymbol() == tableTop.getSymbol();
@@ -394,13 +394,13 @@ public class Game {
         WildCard tableTop = (WildCard) table.peek();
         boolean returnValue = false;
 
-        if (card.getType() == CardTypes.NUMERIC) {
+        if (card.getType() == CardType.NUMERIC) {
             NumericCard numericCard = (NumericCard) card;
             returnValue = numericCard.getColour() == tableTop.getPickedColour();
-        } else if (card.getType() == CardTypes.SPECIAL) {
+        } else if (card.getType() == CardType.SPECIAL) {
             SpecialCard specialCard = (SpecialCard) card;
             returnValue = specialCard.getColour() == tableTop.getPickedColour();
-        } else if (card.getType() == CardTypes.WILD) {
+        } else if (card.getType() == CardType.WILD) {
             returnValue = true;
         }
         return returnValue;

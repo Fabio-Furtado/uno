@@ -17,7 +17,7 @@
 
 package org.uno.engine.objects;
 
-import org.uno.enums.CardTypes;
+import org.uno.enums.CardType;
 
 
 /**
@@ -25,11 +25,11 @@ import org.uno.enums.CardTypes;
  */
 public abstract class Card {
 
-    CardTypes type;
+    CardType type;
 
     /**
      * Retuns the type of the card.
      */
-    public abstract CardTypes getType();
+    public abstract CardType getType();
 
 }

@@ -18,23 +18,23 @@
 package org.uno.engine.objects;
 
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
-import org.uno.enums.SpecialCardSymbols;
+import org.uno.enums.CardType;
+import org.uno.enums.SpecialCardSymbol;
 
 
 public class SpecialCard extends Card {
 
     private CardColour colour;
-    private SpecialCardSymbols symbol;
+    private SpecialCardSymbol symbol;
 
-    public SpecialCard(CardColour colour, SpecialCardSymbols symbol) {
-        this.type = CardTypes.SPECIAL;
+    public SpecialCard(CardColour colour, SpecialCardSymbol symbol) {
+        this.type = CardType.SPECIAL;
         this.colour = colour;
         this.symbol = symbol;
     }
 
     @Override
-    public CardTypes getType() {
+    public CardType getType() {
         return this.type;
     }
 
@@ -52,7 +52,7 @@ public class SpecialCard extends Card {
      *
      * @return symbols of the card
      */
-    public SpecialCardSymbols getSymbol() {
+    public SpecialCardSymbol getSymbol() {
         return this.symbol;
     }
 

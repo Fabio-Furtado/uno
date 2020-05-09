@@ -25,7 +25,7 @@ import org.uno.engine.objects.Card;
 import org.uno.engine.objects.HumanPlayer;
 import org.uno.engine.objects.Player;
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
+import org.uno.enums.CardType;
 import org.uno.exceptions.CommandFormatException;
 import org.uno.exceptions.GameRulesException;
 import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
@@ -266,7 +266,7 @@ public class CLI implements CommandLineReader {
             System.out.printf("%s has played a ", game.getPreviousPlayerId());
             CardPrinter.printCard(game.getTableTop());
             System.out.println();
-            if (game.getTableTop().getType() == CardTypes.WILD) {
+            if (game.getTableTop().getType() == CardType.WILD) {
                 System.out.printf("and has chosen %s%n", move.getColour());
             }
         }

@@ -17,7 +17,7 @@
 
 package org.uno.enums;
 
-public enum SpecialCardSymbols {
+public enum SpecialCardSymbol {
 
     REVERSE, SKIP, DRAW_2;
 }

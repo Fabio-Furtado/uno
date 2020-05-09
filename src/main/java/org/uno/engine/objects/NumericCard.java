@@ -18,7 +18,7 @@
 package org.uno.engine.objects;
 
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
+import org.uno.enums.CardType;
 
 
 /**
@@ -30,12 +30,12 @@ public class NumericCard extends Card {
     private int number;
 
     public NumericCard(CardColour colour, int number) {
-        this.type = CardTypes.NUMERIC;
+        this.type = CardType.NUMERIC;
         this.colour = colour;
         this.number = number;
     }
 
-    public CardTypes getType() {
+    public CardType getType() {
         return this.type;
     }
 

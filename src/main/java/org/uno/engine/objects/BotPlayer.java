@@ -20,7 +20,7 @@ package org.uno.engine.objects;
 import org.uno.engine.Game;
 import org.uno.engine.GameCommand;
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
+import org.uno.enums.CardType;
 import org.uno.util.Vector;
 
 import java.util.Random;
@@ -58,7 +58,7 @@ public class BotPlayer extends Player {
 
         for (int i = 0; i < hand.length(); i++) {
             if (game.isCardValid(hand.get(i))) {
-                if (hand.get(i).getType() == CardTypes.WILD) {
+                if (hand.get(i).getType() == CardType.WILD) {
                     // wild card
                     option = 1;
                     index = i;
@@ -88,7 +88,7 @@ public class BotPlayer extends Player {
         CardColour chosenColour = pickRandomColour();
 
         for (int i = 0; i < hand.length(); i++) {
-            CardTypes type = hand.get(i).getType();
+            CardType type = hand.get(i).getType();
 
             switch (type) {
                 case NUMERIC:

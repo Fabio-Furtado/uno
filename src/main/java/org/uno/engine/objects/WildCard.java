@@ -18,22 +18,22 @@
 package org.uno.engine.objects;
 
 import org.uno.enums.CardColour;
-import org.uno.enums.CardTypes;
-import org.uno.enums.WildCardSymbols;
+import org.uno.enums.CardType;
+import org.uno.enums.WildCardSymbol;
 
 
 public class WildCard extends Card {
 
-    private WildCardSymbols symbol;
+    private WildCardSymbol symbol;
     private CardColour pickedColour;
 
-    public WildCard(WildCardSymbols symbol) {
-        this.type = CardTypes.WILD;
+    public WildCard(WildCardSymbol symbol) {
+        this.type = CardType.WILD;
         this.symbol = symbol;
     }
 
     @Override
-    public CardTypes getType() {
+    public CardType getType() {
         return this.type;
     }
 
@@ -55,7 +55,7 @@ public class WildCard extends Card {
         return this.type == other.getType() && this.symbol == other.getSymbol();
     }
 
-    public WildCardSymbols getSymbol() {
+    public WildCardSymbol getSymbol() {
         return this.symbol;
     }
 }
