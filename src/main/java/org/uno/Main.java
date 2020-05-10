@@ -17,8 +17,7 @@
 
 package org.uno;
 
-import org.uno.cli.CLI;
-
+import org.uno.cli.Booter;
 
 /**
  * @author Fábio Furtado
@@ -26,7 +25,6 @@ import org.uno.cli.CLI;
 public class Main {
 
     public static void main(String[] args) {
-        CLI cli = new CLI();
-        cli.start("Fábio");
+        Booter.boot();
     }
 }
