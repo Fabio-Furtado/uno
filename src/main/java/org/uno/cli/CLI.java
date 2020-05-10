@@ -17,7 +17,7 @@
 
 package org.uno.cli;
 
-import org.uno.data.Settings;
+import org.uno.data.ConfigReader;
 import org.uno.engine.Game;
 import org.uno.engine.GameCommand;
 import org.uno.engine.GameFactory;
@@ -54,9 +54,9 @@ public class CLI implements CommandLineReader {
             "The move you chose is not valid";
 
     static {
-        Object sym = Settings.get(String.class, "cli", "prompt_symbol");
+        Object sym = ConfigReader.get("cli", "prompt_symbol");
         PROMPT_SYMBOL = sym != null ? (String) sym : "> ";
-        Object delay = Settings.get(Boolean.class, "bot_delay");
+        Object delay = ConfigReader.get("bot_delay");
         ENABLE_BOT_DELAY = delay != null ? (Boolean) delay : true;
     }
 
