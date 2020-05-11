@@ -249,7 +249,7 @@ public class CLI implements CommandLineReader {
      */
     private void printHand(String playerID) {
         System.out.printf("%s's hand: %n", playerID);
-        Vector<Card> hand = game.getPlayerHand(playerID);
+        Vector<Card> hand = game.getPlayer(playerID).getHand();
 
         for (int i = 0; i < hand.length(); i++) {
             System.out.printf("%d - ", i + 1);
@@ -261,9 +261,9 @@ public class CLI implements CommandLineReader {
 
     private void reportMove(GameCommand move) {
         if (move.getOption() == 0)
-            System.out.printf("%s has drawn a card%n", game.getPreviousPlayerId());
+            System.out.printf("%s has drawn a card%n", game.getPreviousPlayer().getId());
         else if (move.getOption() == 1) {
-            System.out.printf("%s has played a ", game.getPreviousPlayerId());
+            System.out.printf("%s has played a ", game.getPreviousPlayer().getId());
             CardPrinter.printCard(game.getTableTop());
             System.out.println();
             if (game.getTableTop().getType() == CardType.WILD) {
