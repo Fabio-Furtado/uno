@@ -36,10 +36,33 @@ interface UnoGame {
     /**
      * Gets the specified player.
      *
+     * @param index id of the player
+     * @requires {@code index > 0 && index < this.getNumberOfPlayers - 1}
+     * @return Player object, null if no player with this index was found
+     */
+    Player getPlayer(int index);
+
+    /**
+     * Gets the specified player.
+     *
      * @param id id of the player
      * @return Player object, null if no player with this id was found
      */
-    Player getPlayer(int id);
+    Player getPlayer(String id);
+
+    /**
+     * Gets an array with a copy of all the players in this game.
+     *
+     * @return all players in this game
+     */
+    Player[] getPlayers();
+
+    /**
+     * Gets the index of the player in turn.
+     *
+     * @return index of the player in turn
+     */
+    int getTurn();
 
     /**
      * Gets the player in turn.
@@ -49,7 +72,9 @@ interface UnoGame {
     Player getPlayerInTurn();
 
     /**
-     * Gets previous player.
+     * Gets the player which played previously. Notice that this does not return the
+     * player at index {@code turn - 1}, but the player which indeed made the last
+     * move.
      *
      * @return Player class with the abstraction of the previous player.
      */
@@ -85,16 +110,37 @@ interface UnoGame {
     boolean isOver();
 
     /**
+     * Checks if it's valid to play the given card taking into account what's on
+     * top of the table.
+     *
+     * @param card card to check validity
+     * @return true if the card is valid, false if not
+     */
+    boolean isCardValid(Card card);
+
+    /**
      * Executes the given command for the player currently in turn.
      *
      * @param command command of the move
      * @return 0 if the play was successfully executed, 1 if the move is invalid
-     * @throws InvalidOptionException if the command option given is not valid
+     * @throws InvalidOptionException            if the command option given is
+     *                                           not valid
      * @throws CardIndexOutOfHandBoundsException if the index of the card chosen
-     * in the command is not valid
-     * @throws MissingColourForWildCardException
+     *                                           in the command is not valid
+     * @throws MissingColourForWildCardException if no colour was specified when
+     *                                           trying to play a wild card
+     * @throws IllegalStateException             if the game is already over
      */
     int executeMove(GameCommand command)
-            throws InvalidOptionException, CardIndexOutOfHandBoundsException,
+            throws InvalidOptionException,
+            CardIndexOutOfHandBoundsException,
             MissingColourForWildCardException;
+
+    /**
+     * If the player in turn is a bot, it will make it's move and it will be
+     * executed.
+     *
+     * @return command with the bot's move.
+     */
+    GameCommand goBot();
 }

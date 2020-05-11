@@ -29,6 +29,7 @@ import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 import org.uno.util.Stack;
 import org.uno.util.Vector;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -36,16 +37,55 @@ import java.util.Random;
  * A uno game abstraction. Use the {@link GameFactory} class the get instances
  * of this class.
  */
-public class Game {
+public class Game implements UnoGame {
 
+    /**
+     * All the cards on the deck. The deck is where the players draw new cards.
+     * It will get refilled with the cards from the table if it's close to get
+     * empty.
+     */
     private final Stack<Card> deck;
+
+    /**
+     * The collection of the cards which have been played
+     */
     private final Stack<Card> table;
+
+    /**
+     * The players of this game
+     */
     private final Player[] players;
+
+    /**
+     * Number of players on this game
+     */
     private final int nOfPlayers;
+
+    /**
+     * The index of the player in turn
+     */
     private int turn;
+
+    /**
+     * The index of the player who played previously
+     */
     private int previous;
-    private int move;
+
+    /**
+     * The direction to which the turn to play moves. 1 means it's moving towards
+     * the player with higher index, -1 means it's moving towards the one with
+     * lower index.
+     */
+    private int direction;
+
+    /**
+     * The number of cards each player starts with
+     */
     private static final int N_OF_STARTING_CARDS = 7;
+
+    /**
+     * The winner of this game. It's meant to be null until the game is over
+     */
     private Player winner;
 
     Game(Player[] players) {
@@ -55,26 +95,32 @@ public class Game {
         System.arraycopy(players, 0, this.players, 0, players.length);
         this.nOfPlayers = players.length;
         this.turn = new Random().nextInt((nOfPlayers));
-        this.move = 1;
+        this.direction = 1;
         this.previous = turn;
         this.winner = null;
-        start();
+        distributeAndFlip();
     }
 
+    /**
+     * @see UnoGame#getNumberOfPlayers()
+     */
+    @Override
     public int getNumberOfPlayers() {
         return players.length;
     }
 
+    /**
+     * @see UnoGame#getPlayer(int)
+     */
+    @Override
     public Player getPlayer(int index) {
         return players[index];
     }
 
     /**
-     * Returns a player a specified player.
-     *
-     * @param id id of the player
-     * @return Player object, null if no player with this id was found
+     * @see UnoGame#getPlayer(String)
      */
+    @Override
     public Player getPlayer(String id) {
         Player returnValue = null;
         for (int i = 0; i < nOfPlayers; i++) {
@@ -84,6 +130,18 @@ public class Game {
         return returnValue;
     }
 
+    /**
+     * @see UnoGame#getPlayers()
+     */
+    @Override
+    public Player[] getPlayers() {
+        return Arrays.copyOf(players, players.length);
+    }
+
+    /**
+     * @see UnoGame#getPreviousPlayer()
+     */
+    @Override
     public Player getPreviousPlayer() {
         return players[previous];
     }
@@ -98,9 +156,9 @@ public class Game {
     }
 
     /**
-     * @deprecated
+     * @see UnoGame#getTurn()
      */
-    @Deprecated(forRemoval = true)
+    @Override
     public int getTurn() {
         return this.turn;
     }
@@ -124,32 +182,43 @@ public class Game {
     }
 
     /**
-     * Gets the player in turn.
-     *
-     * @return Player class with the abstraction of the player in turn
+     * @see UnoGame#getPlayerInTurn()
      */
+    @Override
     public Player getPlayerInTurn() {
         return players[turn];
     }
 
+    /**
+     * @see UnoGame#getDeckTop()
+     */
+    @Override
     public Card getDeckTop() {
         return deck.peek();
     }
 
+    /**
+     * @see UnoGame#getTableTop()
+     */
+    @Override
     public Card getTableTop() {
         return table.peek();
     }
 
+    /**
+     * @see UnoGame#getWinner()
+     */
+    @Override
     public Player getWinner() {
         if (isOver())
             return winner;
         throw new IllegalStateException("This game is not over yet!");
     }
 
-    public void start() {
-        distributeAndFlip();
-    }
-
+    /**
+     * @see UnoGame#isOver()
+     */
+    @Override
     public boolean isOver() {
         return winner != null;
     }
@@ -160,15 +229,16 @@ public class Game {
      */
     private void distributeAndFlip() {
         for (Player player : players) {
-            for (int j = 0; j < N_OF_STARTING_CARDS; j++) {
+            for (int i = 0; i < N_OF_STARTING_CARDS; i++) {
                 player.addToHand(deck.pop());
             }
         }
 
         // Making sure the first card to be flipped is not a wild one
+        // TODO
+        // Make sure the first card isn't a special either
         if (deck.peek().getType() != CardType.WILD)
             table.push(deck.pop());
-
         else {
             Stack<Card> temp = new Stack<>();
             while (deck.peek().getType() == CardType.WILD)
@@ -181,13 +251,12 @@ public class Game {
     }
 
     /**
-     * Executes the given command for the player currently in turn.
-     *
-     * @param command command of the move
-     * @return 0 if the play was successfully executed, 1 if the move is invalid
+     * @see UnoGame#executeMove(GameCommand)
      */
+    @Override
     public int executeMove(GameCommand command)
-            throws InvalidOptionException, CardIndexOutOfHandBoundsException,
+            throws InvalidOptionException,
+            CardIndexOutOfHandBoundsException,
             MissingColourForWildCardException {
         if (!isOver()) {
             makeSureDeckDoesNotGetEmpty();
@@ -205,6 +274,24 @@ public class Game {
             return returnValue;
         } else
             throw new IllegalStateException("This game is already over!");
+    }
+
+    /**
+     * @see UnoGame#goBot()
+     */
+    @Override
+    public GameCommand goBot() {
+        GameCommand command = null;
+        if (getPlayerInTurn().getClass() == BotPlayer.class) {
+            command = getPlayerInTurn().makeMove(this);
+            try {
+                executeMove(command);
+            } catch (EngineException e) {
+                // Bot should not cause game exceptions
+                e.printStackTrace();
+            }
+        }
+        return command;
     }
 
     private void draw() {
@@ -225,19 +312,19 @@ public class Game {
 
             // execute the action demanded by the played card
             switch (table.peek().getType()) {
-                case SPECIAL:
-                    doCaseSpecial();
-                    break;
+            case SPECIAL:
+                doCaseSpecial();
+                break;
 
-                case WILD:
-                    doCaseWild(gameCommand);
-                    break;
+            case WILD:
+                doCaseWild(gameCommand);
+                break;
 
-                case NUMERIC:
-                    // No special interactions to do in case of an numeral card so
-                    // we just have to move to the next player
-                    moveToNextPlayer();
-                    break;
+            case NUMERIC:
+                // No special interactions to do in case of an numeral card so
+                // we just have to move to the next player
+                moveToNextPlayer();
+                break;
             }
             returnValue = 0;
         }
@@ -246,20 +333,21 @@ public class Game {
 
     private void checkCommandValidity(GameCommand command)
             throws MissingColourForWildCardException,
-            CardIndexOutOfHandBoundsException, InvalidOptionException {
+            CardIndexOutOfHandBoundsException,
+            InvalidOptionException {
         if (command.getOption() == 0) {
             if (command.getIndex() != -1 || command.getColour() != null) {
                 throw new IllegalStateException(
                         "Not expecting values for index and colour" +
-                                "when option is 0"
+                                                          "when option is 0"
                 );
             }
         } else if (command.getOption() == 1) {
             if (command.getIndex() > players[turn].getHand().length() - 1 ||
                     command.getIndex() < 0)
-                throw new CardIndexOutOfHandBoundsException(
-                        String.format("%d is out of hand range of %d",
-                                command.getIndex(), players[turn].getHand().length())
+                throw new CardIndexOutOfHandBoundsException(String.format(
+                        "%d is out of hand range of %d",
+                        command.getIndex(), players[turn].getHand().length())
                 );
             if (players[turn].getHand().get(command.getIndex()).getClass() ==
                     WildCard.class && command.getColour() == null) {
@@ -309,26 +397,6 @@ public class Game {
         }
     }
 
-    /**
-     * If the player in turn is a bot, it will make it's move and it will be
-     * executed.
-     *
-     * @return bot player move code.
-     */
-    public GameCommand goBot() {
-        GameCommand command = null;
-        if (getPlayerInTurn().getClass() == BotPlayer.class) {
-            command = getPlayerInTurn().makeMove(this);
-            try {
-                executeMove(command);
-            } catch (EngineException e) {
-                // Bot should not cause game exceptions
-                e.printStackTrace();
-            }
-        }
-        return command;
-    }
-
     private void makeSureDeckDoesNotGetEmpty() {
         if (deck.size() < 4) {
             Card tableTop = table.pop();
@@ -342,6 +410,10 @@ public class Game {
         }
     }
 
+    /**
+     * @see UnoGame#isCardValid(Card)
+     */
+    @Override
     public boolean isCardValid(Card card) {
         CardType tableTopType = table.peek().getType();
         boolean isValid;
@@ -409,13 +481,16 @@ public class Game {
         return returnValue;
     }
 
+    /**
+     * Moves the turn to the next player
+     */
     private void moveToNextPlayer() {
-        if (move > 0 && turn == nOfPlayers - 1)
+        if (direction > 0 && turn == nOfPlayers - 1)
             turn = 0;
-        else if (move < 0 && turn == 0)
+        else if (direction < 0 && turn == 0)
             turn = nOfPlayers - 1;
         else
-            turn += move;
+            turn += direction;
     }
 
     /**
@@ -430,7 +505,10 @@ public class Game {
         moveToNextPlayer();
     }
 
+    /**
+     * Reverts the game. Usually done when someone plays a revert card
+     */
     private void revert() {
-        move *= -1;
+        direction *= -1;
     }
 }
