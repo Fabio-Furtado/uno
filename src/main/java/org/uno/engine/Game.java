@@ -88,6 +88,7 @@ public class Game {
         return players[previous];
     }
 
+    @Deprecated(forRemoval = true)
     public Vector<Card> getPlayerHand(String id) {
         for (Player player : players) {
             if (player.getId().equals(id))
@@ -117,6 +118,7 @@ public class Game {
      *
      * @return id of the player
      */
+    @Deprecated(forRemoval = true)
     public String getPreviousPlayerId() {
         return players[previous].getId();
     }
@@ -253,7 +255,8 @@ public class Game {
                 );
             }
         } else if (command.getOption() == 1) {
-            if (command.getIndex() > players[turn].getHand().length() - 1)
+            if (command.getIndex() > players[turn].getHand().length() - 1 ||
+                    command.getIndex() < 0)
                 throw new CardIndexOutOfHandBoundsException(
                         String.format("%d is out of hand range of %d",
                                 command.getIndex(), players[turn].getHand().length())
