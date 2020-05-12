@@ -12,8 +12,7 @@ This is simple uno engine with a CLI interface.
 
 * JDK of your preference (_11 or higher_)
   * [OpenJDK](https://openjdk.java.net/)
-  * [ZuluJDK community](https://www.azul.com/downloads/zulu-community/?architecture=x
-86-64-bit&package=jdk)
+  * [ZuluJDK community](https://www.azul.com/downloads/zulu-community/?architecture=x86-64-bit&package=jdk)
   * [OracleJDk](https://www.oracle.com/java/technologies/javase-downloads.html)
 * [Maven](https://maven.apache.org/)
 
