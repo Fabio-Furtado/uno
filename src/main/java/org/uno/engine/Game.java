@@ -94,7 +94,7 @@ public class Game implements UnoGame {
         this.players = new Player[players.length];
         System.arraycopy(players, 0, this.players, 0, players.length);
         this.nOfPlayers = players.length;
-        this.turn = new Random().nextInt((nOfPlayers));
+        this.turn = new Random().nextInt(nOfPlayers);
         this.direction = 1;
         this.previous = turn;
         this.winner = null;
@@ -224,7 +224,7 @@ public class Game implements UnoGame {
     }
 
     /**
-     * Starts the game by distributing cards to the players and getting the first
+     * Distributes the cards to the players and puts the first
      * card on the table.
      */
     private void distributeAndFlip() {
@@ -236,7 +236,7 @@ public class Game implements UnoGame {
 
         // Making sure the first card to be flipped is a numeric one
         CardType topType = deck.peek().getType();
-        if (topType != CardType.NUMERIC)
+        if (topType == CardType.NUMERIC)
             table.push(deck.pop());
         else {
             Stack<Card> temp = new Stack<>();
