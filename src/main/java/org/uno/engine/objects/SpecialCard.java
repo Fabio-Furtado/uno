@@ -22,10 +22,11 @@ import org.uno.enums.CardType;
 import org.uno.enums.SpecialCardSymbol;
 
 
-public class SpecialCard extends Card {
+public final class SpecialCard implements Card {
 
-    private CardColour colour;
-    private SpecialCardSymbol symbol;
+    private final CardColour colour;
+    private final SpecialCardSymbol symbol;
+    private final CardType type;
 
     public SpecialCard(CardColour colour, SpecialCardSymbol symbol) {
         this.type = CardType.SPECIAL;

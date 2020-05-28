@@ -17,43 +17,23 @@
 
 package org.uno.engine.objects;
 
-import org.uno.util.Vector;
+import org.uno.engine.GameCommand;
+import org.uno.engine.UnoGame;
 
 
 /**
- * This interface should be applied to any player class.
+ * This interface must be applied to bot players
  *
  * @author Fábio Furtado
  */
-public interface Player {
+public interface Bot {
 
     /**
-     * Gets this player's id
-     * @return player id
-     */
-    String getId();
-
-    /**
-     * Gets this players hand.
+     * The bot will choose his next move based on the info it gets from the given
+     * game class.
      *
-     * @return player's hand
+     * @param game game class to which to bot will base it's decision on.
+     * @return Command class with the bots decision
      */
-    Vector<Card> getHand();
-
-    /**
-     * Adds the given card to the player's hand.
-     * @requires {@code card != null}
-     *
-     * @param card card to be added
-     */
-    void addToHand(Card card);
-
-    /**
-     * Removes the card with the given index from the player's hand
-     * @param index index of the card on the player's hand
-     * @requires {@code index < this.getHand().size() && index > -1}
-     *
-     * @return removed card
-     */
-    Card takeFromHand(int index);
+    GameCommand makeMove(UnoGame game);
 }

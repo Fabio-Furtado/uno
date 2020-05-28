@@ -21,15 +21,14 @@ import org.uno.enums.CardType;
 
 
 /**
- * Represents a general uno card.
+ * All cards must implement this interface
  */
-public abstract class Card {
-
-    CardType type;
+public interface Card {
 
     /**
-     * Retuns the type of the card.
+     * Returns the type of the card
+     *
+     * @return type of the card
      */
-    public abstract CardType getType();
-
+    CardType getType();
 }

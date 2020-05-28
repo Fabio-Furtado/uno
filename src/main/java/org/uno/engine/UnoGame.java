@@ -24,7 +24,7 @@ import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 
 
-interface UnoGame {
+public interface UnoGame {
 
     /**
      * Gets the number of players of this game.

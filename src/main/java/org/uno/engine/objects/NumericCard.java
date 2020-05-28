@@ -24,10 +24,11 @@ import org.uno.enums.CardType;
 /**
  * These cards have a number between 0 and 9 associated with them
  */
-public class NumericCard extends Card {
+public final class NumericCard implements Card {
 
-    private CardColour colour;
-    private int number;
+    private final CardColour colour;
+    private final int number;
+    private final CardType type;
 
     public NumericCard(CardColour colour, int number) {
         this.type = CardType.NUMERIC;

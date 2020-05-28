@@ -17,43 +17,66 @@
 
 package org.uno.engine.objects;
 
-import org.uno.engine.Game;
-import org.uno.engine.GameCommand;
 import org.uno.util.Vector;
 
 
 /**
- * Abstracts a human player.
+ * An Abstraction for a human player.
  *
  * @author Fábio Furtado
  */
-public class HumanPlayer extends Player {
+public final class HumanPlayer implements Player {
 
-    private GameCommand nextMove;
+    /**
+     * A String to identify this player
+     */
+    private final String id;
 
+    /**
+     * An ADT with the cards on the player's hand
+     */
+    private final Vector<Card> hand;
+
+    /**
+     * Creates a new instance.
+     * @param id a String to identify this player
+     */
     public HumanPlayer(String id) {
-        this.hand = new Vector<>();
-        this.handSize = 0;
         this.id = id;
+        this.hand = new Vector<>();
     }
 
-
+    /**
+     * @see Player#getId()
+     */
     @Override
-    public GameCommand makeMove(Game game) {
-        return nextMove;
+    public String getId() {
+        return id;
     }
 
+    /**
+     * @see Player#getHand()
+     */
+    @Override
+    public Vector<Card> getHand() {
+        return hand;
+    }
+
+    /**
+     * @see Player#addToHand(Card)
+     */
     @Override
     public void addToHand(Card card) {
         hand.add(card);
-        handSize++;
     }
 
+    /**
+     * @see Player#takeFromHand(int)
+     */
     @Override
     public Card takeFromHand(int index) {
         Card returnValue = this.hand.get(index);
         hand.remove(index);
-        handSize--;
         return returnValue;
     }
 }

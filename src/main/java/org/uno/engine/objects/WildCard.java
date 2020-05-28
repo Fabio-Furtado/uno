@@ -22,10 +22,11 @@ import org.uno.enums.CardType;
 import org.uno.enums.WildCardSymbol;
 
 
-public class WildCard extends Card {
+public final class WildCard implements Card {
 
-    private WildCardSymbol symbol;
-    private CardColour pickedColour;
+    private final WildCardSymbol symbol;
+    private  CardColour pickedColour;
+    private final CardType type;
 
     public WildCard(WildCardSymbol symbol) {
         this.type = CardType.WILD;

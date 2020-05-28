@@ -282,7 +282,8 @@ public class Game implements UnoGame {
     public GameCommand goBot() {
         GameCommand command = null;
         if (getPlayerInTurn().getClass() == BotPlayer.class) {
-            command = getPlayerInTurn().makeMove(this);
+            Bot bot = (BotPlayer) getPlayerInTurn();
+            command = bot.makeMove(this);
             try {
                 executeMove(command);
             } catch (EngineException e) {
