@@ -18,12 +18,12 @@
 package org.uno.data;
 
 /**
- * This class contains information about the System Counting it is a unix-like
- * system.
+ * This class should be used to store useful information about the running
+ * unix-like System.
  */
 public class SystemInfoUnix implements SystemInfo {
 
-    private String userName;
+    private final String userName;
 
     /**
      * Creates a new instance.

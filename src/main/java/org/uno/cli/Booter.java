@@ -20,6 +20,7 @@ package org.uno.cli;
 import org.uno.data.ConfigReader;
 import org.uno.data.SystemInfo;
 import org.uno.data.SystemInfoUnix;
+import org.uno.data.SystemInfoWindows;
 
 
 public class Booter {
@@ -42,6 +43,9 @@ public class Booter {
             userName = configFileUserName;
         } else if (os == OS.UNIX) {
             system = new SystemInfoUnix();
+            userName = system.getUserName();
+        } else if (os == os.WINDOWS) {
+            system = new SystemInfoWindows();
             userName = system.getUserName();
         } else
             userName = DEFAULT_USER_NAME;
