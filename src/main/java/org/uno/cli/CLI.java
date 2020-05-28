@@ -298,13 +298,13 @@ public class CLI implements CommandLineReader {
     }
 
     private void warnIfRivalIsAboutToWin() {
-        Player playerInTurn = game.getPlayerInTurn();
-        if (playerInTurn.getHand().length() == 1 &&
-                !playerInTurn.getId().equals(humanPlayerName)
+        Player previousPlayer = game.getPreviousPlayer();
+        if (previousPlayer.getHand().length() == 1 &&
+                !previousPlayer.getId().equals(humanPlayerName)
         )
             System.out.printf(
                     "CAREFUL: %s has only one card left%n%n",
-                    game.getPlayerInTurn().getId()
+                    previousPlayer.getId()
             );
     }
 
