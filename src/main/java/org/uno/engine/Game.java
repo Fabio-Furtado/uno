@@ -57,11 +57,6 @@ public final class Game implements UnoGame {
     private final Player[] players;
 
     /**
-     * Number of players on this game
-     */
-    private final int nOfPlayers;
-
-    /**
      * The index of the player in turn
      */
     private int turn;
@@ -98,8 +93,7 @@ public final class Game implements UnoGame {
         this.table = new Stack<>();
         this.players = new Player[players.length];
         System.arraycopy(players, 0, this.players, 0, players.length);
-        this.nOfPlayers = players.length;
-        this.turn = new Random().nextInt(nOfPlayers);
+        this.turn = new Random().nextInt(players.length);
         this.direction = 1;
         this.previous = turn;
         this.winner = null;
@@ -128,7 +122,7 @@ public final class Game implements UnoGame {
     @Override
     public Player getPlayer(String id) {
         Player returnValue = null;
-        for (int i = 0; i < nOfPlayers; i++) {
+        for (int i = 0; i < players.length; i++) {
             if (players[i].getId().equals(id))
                 returnValue = players[i];
         }
@@ -348,7 +342,7 @@ public final class Game implements UnoGame {
             moveToNextPlayer();
         } else if (tableTop.getSymbol() == SpecialCardSymbol.REVERSE) {
             revert();
-            if (nOfPlayers > 2)
+            if (players.length > 2)
                 moveToNextPlayer();
         } else { // skip card
             jumpAPlayer();
@@ -467,10 +461,10 @@ public final class Game implements UnoGame {
      * Moves the turn to the next player
      */
     private void moveToNextPlayer() {
-        if (direction > 0 && turn == nOfPlayers - 1)
+        if (direction > 0 && turn == players.length - 1)
             turn = 0;
         else if (direction < 0 && turn == 0)
-            turn = nOfPlayers - 1;
+            turn = players.length - 1;
         else
             turn += direction;
     }
