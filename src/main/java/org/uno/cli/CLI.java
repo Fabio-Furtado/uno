@@ -18,9 +18,9 @@
 package org.uno.cli;
 
 import org.uno.data.ConfigReader;
-import org.uno.engine.Game;
 import org.uno.engine.GameCommand;
 import org.uno.engine.GameFactory;
+import org.uno.engine.UnoGame;
 import org.uno.engine.objects.Card;
 import org.uno.engine.objects.HumanPlayer;
 import org.uno.engine.objects.Player;
@@ -40,9 +40,9 @@ import java.util.Random;
 /**
  * @author Fábio Furtado
  */
-public class CLI implements CommandLineReader {
+public final class CLI implements CommandLineReader {
 
-    private Game game;
+    private UnoGame game;
     private String humanPlayerName;
     private final GameFactory gameFactory;
     private static final boolean ENABLE_BOT_DELAY;

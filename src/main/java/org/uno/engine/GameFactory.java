@@ -28,7 +28,7 @@ import org.uno.exceptions.GameRulesException;
  *
  * @author Fábio Furtado
  */
-public class GameFactory {
+public final class GameFactory {
 
     private static final String BOT_PLAYER_NAME_PREFIX = "Bot";
     private static final int MIN_NUMBER_OF_PLAYERS = 2;

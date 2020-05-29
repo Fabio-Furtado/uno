@@ -24,7 +24,7 @@ import java.util.Scanner;
 /**
  * @author Fábio Furtado
  */
-class CliUtils {
+final class CliUtils {
 
     /**
      * Makes sure the user inputs a value within the given range.

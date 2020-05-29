@@ -31,12 +31,12 @@ import org.uno.util.Vector;
 /**
  * @author Fábio Furtado
  */
-class DeckGenerator {
+final class DeckGenerator {
 
     private static final int N_WILD_SIMPLE = 4;
     private static final int N_WILD_DRAW_FOUR = 4;
     private static final int N_ZEROS_PER_COLOUR = 1;
-    private static final int N_NUMERICS_PER_COLOUR = 2;
+    private static final int N_NUMERALS_PER_COLOUR = 2;
     private static final int N_EACH_SPECIAL_PER_COLOUR = 2;
     private Vector<Card> temporaryDeck;
     private Stack<Card> deck;
@@ -67,17 +67,17 @@ class DeckGenerator {
 
         for (int i = 1; i < 10; i++) {
             // blue
-            for (int j = 0; j < N_NUMERICS_PER_COLOUR; j++)
+            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
                 temporaryDeck.add(this.index++, new NumericCard(CardColour.BLUE, i));
             // red
-            for (int j = 0; j < N_NUMERICS_PER_COLOUR; j++)
+            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
                 temporaryDeck.add(this.index++, new NumericCard(CardColour.RED, i));
             // green
-            for (int j = 0; j < N_NUMERICS_PER_COLOUR; j++) {
+            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++) {
                 temporaryDeck.add(this.index++, new NumericCard(CardColour.GREEN, i));
             }
             // yellow
-            for (int j = 0; j < N_NUMERICS_PER_COLOUR; j++)
+            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
                 temporaryDeck.add(this.index++, new NumericCard(CardColour.YELLOW, i));
         }
     }

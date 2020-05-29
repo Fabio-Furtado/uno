@@ -23,7 +23,7 @@ import org.uno.data.SystemInfoUnix;
 import org.uno.data.SystemInfoWindows;
 
 
-public class Booter {
+public final class Booter {
 
     private static final String DEFAULT_USER_NAME = "player";
 

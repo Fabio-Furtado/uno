@@ -37,7 +37,7 @@ import java.util.Random;
  * A uno game abstraction. Use the {@link GameFactory} class the get instances
  * of this class.
  */
-public class Game implements UnoGame {
+public final class Game implements UnoGame {
 
     /**
      * All the cards on the deck. The deck is where the players draw new cards.

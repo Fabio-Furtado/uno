@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * @author Fábio Furtado
  */
-class CommandValuesKeeper {
+final class CommandValuesKeeper {
 
     private static final Map<Command, String> commands = new HashMap<>();
     private static final Map<CardColour, String> colours = new HashMap<>();

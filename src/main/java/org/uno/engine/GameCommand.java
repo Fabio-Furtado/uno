@@ -23,7 +23,7 @@ import org.uno.enums.CardColour;
 /**
  * @author Fábio Furtado
  */
-public class GameCommand {
+public final class GameCommand {
 
     private final int option;
     private final int index;
