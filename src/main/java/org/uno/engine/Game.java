@@ -146,39 +146,12 @@ public class Game implements UnoGame {
         return players[previous];
     }
 
-    @Deprecated(forRemoval = true)
-    public Vector<Card> getPlayerHand(String id) {
-        for (Player player : players) {
-            if (player.getId().equals(id))
-                return player.getHand();
-        }
-        return null;
-    }
-
     /**
      * @see UnoGame#getTurn()
      */
     @Override
     public int getTurn() {
         return this.turn;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated(forRemoval = true)
-    public String getPlayerInTurnId() {
-        return players[turn].getId();
-    }
-
-    /**
-     * Returns the id of the player who played in the previous move.
-     *
-     * @return id of the player
-     */
-    @Deprecated(forRemoval = true)
-    public String getPreviousPlayerId() {
-        return players[previous].getId();
     }
 
     /**
@@ -250,6 +223,25 @@ public class Game implements UnoGame {
     }
 
     /**
+     * @see UnoGame#goBot()
+     */
+    @Override
+    public GameCommand goBot() {
+        GameCommand command = null;
+        if (getPlayerInTurn().getClass() == BotPlayer.class) {
+            Bot bot = (BotPlayer) getPlayerInTurn();
+            command = bot.makeMove(this);
+            try {
+                executeMove(command);
+            } catch (EngineException e) {
+                // Bot should not cause game exceptions
+                e.printStackTrace();
+            }
+        }
+        return command;
+    }
+
+    /**
      * @see UnoGame#executeMove(GameCommand)
      */
     @Override
@@ -273,25 +265,6 @@ public class Game implements UnoGame {
             return returnValue;
         } else
             throw new IllegalStateException("This game is already over!");
-    }
-
-    /**
-     * @see UnoGame#goBot()
-     */
-    @Override
-    public GameCommand goBot() {
-        GameCommand command = null;
-        if (getPlayerInTurn().getClass() == BotPlayer.class) {
-            Bot bot = (BotPlayer) getPlayerInTurn();
-            command = bot.makeMove(this);
-            try {
-                executeMove(command);
-            } catch (EngineException e) {
-                // Bot should not cause game exceptions
-                e.printStackTrace();
-            }
-        }
-        return command;
     }
 
     private void draw() {

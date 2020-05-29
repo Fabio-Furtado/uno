@@ -34,16 +34,16 @@ public interface UnoGame {
     int getNumberOfPlayers();
 
     /**
-     * Gets the specified player.
+     * Gets the player by index.
      *
-     * @param index id of the player
+     * @param index index of the player
      * @requires {@code index > 0 && index < this.getNumberOfPlayers - 1}
      * @return Player object, null if no player with this index was found
      */
     Player getPlayer(int index);
 
     /**
-     * Gets the specified player.
+     * Gets the player by id.
      *
      * @param id id of the player
      * @return Player object, null if no player with this id was found
@@ -98,7 +98,7 @@ public interface UnoGame {
      * Gets this game's winner.
      *
      * @return player which won the game
-     * @throws IllegalStateException if this game is not over yet
+     * @throws IllegalStateException if {@code !this.isOver()}
      */
     Player getWinner();
 
