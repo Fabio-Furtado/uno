@@ -88,6 +88,11 @@ public class Game implements UnoGame {
      */
     private Player winner;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param players players for this game
+     */
     Game(Player[] players) {
         this.deck = new DeckGenerator().next();
         this.table = new Stack<>();
@@ -147,11 +152,15 @@ public class Game implements UnoGame {
     }
 
     /**
-     * @see UnoGame#getTurn()
+     * @see UnoGame#getIndex(String)
      */
     @Override
-    public int getTurn() {
-        return this.turn;
+    public int getIndex(String id) {
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getId().equals(id))
+                return i;
+        }
+        return -1;
     }
 
     /**

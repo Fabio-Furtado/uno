@@ -58,11 +58,12 @@ public interface UnoGame {
     Player[] getPlayers();
 
     /**
-     * Gets the index of the player in turn.
+     * Returns the index of the player.
      *
-     * @return index of the player in turn
+     * @param id player identification
+     * @return index of the player, -1 if there's no player with the given id
      */
-    int getTurn();
+    int getIndex(String id);
 
     /**
      * Gets the player in turn.
