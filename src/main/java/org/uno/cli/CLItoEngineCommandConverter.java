@@ -32,7 +32,7 @@ class CLItoEngineCommandConverter {
     private static final String SEPARATOR_SYMBOL = " ";
     private static final String UNKNOWN_COMMAND_ERROR_MESSAGE =
             "Unknown command: %s";
-    private static final String UNKNOWN_ARGUMENT_ERROR_MESSAGE =
+    private static final String NOT_INDEX_ERROR_MESSAGE =
             "Expected an index after the <%s> command";
     private static final String INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE =
             "Not enough arguments for the <%s> command";
@@ -46,8 +46,8 @@ class CLItoEngineCommandConverter {
         return UNKNOWN_COMMAND_ERROR_MESSAGE;
     }
 
-    public static String getUnknownArgumentErrorMessage() {
-        return UNKNOWN_ARGUMENT_ERROR_MESSAGE;
+    public static String getNotIndexErrorMessage() {
+        return NOT_INDEX_ERROR_MESSAGE;
     }
 
     public static String getInsufficientArgumentsErrorMessage() {
@@ -58,58 +58,56 @@ class CLItoEngineCommandConverter {
         return TOO_MANY_ARGUMENTS_ERROR_MESSAGE;
     }
 
-    static GameCommand convert(String cliCommand) throws CommandFormatException {
+    static GameCommand convert(String[] cliCommand) throws CommandFormatException {
         int option;
         int index;
         CardColour colour;
 
-        if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW)))
+        if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW)))
             return new GameCommand();
         else {
             return doIfLikelyPlayingFromHand(cliCommand);
         }
     }
 
-    private static GameCommand doIfLikelyPlayingFromHand(String cliCommand)
+    private static GameCommand doIfLikelyPlayingFromHand(String[] cliCommand)
             throws CommandFormatException {
         int index;
         CardColour colour = null;
-        String[] commandElements = cliCommand.split(SEPARATOR_SYMBOL);
-
-        if (commandElements[0].equals(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
+        if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
             try {
-                index = (Integer.parseInt(commandElements[1]) - 1);
+                index = (Integer.parseInt(cliCommand[1]) - 1);
             } catch (NumberFormatException e) {
                 throw new CommandFormatException(
-                        String.format(UNKNOWN_ARGUMENT_ERROR_MESSAGE,
-                                commandElements[0])
+                        String.format(NOT_INDEX_ERROR_MESSAGE,
+                                cliCommand[0])
                 );
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new CommandFormatException(String.format(
-                        INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
+                        INSUFFICIENT_ARGUMENTS_ERROR_MESSAGE, cliCommand[0])
                 );
             }
         } else {
             throw new CommandFormatException(String.format(
-                    UNKNOWN_COMMAND_ERROR_MESSAGE, commandElements[0])
+                    UNKNOWN_COMMAND_ERROR_MESSAGE, cliCommand[0])
             );
         }
-        if (commandElements.length == 3) {
+        if (cliCommand.length == 3) {
             CardColour engineCardColourCode = null;
-            if (commandElements[2].equals(CommandValuesKeeper.getValue(CardColour.BLUE)))
+            if (cliCommand[2].equals(CommandValuesKeeper.getValue(CardColour.BLUE)))
                 engineCardColourCode = CardColour.BLUE;
-            else if (commandElements[2].equals(CommandValuesKeeper.getValue(CardColour.RED)))
+            else if (cliCommand[2].equals(CommandValuesKeeper.getValue(CardColour.RED)))
                 engineCardColourCode = CardColour.RED;
-            else if (commandElements[2].equals(CommandValuesKeeper.getValue(CardColour.GREEN)))
+            else if (cliCommand[2].equals(CommandValuesKeeper.getValue(CardColour.GREEN)))
                 engineCardColourCode = CardColour.GREEN;
-            else if (commandElements[2].equals(CommandValuesKeeper.getValue(CardColour.YELLOW)))
+            else if (cliCommand[2].equals(CommandValuesKeeper.getValue(CardColour.YELLOW)))
                 engineCardColourCode = CardColour.YELLOW;
 
             if (engineCardColourCode != null)
                 colour = engineCardColourCode;
-        } else if (commandElements.length > 3)
+        } else if (cliCommand.length > 3)
             throw new CommandFormatException(String.format(
-                    TOO_MANY_ARGUMENTS_ERROR_MESSAGE, commandElements[0])
+                    TOO_MANY_ARGUMENTS_ERROR_MESSAGE, cliCommand[0])
             );
         return new GameCommand(index, colour);
     }

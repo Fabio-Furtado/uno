@@ -29,11 +29,11 @@ import org.uno.enums.CardType;
 import org.uno.exceptions.CommandFormatException;
 import org.uno.exceptions.GameRulesException;
 import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
-import org.uno.exceptions.engineExceptions.EngineException;
 import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 import org.uno.util.Vector;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -121,45 +121,40 @@ public final class CLI implements CommandLineReader {
     private boolean prompt() {
         boolean keepPlaying = true;
         System.out.print(PROMPT_SYMBOL);
-        String cliCommand = reader.nextLine();
+        String[] cliCommand = reader.nextLine().strip().split(" ");
         System.out.println();
 
-        if (cliCommand.equals(CommandValuesKeeper.getValue(Command.HELP)))
-            System.out.println(COMMANDS_HELP);
-        else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_HAND))) {
-            printHand(game.getPlayerInTurn().getId());
-        } else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.DRAW))) {
-            try {
-                GameCommand move = CLItoEngineCommandConverter.convert(cliCommand);
-                game.executeMove(move);
-                reportMove(move);
-            } catch (CommandFormatException | EngineException e) {
-                e.printStackTrace();
-            }
-        } else if (cliCommand.startsWith(
-                CommandValuesKeeper.getValue(Command.PLAY_A_CARD))
-        ) {
-            playACard(cliCommand);
-        } else if (cliCommand.equals(
-                CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))
-        ) {
-            printNumberOfCardsEachRivalPlayerHas();
-        } else if (cliCommand.equals(
-                CommandValuesKeeper.getValue(Command.RESTART))
-        ) {
-            restart();
-        } else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
-            keepPlaying = false;
-        else
-            System.out.printf(
-                    "Invalid command <%s>, type <%s> to see the available ones%n%n",
-                    cliCommand,
-                    CommandValuesKeeper.getValue(Command.HELP)
-            );
+        if (cliCommand.length != 0 && !cliCommand[0].isEmpty()) {
+            if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.HELP)))
+                System.out.println(COMMANDS_HELP);
+            else if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.PRINT_HAND))) {
+                printHand(game.getPlayerInTurn().getId());
+            } else if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW)) ||
+                    cliCommand[0].equals(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
+                drawOrPlayACard(cliCommand);
+            } else if (cliCommand[0].equals(
+                    CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))
+            ) {
+                printNumberOfCardsEachRivalPlayerHas();
+            } else if (cliCommand[0].equals(
+                    CommandValuesKeeper.getValue(Command.RESTART))
+            ) {
+                restart();
+            } else if (cliCommand[0].equals(CommandValuesKeeper.getValue((Command.EXIT))))
+                keepPlaying = false;
+            else
+                System.out.printf(
+                        "Invalid command <%s>, type <%s> to see the available ones%n%n",
+                        cliCommand[0],
+                        CommandValuesKeeper.getValue(Command.HELP)
+                );
+        } else {
+            prompt();
+        }
         return keepPlaying;
     }
 
-    private void playACard(String cliCommand) {
+    private void drawOrPlayACard(String[] cliCommand) {
         GameCommand move = null;
         int executionResult;
         try {
@@ -177,30 +172,23 @@ public final class CLI implements CommandLineReader {
                             cliCommand
                     ))
             ) {
-                playACard(cliCommand + " " + pickIndex());
+                String[] corrected = Arrays.copyOf(cliCommand, cliCommand.length + 1);
+                corrected[1] = Integer.toString(pickIndex());
+                drawOrPlayACard(corrected);
             } else {
                 System.out.println(e.getMessage());
                 System.out.println();
             }
-        } catch (InvalidOptionException invalidOptionException) {
+        } catch (InvalidOptionException e) {
 
-            // The exception above already prevents this exception
-            invalidOptionException.printStackTrace();
+            // The exception catch above already prevents this exception
+            e.printStackTrace();
         } catch (CardIndexOutOfHandBoundsException cardIndexOutOfHandBoundsException) {
             System.out.printf("Invalid card index%n%n");
         } catch (MissingColourForWildCardException e) {
-            GameCommand corrected = new GameCommand(
-                    move.getIndex(), pickWildCardColour()
-            );
-            reportMove(corrected);
-            try {
-                executionResult = game.executeMove(corrected);
-            } catch (EngineException engineException) {
-
-                // All engine exceptions are dealt with by this point so this
-                // exception should not be thrown
-                e.printStackTrace();
-            }
+            String[] corrected = Arrays.copyOf(cliCommand, cliCommand.length + 1);
+            corrected[2] = pickWildCardColour();
+            drawOrPlayACard(corrected);
         }
     }
 
@@ -215,8 +203,8 @@ public final class CLI implements CommandLineReader {
         return index;
     }
 
-    private CardColour pickWildCardColour() {
-        CardColour colour;
+    private String pickWildCardColour() {
+        String colour;
         System.out.printf(
                 "You have to pick a colour for your wild card,%n"
                         + "1) Blue%n" + "2) Red%n" + "3) Green%n"
@@ -224,13 +212,13 @@ public final class CLI implements CommandLineReader {
         int choice = CliUtils.readValueInRange(1, 4);
         System.out.println();
         if (choice == 1)
-            colour = CardColour.BLUE;
+            colour = CommandValuesKeeper.getValue(CardColour.BLUE);
         else if (choice == 2)
-            colour = CardColour.RED;
+            colour = CommandValuesKeeper.getValue(CardColour.RED);
         else if (choice == 3)
-            colour = CardColour.GREEN;
+            colour = CommandValuesKeeper.getValue(CardColour.GREEN);
         else
-            colour = CardColour.YELLOW;
+            colour = CommandValuesKeeper.getValue(CardColour.YELLOW);
         return colour;
     }
 
