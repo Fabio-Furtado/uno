@@ -38,6 +38,7 @@ import java.util.Random;
 
 
 /**
+ * A command line interface for the uno game
  * @author Fábio Furtado
  */
 public final class CLI implements CommandLineReader {

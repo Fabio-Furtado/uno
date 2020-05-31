@@ -47,6 +47,18 @@ public final class HumanPlayer implements Player {
     }
 
     /**
+     * This constructor is meant to be used in the {@link HumanPlayer#clone()}
+     * class.
+     *
+     * @param id a String to identify this player
+     * @param hand the hand of the player
+     */
+    private HumanPlayer(String id, Vector<Card> hand) {
+        this.id = id;
+        this.hand = hand;
+    }
+
+    /**
      * @see Player#getId()
      */
     @Override
@@ -78,5 +90,13 @@ public final class HumanPlayer implements Player {
         Card returnValue = this.hand.get(index);
         hand.remove(index);
         return returnValue;
+    }
+
+    /**
+     * @see Player#clone()
+     */
+    @Override
+    public Player clone() {
+        return new HumanPlayer(this.id, this.hand.clone());
     }
 }

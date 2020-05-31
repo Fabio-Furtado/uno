@@ -17,7 +17,5 @@
 
 package org.uno.enums;
 
-public enum SpecialCardSymbol implements CardSymbol {
-
-    REVERSE, SKIP, DRAW_2;
+public interface CardSymbol {
 }

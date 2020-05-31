@@ -23,7 +23,11 @@ import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
 import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 
-
+/**
+ * A uno game abstraction. Use the {@link GameFactory} class the get instances.
+ *
+ * @author Fábio Furtado
+ */
 public interface UnoGame {
 
     /**
@@ -34,7 +38,7 @@ public interface UnoGame {
     int getNumberOfPlayers();
 
     /**
-     * Gets the player by index.
+     * Gets a copy of the player by index.
      *
      * @param index index of the player
      * @requires {@code index > 0 && index < this.getNumberOfPlayers - 1}
@@ -43,7 +47,7 @@ public interface UnoGame {
     Player getPlayer(int index);
 
     /**
-     * Gets the player by id.
+     * Gets a copy of the player by id.
      *
      * @param id id of the player
      * @return Player object, null if no player with this id was found
@@ -66,37 +70,37 @@ public interface UnoGame {
     int getIndex(String id);
 
     /**
-     * Gets the player in turn.
+     * Gets a copy of the player in turn.
      *
      * @return Player class with the abstraction of the player in turn
      */
     Player getPlayerInTurn();
 
     /**
-     * Gets the player which played previously. Notice that this does not return the
-     * player at index {@code turn - 1}, but the player which indeed made the last
-     * move.
+     * Gets a copy of the player which played previously. Notice that this does
+     * not return the player at index {@code turn - 1}, but the player which
+     * indeed made the last move.
      *
      * @return Player class with the abstraction of the previous player.
      */
     Player getPreviousPlayer();
 
     /**
-     * Gets the card on the top of the deck.
+     * Gets a copy of the card on the top of the deck.
      *
-     * @return card on the the top of the deck
+     * @return copy of the card on the the top of the deck
      */
     Card getDeckTop();
 
     /**
-     * Gets the card at the top of the table.
+     * Gets a copy of the card at the top of the table.
      *
-     * @return card on the the top of the table
+     * @return copy of the card on the the top of the table
      */
     Card getTableTop();
 
     /**
-     * Gets this game's winner.
+     * Gets a copy of this game's winner.
      *
      * @return player which won the game
      * @throws IllegalStateException if {@code !this.isOver()}

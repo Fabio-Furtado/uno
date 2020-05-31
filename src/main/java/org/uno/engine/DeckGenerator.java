@@ -29,12 +29,13 @@ import org.uno.util.Vector;
 
 
 /**
+ * Generator class for creating decks
+ *
  * @author Fábio Furtado
  */
 final class DeckGenerator {
 
-    private static final int N_WILD_SIMPLE = 4;
-    private static final int N_WILD_DRAW_FOUR = 4;
+    private static final int N_WILD_EACH = 4;
     private static final int N_ZEROS_PER_COLOUR = 1;
     private static final int N_NUMERALS_PER_COLOUR = 2;
     private static final int N_EACH_SPECIAL_PER_COLOUR = 2;
@@ -53,10 +54,10 @@ final class DeckGenerator {
      * Adds the wild cards the temporary deck.
      */
     private void addWilds() {
-        for (int i = 0; i < N_WILD_SIMPLE; i++)
+        for (int i = 0; i < N_WILD_EACH; i++)
             temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.CHANGE_COLOUR));
 
-        for (int i = 0; i < N_WILD_DRAW_FOUR; i++)
+        for (int i = 0; i < N_WILD_EACH; i++)
             temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.DRAW_4));
     }
 

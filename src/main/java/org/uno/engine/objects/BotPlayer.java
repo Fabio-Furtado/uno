@@ -28,6 +28,8 @@ import java.util.Random;
 
 /**
  * An abstraction for a bot player
+ *
+ * @author Fábio Furtado
  */
 public final class BotPlayer implements Player, Bot {
 
@@ -43,11 +45,24 @@ public final class BotPlayer implements Player, Bot {
 
     /**
      * Creates a new instance.
+     *
      * @param id a String to identify this player
      */
     public BotPlayer(String id) {
         this.id = id;
         this.hand = new Vector<>();
+    }
+
+    /**
+     * This constructor is meant to be used in the {@link BotPlayer#clone()}
+     * class.
+     *
+     * @param id a String to identify this player
+     * @param hand the hand of the player
+     */
+    private BotPlayer(String id, Vector<Card> hand) {
+        this.id = id;
+        this.hand = hand;
     }
 
     /**
@@ -185,5 +200,13 @@ public final class BotPlayer implements Player, Bot {
         CardColour[] colours = CardColour.values();
         Random rand = new Random();
         return colours[rand.nextInt(colours.length)];
+    }
+
+    /**
+     * @see Player#clone()
+     */
+    @Override
+    public Player clone() {
+        return new BotPlayer(this.id, this.hand.clone());
     }
 }

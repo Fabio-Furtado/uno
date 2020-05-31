@@ -28,7 +28,8 @@ import org.uno.util.Vector;
 public interface Player {
 
     /**
-     * Gets this player's id
+     * Gets this player's id.
+     *
      * @return player id
      */
     String getId();
@@ -42,18 +43,26 @@ public interface Player {
 
     /**
      * Adds the given card to the player's hand.
-     * @requires {@code card != null}
      *
+     * @requires {@code card != null}
      * @param card card to be added
      */
     void addToHand(Card card);
 
     /**
-     * Removes the card with the given index from the player's hand
+     * Removes the card with the given index from the player's hand.
+     *
      * @param index index of the card on the player's hand
      * @requires {@code index < this.getHand().size() && index > -1}
      *
      * @return removed card
      */
     Card takeFromHand(int index);
+
+    /**
+     * Returns a clone of this Player.
+     *
+     * @return clone of this player
+     */
+    Player clone();
 }

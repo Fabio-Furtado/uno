@@ -22,42 +22,74 @@ import org.uno.enums.CardType;
 
 
 /**
- * These cards have a number between 0 and 9 associated with them
+ * Immutable abstraction of a numeric card
+ *
+ * @author Fábio Furtado
  */
-public final class NumericCard implements Card {
+public final class NumericCard implements Card, Numeric, Colourful {
 
     private final CardColour colour;
     private final int number;
     private final CardType type;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param colour colour of the card
+     * @param number number the card will hold
+     */
     public NumericCard(CardColour colour, int number) {
         this.type = CardType.NUMERIC;
         this.colour = colour;
         this.number = number;
     }
 
+    /**
+     * @see Card#getType()
+     */
     public CardType getType() {
         return this.type;
     }
 
+    /**
+     * @see Colourful#getColour()
+     */
+    @Override
     public CardColour getColour() {
         return colour;
     }
 
+    /**
+     * @see Numeric#getNumber()
+     */
+    @Override
     public int getNumber() {
         return number;
     }
 
     /**
-     * Checks the equality between this card and the given one.
-     *
-     * @param other other object to compare.
-     * @return true if the cards are equal, false if not
+     * To be equal to this numeric card, the other card needs to also be numeric,
+     * to have the same colour and number or to be a reference to this exact same
+     * object.
+     * @see Card#equals(Card)
      */
-    public boolean equals(NumericCard other) {
+    @Override
+    public boolean equals(Card other) {
+        if (this == other)
+            return true;
+        if (this.getType() != other.getType())
+            return false;
+        NumericCard numOther = (NumericCard) other;
         return
-                this.type == other.getType() &&
-                        this.colour == other.getColour() &&
-                        this.number == other.getNumber();
+            this.colour == numOther.getColour() &&
+            this.number == numOther.getNumber();
+    }
+
+    /**
+     * @see Card#clone()
+     */
+    @Override
+    public Card clone() {
+        return new NumericCard(this.getColour(), this.getNumber());
     }
 }

@@ -169,7 +169,7 @@ public class Vector<E> {
      * @return vector with the clone
      */
     public Vector clone() {
-        Vector<E> clone = new Vector<>(length);
+        Vector<E> clone = new Vector<>();
         for (int i = 0; i < length; i++) {
             clone.add(i, (E) values[i]);
         }

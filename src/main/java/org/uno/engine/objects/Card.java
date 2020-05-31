@@ -22,13 +22,28 @@ import org.uno.enums.CardType;
 
 /**
  * All cards must implement this interface
+ *
+ * @author Fábio Furtado
  */
 public interface Card {
 
     /**
-     * Returns the type of the card
+     * Returns the type of the card.
      *
      * @return type of the card
      */
     CardType getType();
+
+    /**
+     * Checks the equality between this card and the given one.
+     *
+     * @param other other object to compare.
+     * @return true if the cards are equal, false if not
+     */
+    boolean equals(Card other);
+
+    /**
+     * Returns a clone of tis card.
+     */
+    Card clone();
 }

@@ -15,9 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine.objects;
 
-public enum SpecialCardSymbol implements CardSymbol {
+import org.uno.enums.CardColour;
 
-    REVERSE, SKIP, DRAW_2;
+
+/**
+ * This interface must be applied to all cards which hold a colour (not wilds).
+ *
+ * @author Fábio Furtado
+ */
+public interface Colourful {
+
+    /**
+     * Returns the card's colour
+     *
+     * @return colour of the card
+     */
+    CardColour getColour();
 }

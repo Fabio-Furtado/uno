@@ -34,8 +34,9 @@ import java.util.Random;
 
 
 /**
- * A uno game abstraction. Use the {@link GameFactory} class the get instances
- * of this class.
+ * @see UnoGame
+ *
+ * @author Fábio Furtado
  */
 public final class Game implements UnoGame {
 
@@ -113,7 +114,7 @@ public final class Game implements UnoGame {
      */
     @Override
     public Player getPlayer(int index) {
-        return players[index];
+        return players[index].clone();
     }
 
     /**
@@ -121,12 +122,11 @@ public final class Game implements UnoGame {
      */
     @Override
     public Player getPlayer(String id) {
-        Player returnValue = null;
         for (int i = 0; i < players.length; i++) {
             if (players[i].getId().equals(id))
-                returnValue = players[i];
+                return players[i].clone();
         }
-        return returnValue;
+        return null;
     }
 
     /**
@@ -142,7 +142,7 @@ public final class Game implements UnoGame {
      */
     @Override
     public Player getPreviousPlayer() {
-        return players[previous];
+        return players[previous].clone();
     }
 
     /**
@@ -162,7 +162,7 @@ public final class Game implements UnoGame {
      */
     @Override
     public Player getPlayerInTurn() {
-        return players[turn];
+        return players[turn].clone();
     }
 
     /**
@@ -170,7 +170,7 @@ public final class Game implements UnoGame {
      */
     @Override
     public Card getDeckTop() {
-        return deck.peek();
+        return deck.peek().clone();
     }
 
     /**
@@ -178,7 +178,7 @@ public final class Game implements UnoGame {
      */
     @Override
     public Card getTableTop() {
-        return table.peek();
+        return table.peek().clone();
     }
 
     /**
@@ -187,7 +187,7 @@ public final class Game implements UnoGame {
     @Override
     public Player getWinner() {
         if (isOver())
-            return winner;
+            return winner.clone();
         throw new IllegalStateException("This game is not over yet!");
     }
 

@@ -17,7 +17,7 @@
 
 package org.uno.enums;
 
-public enum WildCardSymbol {
+public enum WildCardSymbol implements CardSymbol {
 
     CHANGE_COLOUR, DRAW_4;
 }

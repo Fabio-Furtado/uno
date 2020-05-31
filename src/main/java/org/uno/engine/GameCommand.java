@@ -21,6 +21,9 @@ import org.uno.enums.CardColour;
 
 
 /**
+ * Abstraction of a command which can be passed to {@link UnoGame#executeMove(GameCommand)}
+ * to be executed. There are constructors for all situations (ex: drawing, playing...)
+ *
  * @author Fábio Furtado
  */
 public final class GameCommand {

@@ -15,9 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine.objects;
 
-public enum SpecialCardSymbol implements CardSymbol {
+import org.uno.enums.CardColour;
 
-    REVERSE, SKIP, DRAW_2;
+
+/**
+ * Wild cards must implement this interface.
+ *
+ * @author Fábio Furtado
+ */
+public interface Wild {
+
+    /**
+     * Returns the colour picked for the wild card.
+     *
+     * @return colour which was picked for this wild card, null if no colour has
+     *         been picked yet
+     */
+    CardColour getPickedColour();
+
+    /**
+     * Sets a picked colour for the wild card
+     *
+     * @param colour picked colour to set for the wild card
+     */
+    void setPickedColour(CardColour colour);
 }

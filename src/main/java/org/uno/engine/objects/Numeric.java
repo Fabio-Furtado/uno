@@ -15,9 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine.objects;
 
-public enum SpecialCardSymbol implements CardSymbol {
+/**
+ * This interface must be applied to all cards which hold a numeric value.
+ *
+ * @author Fábio Furtado
+ */
+public interface Numeric {
 
-    REVERSE, SKIP, DRAW_2;
+    /**
+     * The minimal numeric value a card can hold.
+     */
+    int MIN_VALUE = 0;
+
+    /**
+     * The maximal numeric value a card can hold.
+     */
+    int MAX_VALUE = 9;
+
+    /**
+     * Returns the card's number.
+     *
+     * @return number of the card
+     */
+    int getNumber();
 }

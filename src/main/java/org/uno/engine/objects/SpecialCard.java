@@ -18,55 +18,80 @@
 package org.uno.engine.objects;
 
 import org.uno.enums.CardColour;
+import org.uno.enums.CardSymbol;
 import org.uno.enums.CardType;
 import org.uno.enums.SpecialCardSymbol;
 
 
-public final class SpecialCard implements Card {
+/**
+ * Immutable abstraction of a special card
+ *
+ * @author Fábio Furtado
+ */
+public final class SpecialCard implements Card, Colourful, Symbolic {
 
     private final CardColour colour;
     private final SpecialCardSymbol symbol;
     private final CardType type;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param colour colour for this card
+     * @param symbol symbol for this card
+     */
     public SpecialCard(CardColour colour, SpecialCardSymbol symbol) {
         this.type = CardType.SPECIAL;
         this.colour = colour;
         this.symbol = symbol;
     }
 
+    /**
+     * @see Card#getType()
+     */
     @Override
     public CardType getType() {
-        return this.type;
+        return type;
     }
 
     /**
-     * Retrns the colour of the card.
-     *
-     * @return colour of thte card
+     * @see Colourful#getColour()
      */
     public CardColour getColour() {
-        return this.colour;
+        return colour;
     }
 
     /**
-     * Returns the symbols of the card.
-     *
-     * @return symbols of the card
+     * @see Symbolic#getSymbol()
      */
-    public SpecialCardSymbol getSymbol() {
-        return this.symbol;
+    @Override
+    public CardSymbol getSymbol() {
+        return symbol;
     }
 
     /**
-     * Checks the equality between this card and the given one.
+     * To be equal to this special card, the other card needs to also be special
+     * and to have the same symbol and colour or to be the exact same object.
      *
-     * @param other other object to compare.
-     * @return true if the cards are equal, false if not
+     * @see Card#equals(Card)
      */
-    public boolean equals(SpecialCard other) {
+    @Override
+    public boolean equals(Card other) {
+        if (this == other)
+            return true;
+        if (this.getType() != other.getType())
+            return false;
+        SpecialCard specialOther = (SpecialCard) other;
         return
-                this.type == other.getType() &&
-                        this.colour == other.getColour() &&
-                        this.symbol == other.getSymbol();
+            this.colour == specialOther.getColour() &&
+            this.symbol == specialOther.getSymbol();
+    }
+
+    /**
+     * @see Card#clone()
+     */
+    @Override
+    public Card clone() {
+        return new SpecialCard(this.colour, this.symbol);
     }
 }

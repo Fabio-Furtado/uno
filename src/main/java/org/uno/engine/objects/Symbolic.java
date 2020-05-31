@@ -15,9 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine.objects;
 
-public enum SpecialCardSymbol implements CardSymbol {
+import org.uno.enums.CardSymbol;
 
-    REVERSE, SKIP, DRAW_2;
+
+/**
+ * This interface must be applied to cards which hold symbols instead of numbers
+ * (wilds and specials).
+ *
+ * @author Fábio Furtado
+ */
+public interface Symbolic {
+
+    /**
+     * Returns the symbol the card is holding
+     *
+     * @return symbol the card is holding
+     */
+    CardSymbol getSymbol();
 }
