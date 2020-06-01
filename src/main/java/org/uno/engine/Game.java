@@ -380,11 +380,11 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * If the deck size is under 4, the cards from the table will be reshuffled
+     * If the deck size is under 5, the cards from the table will be reshuffled
      * and passed the the deck so it doesn't get empty.
      */
     private void makeSureDeckDoesNotGetEmpty() {
-        if (deck.size() < 4) {
+        if (deck.size() < 5) {
             Card tableTop = table.pop();
             Vector<Card> temp = new Vector<>(table.size());
             for (int i = 0; i < table.size(); i++)
