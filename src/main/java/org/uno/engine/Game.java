@@ -205,24 +205,17 @@ public final class Game implements UnoGame {
      */
     private void distributeAndFlip() {
         for (Player player : players) {
-            for (int i = 0; i < N_OF_STARTING_CARDS; i++) {
+            for (int i = 0; i < N_OF_STARTING_CARDS; i++)
                 player.addToHand(deck.pop());
-            }
         }
 
         // Making sure the first card to be flipped is a numeric one
-        CardType topType = deck.peek().getType();
-        if (topType == CardType.NUMERIC)
-            table.push(deck.pop());
-        else {
-            Stack<Card> temp = new Stack<>();
-            while (deck.peek().getType() != CardType.NUMERIC)
-                temp.push(deck.pop());
-            table.push(deck.pop());
-            for (int i = 0; i < temp.size(); i++) {
-                deck.push(temp.pop());
-            }
-        }
+        Stack<Card> temp = new Stack<>();
+        while (deck.peek().getType() != CardType.NUMERIC)
+            temp.push(deck.pop());
+        table.push(deck.pop());
+        for (int i = 0; i < temp.size(); i++)
+            deck.push(temp.pop());
     }
 
     /**
