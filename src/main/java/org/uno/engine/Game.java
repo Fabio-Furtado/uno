@@ -250,10 +250,10 @@ public final class Game implements UnoGame {
             int returnValue = 1;
             checkCommandValidity(command);
 
-            if (command.getOption() == 0) { // chose to draw
+            if (command.getOption() == 0) {
                 draw();
                 returnValue = 0;
-            } else if (command.getOption() == 1) { // chose to play
+            } else if (command.getOption() == 1) {
                 returnValue = play(command);
                 if (players[previous].getHand().isEmpty())
                     winner = players[previous];
@@ -264,9 +264,7 @@ public final class Game implements UnoGame {
     }
 
     private void draw() {
-        // player draws a card
         players[turn].addToHand(deck.pop());
-        // player does not stop drawing until it finds a playable card
         previous = turn;
         moveToNextPlayer();
     }
@@ -290,6 +288,7 @@ public final class Game implements UnoGame {
                 break;
 
             case NUMERIC:
+
                 // No special interactions to do in case of an numeral card so
                 // we just have to move to the next player
                 moveToNextPlayer();
@@ -300,6 +299,20 @@ public final class Game implements UnoGame {
         return returnValue;
     }
 
+    /**
+     * Cheks if the given command is valid. Throws exceptions in case problems are
+     * found
+     * @param command command to be checked
+     * @throws MissingColourForWildCardException if the command plays a wild card
+     *                                           but does not have a chosen colour
+     * @throws CardIndexOutOfHandBoundsException if the command plays a card out
+     *                                           of the player in turn hand's
+     *                                           index bounds
+     * @throws InvalidOptionException            If the given option is not valid
+     *
+     * @throws IllegalStateException             if an index and/or colour were given
+     *                                           when the option is to draw
+     */
     private void checkCommandValidity(GameCommand command)
             throws MissingColourForWildCardException,
             CardIndexOutOfHandBoundsException,
@@ -307,7 +320,7 @@ public final class Game implements UnoGame {
         if (command.getOption() == 0) {
             if (command.getIndex() != -1 || command.getColour() != null) {
                 throw new IllegalStateException(
-                        "Not expecting values for index and colour" +
+                        "Not expecting values for index and/or colour" +
                                                           "when option is 0"
                 );
             }
@@ -366,6 +379,10 @@ public final class Game implements UnoGame {
         }
     }
 
+    /**
+     * If the deck size is under 4, the cards from the table will be reshuffled
+     * and passed the the deck so it doesn't get empty.
+     */
     private void makeSureDeckDoesNotGetEmpty() {
         if (deck.size() < 4) {
             Card tableTop = table.pop();
@@ -428,6 +445,7 @@ public final class Game implements UnoGame {
             returnValue = specialCard.getColour() == tableTop.getColour()
                     || specialCard.getSymbol() == tableTop.getSymbol();
         } else {
+
             // No restrictions for wild card
             returnValue = true;
         }
@@ -466,10 +484,6 @@ public final class Game implements UnoGame {
      * Jumps a player
      */
     private void jumpAPlayer() {
-
-        // The turnBackup variable is needed to store the current turn in order
-        // to get right value to previous turn, otherwise the value in previous
-        // will be incorrect
         moveToNextPlayer();
         moveToNextPlayer();
     }
