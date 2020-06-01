@@ -23,7 +23,9 @@ import java.util.Random;
 /**
  * @param <E> data type
  * @author Fábio Furtado
+ * @deprecated This class is just awful and bad code
  */
+@Deprecated(forRemoval = true)
 public class Vector<E> {
 
     private static final int DEFAULT_SIZE = 0;
