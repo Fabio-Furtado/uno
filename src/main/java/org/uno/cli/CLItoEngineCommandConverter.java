@@ -63,8 +63,13 @@ class CLItoEngineCommandConverter {
         int index;
         CardColour colour;
 
-        if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW)))
+        if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW))) {
+            if (cliCommand.length > 1)
+                throw new CommandFormatException(
+                        String.format(TOO_MANY_ARGUMENTS_ERROR_MESSAGE, cliCommand[0])
+                );
             return new GameCommand();
+        }
         else {
             return doIfLikelyPlayingFromHand(cliCommand);
         }
