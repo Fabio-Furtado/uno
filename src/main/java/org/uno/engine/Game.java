@@ -469,23 +469,33 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * Moves the turn to the next player
+     * Moves the turn to the next player.
      */
     private void moveToNextPlayer() {
-        if (direction > 0 && turn == players.length - 1)
-            turn = 0;
-        else if (direction < 0 && turn == 0)
-            turn = players.length - 1;
-        else
-            turn += direction;
+        move(1);
+    }
+
+    /**
+     * Moves the turn how many times as requested
+     *
+     * @param repeat number of times to repeat this operation
+     */
+    private void move(int repeat) {
+        for (int i = 0; i < repeat; i++) {
+            if (direction > 0 && turn == players.length - 1)
+                turn = 0;
+            else if (direction < 0 && turn == 0)
+                turn = players.length - 1;
+            else
+                turn += direction;
+        }
     }
 
     /**
      * Jumps a player
      */
     private void jumpAPlayer() {
-        moveToNextPlayer();
-        moveToNextPlayer();
+        move(2);
     }
 
     /**
