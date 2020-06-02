@@ -93,6 +93,8 @@ public final class WildCard implements Card, Wild, Symbolic {
      */
     @Override
     public Card clone() {
-        return new WildCard((WildCardSymbol) this.getSymbol());
+        WildCard clone = new WildCard(symbol);
+        clone.setPickedColour(pickedColour);
+        return clone;
     }
 }
