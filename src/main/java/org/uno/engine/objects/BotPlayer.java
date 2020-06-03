@@ -21,8 +21,9 @@ import org.uno.engine.GameCommand;
 import org.uno.engine.UnoGame;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardType;
-import org.uno.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -41,7 +42,7 @@ public final class BotPlayer implements Player, Bot {
     /**
      * An ADT with the cards on the player's hand
      */
-    private final Vector<Card> hand;
+    private final List<Card> hand;
 
     /**
      * Creates a new instance.
@@ -50,7 +51,7 @@ public final class BotPlayer implements Player, Bot {
      */
     public BotPlayer(String id) {
         this.id = id;
-        this.hand = new Vector<>();
+        this.hand = new ArrayList<>();
     }
 
     /**
@@ -60,7 +61,7 @@ public final class BotPlayer implements Player, Bot {
      * @param id a String to identify this player
      * @param hand the hand of the player
      */
-    private BotPlayer(String id, Vector<Card> hand) {
+    private BotPlayer(String id, List<Card> hand) {
         this.id = id;
         this.hand = hand;
     }
@@ -77,7 +78,7 @@ public final class BotPlayer implements Player, Bot {
      * @see Player#getHand()
      */
     @Override
-    public Vector<Card> getHand() {
+    public List<Card> getHand() {
         return hand;
     }
 
@@ -109,7 +110,7 @@ public final class BotPlayer implements Player, Bot {
         CardColour colour = null;
         GameCommand command;
 
-        for (int i = 0; i < hand.length(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             if (game.isCardValid(hand.get(i))) {
                 if (hand.get(i).getType() == CardType.WILD) {
                     // wild card
@@ -140,7 +141,7 @@ public final class BotPlayer implements Player, Bot {
         int yellowsInHand = 0;
         CardColour chosenColour = pickRandomColour();
 
-        for (int i = 0; i < hand.length(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             CardType type = hand.get(i).getType();
 
             switch (type) {
@@ -207,6 +208,6 @@ public final class BotPlayer implements Player, Bot {
      */
     @Override
     public Player clone() {
-        return new BotPlayer(this.id, this.hand.clone());
+        return new BotPlayer(this.id, new ArrayList<>(this.hand));
     }
 }

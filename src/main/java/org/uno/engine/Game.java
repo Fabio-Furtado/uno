@@ -27,10 +27,8 @@ import org.uno.exceptions.engineExceptions.EngineException;
 import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 import org.uno.util.Stack;
-import org.uno.util.Vector;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 
 /**
@@ -325,11 +323,11 @@ public final class Game implements UnoGame {
                 );
             }
         } else if (command.getOption() == 1) {
-            if (command.getIndex() > players[turn].getHand().length() - 1 ||
+            if (command.getIndex() > players[turn].getHand().size() - 1 ||
                     command.getIndex() < 0)
                 throw new CardIndexOutOfHandBoundsException(String.format(
                         "%d is out of hand range of %d",
-                        command.getIndex(), players[turn].getHand().length())
+                        command.getIndex(), players[turn].getHand().size())
                 );
             if (players[turn].getHand().get(command.getIndex()).getClass() ==
                     WildCard.class && command.getColour() == null) {
@@ -386,12 +384,12 @@ public final class Game implements UnoGame {
     private void makeSureDeckDoesNotGetEmpty() {
         if (deck.size() < 5) {
             Card tableTop = table.pop();
-            Vector<Card> temp = new Vector<>(table.size());
+            List<Card> temp = new ArrayList<>(table.size());
             for (int i = 0; i < table.size(); i++)
                 temp.add(i, table.pop());
             table.push(tableTop);
-            temp.shuffle();
-            for (int i = 0; i < temp.length(); i++)
+            Collections.shuffle(temp);
+            for (int i = 0; i < temp.size(); i++)
                 deck.push(temp.get(i));
         }
     }

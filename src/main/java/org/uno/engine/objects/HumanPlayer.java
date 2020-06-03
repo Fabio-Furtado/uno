@@ -17,7 +17,9 @@
 
 package org.uno.engine.objects;
 
-import org.uno.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -35,7 +37,7 @@ public final class HumanPlayer implements Player {
     /**
      * An ADT with the cards on the player's hand
      */
-    private final Vector<Card> hand;
+    private final List<Card> hand;
 
     /**
      * Creates a new instance.
@@ -43,7 +45,7 @@ public final class HumanPlayer implements Player {
      */
     public HumanPlayer(String id) {
         this.id = id;
-        this.hand = new Vector<>();
+        this.hand = new ArrayList<>();
     }
 
     /**
@@ -53,7 +55,7 @@ public final class HumanPlayer implements Player {
      * @param id a String to identify this player
      * @param hand the hand of the player
      */
-    private HumanPlayer(String id, Vector<Card> hand) {
+    private HumanPlayer(String id, List<Card> hand) {
         this.id = id;
         this.hand = hand;
     }
@@ -70,7 +72,7 @@ public final class HumanPlayer implements Player {
      * @see Player#getHand()
      */
     @Override
-    public Vector<Card> getHand() {
+    public List<Card> getHand() {
         return hand;
     }
 
@@ -97,6 +99,6 @@ public final class HumanPlayer implements Player {
      */
     @Override
     public Player clone() {
-        return new HumanPlayer(this.id, this.hand.clone());
+        return new HumanPlayer(this.id, new ArrayList<>(this.hand));
     }
 }

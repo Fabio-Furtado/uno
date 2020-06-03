@@ -25,7 +25,10 @@ import org.uno.enums.CardColour;
 import org.uno.enums.SpecialCardSymbol;
 import org.uno.enums.WildCardSymbol;
 import org.uno.util.Stack;
-import org.uno.util.Vector;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -39,14 +42,14 @@ final class DeckGenerator {
     private static final int N_ZEROS_PER_COLOUR = 1;
     private static final int N_NUMERALS_PER_COLOUR = 2;
     private static final int N_EACH_SPECIAL_PER_COLOUR = 2;
-    private Vector<Card> temporaryDeck;
+    private List<Card> temporaryDeck;
     private Stack<Card> deck;
     private int index;
     private static final int DECK_SIZE = 108;
 
     public DeckGenerator() {
         this.index = 0;
-        temporaryDeck = new Vector<>();
+        temporaryDeck = new ArrayList<>();
         deck = new Stack<>();
     }
 
@@ -146,7 +149,7 @@ final class DeckGenerator {
         addZeros();
         addSpecials();
 
-        temporaryDeck.shuffle();
+        Collections.shuffle(temporaryDeck);
 
         for (int i = 0; i < DECK_SIZE; i++)
             deck.push(temporaryDeck.get(i));

@@ -31,9 +31,9 @@ import org.uno.exceptions.GameRulesException;
 import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException;
 import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
-import org.uno.util.Vector;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 
@@ -210,7 +210,7 @@ public final class CLI implements CommandLineReader {
                 "to play%n");
         printHand(playerInTurn.getId());
         System.out.print("Choose please: ");
-        index = CliUtils.readValueInRange(1, playerInTurn.getHand().length());
+        index = CliUtils.readValueInRange(1, playerInTurn.getHand().size());
         return index;
     }
 
@@ -249,9 +249,9 @@ public final class CLI implements CommandLineReader {
      */
     private void printHand(String playerID) {
         System.out.printf("%s's hand: %n", playerID);
-        Vector<Card> hand = game.getPlayer(playerID).getHand();
+        List<Card> hand = game.getPlayer(playerID).getHand();
 
-        for (int i = 0; i < hand.length(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             System.out.printf("%d - ", i + 1);
             CardPrinter.printCard(hand.get(i));
             System.out.println();
@@ -281,16 +281,16 @@ public final class CLI implements CommandLineReader {
         for (int i = 0; i < numberOfPlayers; i++) {
             Player player = game.getPlayer(i);
             if (!player.getId().equals(humanPlayerName)) {
-                Vector<Card> hand = player.getHand();
-                if (hand.length() > 1)
+                List<Card> hand = player.getHand();
+                if (hand.size() > 1)
                     System.out.printf(
                             "%s -> %d %s left%n",
-                            player.getId(), player.getHand().length(), cards
+                            player.getId(), player.getHand().size(), cards
                     );
                 else
                     System.out.printf(
                             "%s -> %d %s left%n",
-                            player.getId(), player.getHand().length(), card
+                            player.getId(), player.getHand().size(), card
                     );
                 System.out.println();
             }
@@ -299,7 +299,7 @@ public final class CLI implements CommandLineReader {
 
     private void warnIfRivalIsAboutToWin() {
         Player previousPlayer = game.getPreviousPlayer();
-        if (previousPlayer.getHand().length() == 1 &&
+        if (previousPlayer.getHand().size() == 1 &&
                 !previousPlayer.getId().equals(humanPlayerName)
         )
             System.out.printf(

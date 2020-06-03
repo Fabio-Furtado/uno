@@ -17,7 +17,8 @@
 
 package org.uno.engine.objects;
 
-import org.uno.util.Vector;
+
+import java.util.List;
 
 
 /**
@@ -39,7 +40,7 @@ public interface Player {
      *
      * @return player's hand
      */
-    Vector<Card> getHand();
+    List<Card> getHand();
 
     /**
      * Adds the given card to the player's hand.
