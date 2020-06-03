@@ -125,23 +125,17 @@ public final class CLI implements CommandLineReader {
         System.out.println();
 
         if (cliCommand.length != 0 && !cliCommand[0].isEmpty()) {
-            if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.HELP)))
-                System.out.println(COMMANDS_HELP);
-            else if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.PRINT_HAND))) {
-                printHand(game.getPlayerInTurn().getId());
-            } else if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW)) ||
-                    cliCommand[0].equals(CommandValuesKeeper.getValue(Command.PLAY_A_CARD))) {
+            if (CommandValuesKeeper.isEngineConvertible(cliCommand[0]))
                 drawOrPlayACard(cliCommand);
-            } else if (cliCommand[0].equals(
-                    CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH))
-            ) {
-                printNumberOfCardsEachRivalPlayerHas();
-            } else if (cliCommand[0].equals(
-                    CommandValuesKeeper.getValue(Command.RESTART))
-            ) {
-                restart();
-            } else if (cliCommand[0].equals(CommandValuesKeeper.getValue((Command.EXIT))))
-                keepPlaying = false;
+            else if (CommandValuesKeeper.isCliExclusive(cliCommand[0])) {
+                if (cliCommand.length == 1)
+                    keepPlaying = doForCliExclusiveCommand(cliCommand[0]);
+                else
+                    System.out.printf(
+                            "No arguments expected for the <%s> command%n%n",
+                            cliCommand[0]
+                    );
+            }
             else
                 System.out.printf(
                         "Invalid command <%s>, type <%s> to see the available ones%n%n",
@@ -151,6 +145,23 @@ public final class CLI implements CommandLineReader {
         } else {
             prompt();
         }
+        return keepPlaying;
+    }
+
+    private boolean doForCliExclusiveCommand(String cliCommand) {
+        var keepPlaying = true;
+
+        if (cliCommand.equals(CommandValuesKeeper.getValue(Command.HELP)))
+            System.out.println(COMMANDS_HELP);
+        else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.PRINT_HAND)))
+            printHand(game.getPlayerInTurn().getId());
+        else if (cliCommand.equals(
+                CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH)))
+            printNumberOfCardsEachRivalPlayerHas();
+        else if (cliCommand.equals(CommandValuesKeeper.getValue(Command.RESTART)))
+            restart();
+        else if (cliCommand.equals(CommandValuesKeeper.getValue((Command.EXIT))))
+            keepPlaying = false;
         return keepPlaying;
     }
 
