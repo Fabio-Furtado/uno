@@ -42,118 +42,118 @@ final class DeckGenerator {
     private static final int N_ZEROS_PER_COLOUR = 1;
     private static final int N_NUMERALS_PER_COLOUR = 2;
     private static final int N_EACH_SPECIAL_PER_COLOUR = 2;
-    private List<Card> temporaryDeck;
     private Stack<Card> deck;
     private int index;
     private static final int DECK_SIZE = 108;
 
     public DeckGenerator() {
         this.index = 0;
-        temporaryDeck = new ArrayList<>();
         deck = new Stack<>();
     }
 
     /**
      * Adds the wild cards the temporary deck.
      */
-    private void addWilds() {
+    private void addWilds(List<Card> listDeck) {
         for (int i = 0; i < N_WILD_EACH; i++)
-            temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.CHANGE_COLOUR));
+            listDeck.add(this.index++, new WildCard(WildCardSymbol.CHANGE_COLOUR));
 
         for (int i = 0; i < N_WILD_EACH; i++)
-            temporaryDeck.add(this.index++, new WildCard(WildCardSymbol.DRAW_4));
+            listDeck.add(this.index++, new WildCard(WildCardSymbol.DRAW_4));
     }
 
     /**
      * Adds numerals to the temporary deck.
      */
-    private void addNumerals() {
+    private void addNumerals(List<Card> listDeck) {
 
         for (int i = 1; i < 10; i++) {
             // blue
             for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                temporaryDeck.add(this.index++, new NumericCard(CardColour.BLUE, i));
+                listDeck.add(this.index++, new NumericCard(CardColour.BLUE, i));
             // red
             for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                temporaryDeck.add(this.index++, new NumericCard(CardColour.RED, i));
+                listDeck.add(this.index++, new NumericCard(CardColour.RED, i));
             // green
             for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++) {
-                temporaryDeck.add(this.index++, new NumericCard(CardColour.GREEN, i));
+                listDeck.add(this.index++, new NumericCard(CardColour.GREEN, i));
             }
             // yellow
             for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                temporaryDeck.add(this.index++, new NumericCard(CardColour.YELLOW, i));
+                listDeck.add(this.index++, new NumericCard(CardColour.YELLOW, i));
         }
     }
 
     /**
      * Adds the zeros to the temporary deck
      */
-    private void addZeros() {
+    private void addZeros(List<Card> listDeck) {
+
         // blue
         for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            temporaryDeck.add(this.index++, new NumericCard(CardColour.BLUE, 0));
+            listDeck.add(this.index++, new NumericCard(CardColour.BLUE, 0));
+
         // red
         for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            temporaryDeck.add(this.index++, new NumericCard(CardColour.RED, 0));
+            listDeck.add(this.index++, new NumericCard(CardColour.RED, 0));
+
         // green
         for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            temporaryDeck.add(this.index++, new NumericCard(CardColour.GREEN, 0));
+            listDeck.add(this.index++, new NumericCard(CardColour.GREEN, 0));
+
         // yellow
         for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            temporaryDeck.add(this.index++, new NumericCard(CardColour.YELLOW, 0));
+            listDeck.add(this.index++, new NumericCard(CardColour.YELLOW, 0));
     }
 
     /**
      * Adds th especial cards to the temporary deck.
      */
-    private void addSpecials() {
+    private void addSpecials(List<Card> listDeck) {
         // blue
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.SKIP));
+            listDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.REVERSE));
+            listDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.DRAW_2));
+            listDeck.add(this.index++, new SpecialCard(CardColour.BLUE, SpecialCardSymbol.DRAW_2));
         // red
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.SKIP));
+            listDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.REVERSE));
+            listDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.DRAW_2));
+            listDeck.add(this.index++, new SpecialCard(CardColour.RED, SpecialCardSymbol.DRAW_2));
         // green
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.SKIP));
+            listDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.REVERSE));
+            listDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.DRAW_2));
+            listDeck.add(this.index++, new SpecialCard(CardColour.GREEN, SpecialCardSymbol.DRAW_2));
         // yellow
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.SKIP));
+            listDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.SKIP));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.REVERSE));
+            listDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.REVERSE));
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            temporaryDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.DRAW_2));
+            listDeck.add(this.index++, new SpecialCard(CardColour.YELLOW, SpecialCardSymbol.DRAW_2));
     }
 
     /**
      * Returns a new deck.
      *
-     * @return stack with the deck
+     * @return deck with shuffled cards
      */
     public Stack<Card> next() {
-        addWilds();
-        addNumerals();
-        addZeros();
-        addSpecials();
-
-        Collections.shuffle(temporaryDeck);
-
-        for (int i = 0; i < DECK_SIZE; i++)
-            deck.push(temporaryDeck.get(i));
-
+        List<Card> deckList = new ArrayList<>(DECK_SIZE);
+        addWilds(deckList);
+        addNumerals(deckList);
+        addZeros(deckList);
+        addSpecials(deckList);
+        Collections.shuffle(deckList);
+        for (Card card : deckList)
+            deck.push(card);
         index = 0;
         return deck;
     }
