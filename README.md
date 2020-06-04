@@ -10,20 +10,22 @@ This is simple uno engine with a CLI interface.
 
 ***Requirements***
 
-* JDK of your preference (_11 or higher_)
+* JDK of preference (_11 or higher_)
   * [OpenJDK](https://openjdk.java.net/)
   * [ZuluJDK community](https://www.azul.com/downloads/zulu-community/?architecture=x86-64-bit&package=jdk)
   * [OracleJDk](https://www.oracle.com/java/technologies/javase-downloads.html)
-* [Maven](https://maven.apache.org/)
 
-***Unix-Like systems***
 
-In project root run:
-```
-mvn install
-cd target
-java -jar hello.jar 
-``` 
+***Linux/macOS***
+
+run: `gradlew deploy`
+
+***Windows***
+
+run: `gradlew.bat deploy`
+
+The generated jar will be deployed at `build/uno/ alongside the dependencies 
+and resources 
 
 ## Configuration
 A configuration file won't be created for you, but the program will look for one
