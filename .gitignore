@@ -1,4 +1,16 @@
+### Java ###
+*.class
+*.jar
+
+### Gradle ###
+.gradle/
+build/
+
+### Maven ###
+target/
+
+
+### Other ###
 .*
 *.iml
 *.yml
-target/
