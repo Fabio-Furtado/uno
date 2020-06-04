@@ -36,21 +36,29 @@ import java.util.Scanner;
  */
 public class ConfigReader {
 
+    /**
+     * Map with the settings
+     */
     private static final Map<String, Object> settings = load();
+
+    /**
+     * Location in the disk where to look for the config file
+     */
     private static final String CONFIGURATIONS_FILE_LOCATION = "uno.yml";
 
-    // TODO
-    //  complete documentation
+    /**
+     * Not to be instantiated
+     */
+    private ConfigReader() {}
+
     /**
      * Returns the value of the setting corresponding to the given key or keys
-     * (if nested).
+     * (if nested). Will always return null if the config file was not found.
      *
-     * @param cls type of the value
      * @param keys can be a single or multiple keys depending if the value is
      *             nested
-     *
-     *
-     * @return
+     * @return value of the setting corresponding to the given key or keys, null
+     *         if the value does not exist or maybe the config file is missing
      */
     public static Object get(String... keys) {
         Object value = null;
@@ -70,17 +78,30 @@ public class ConfigReader {
     }
 
     /**
+     * Checks if the config file was found by the time this object was initialized
+     * If the return value is false the {@link ConfigReader#get(String...)} method
+     * will return null for any value requested.
+     *
+     * @return true if the config file exists, false if not
+     */
+    public static boolean configFileExists() {
+        return settings.size() > 0;
+    }
+
+    /**
      * Loads the setting from the configuration file.
      *
-     * @return map with the values, null if the file does not exist
+     * @return map with the values, empty map if the file does not exist
      */
     private static Map<String, Object> load() {
         File file = new File(CONFIGURATIONS_FILE_LOCATION);
         StringBuilder sb = new StringBuilder();
         Map<String, Object> map = new HashMap<>();
-        try (Scanner reader = new Scanner(file);) {
-            while (reader.hasNextLine())
-                sb.append(reader.nextLine() + "\n");
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNextLine()) {
+                sb.append(reader.nextLine());
+                sb.append("\n");
+            }
             Yaml yaml = new Yaml();
             map = (Map<String, Object>) yaml.load(sb.toString());
         } catch (FileNotFoundException ignored) {
