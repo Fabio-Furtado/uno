@@ -39,6 +39,7 @@ import java.util.Random;
 
 /**
  * A command line interface for the uno game
+ *
  * @author Fábio Furtado
  */
 public final class CLI implements CommandLineReader {
@@ -61,10 +62,18 @@ public final class CLI implements CommandLineReader {
         ENABLE_BOT_DELAY = delay != null ? (Boolean) delay : true;
     }
 
+    /**
+     * Creates a new instance.
+     */
     public CLI() {
         gameFactory = new GameFactory();
     }
 
+    /**
+     * Starts the cli.
+     *
+     * @param humanPlayerName the name for the human player
+     */
     public void start(String humanPlayerName) {
         System.out.printf("%nWelcome to UNO!!%n%n");
         this.humanPlayerName = humanPlayerName;
@@ -343,9 +352,5 @@ public final class CLI implements CommandLineReader {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void close() {
-        CommandLineReader.reader.close();
     }
 }

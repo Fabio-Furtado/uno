@@ -23,6 +23,11 @@ import org.uno.data.SystemInfoUnix;
 import org.uno.data.SystemInfoWindows;
 
 
+/**
+ * This class is responsible for booting the cli.
+ *
+ * @author Fábio Furtado 
+ */
 public final class Booter {
 
     private static final String DEFAULT_USER_NAME = "player";
@@ -31,6 +36,9 @@ public final class Booter {
         UNIX, WINDOWS
     }
 
+    /**
+     * Boots the cli
+     */
     public static void boot() {
         final String userName;
         final SystemInfo system;
