@@ -6,10 +6,6 @@
 .gradle/
 build/
 
-### Maven ###
-target/
-
-
 ### Other ###
 .*
 *.iml
