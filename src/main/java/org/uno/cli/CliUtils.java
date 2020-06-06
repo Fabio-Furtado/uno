@@ -18,13 +18,19 @@
 package org.uno.cli;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 
 /**
+ * Contains some utility console functions.
+ *
  * @author Fábio Furtado
  */
-final class CliUtils {
+final class CliUtils implements CommandLineReader {
+
+    /**
+     * Not to be instantiated.
+     */
+    private CliUtils() {}
 
     /**
      * Makes sure the user inputs a value within the given range.
@@ -37,8 +43,7 @@ final class CliUtils {
         int choice = 0;
         do {
             try {
-                Scanner scanner = new Scanner(System.in);
-                choice = scanner.nextInt();
+                choice = reader.nextInt();
                 if (choice < beginning || choice > end)
                     System.out.printf(
                             "Invalid value, insert a number between %d and %d: ",
@@ -60,12 +65,11 @@ final class CliUtils {
      * @return chosen valid option
      */
     static String readValidOption(String... valid) {
-        Scanner scanner = new Scanner(System.in);
-        String choice = "";
+        String choice;
         boolean isValid = false;
 
         do {
-            choice = scanner.next();
+            choice = reader.next();
             for (String element : valid) {
                 if (element.equals(choice)) {
                     isValid = true;
