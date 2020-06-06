@@ -30,14 +30,35 @@ import org.uno.exceptions.GameRulesException;
  */
 public final class GameFactory {
 
+    /**
+     * All bots name's will start with this prefix.
+     */
     private static final String BOT_PLAYER_NAME_PREFIX = "Bot";
+
+    /**
+     * Min number of players for each game.
+     */
     private static final int MIN_NUMBER_OF_PLAYERS = 2;
+
+    /**
+     * Max number of players for each game.
+     */
     private static final int MAX_NUMBER_OF_PLAYERS = 8;
 
+     /**
+     * Returns the minumum number of players allowed for each game.
+     * 
+     * @return min number of players
+     */
     public static int getMinNumberOfPlayers() {
         return MIN_NUMBER_OF_PLAYERS;
     }
 
+    /**
+     * Returns the max number of players allowed for each game.
+     * 
+     * @return max number of players
+     */
     public static int getMaxNumberOfPlayers() {
         return MAX_NUMBER_OF_PLAYERS;
     }

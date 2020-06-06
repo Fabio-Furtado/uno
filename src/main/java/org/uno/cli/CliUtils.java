@@ -17,8 +17,6 @@
 
 package org.uno.cli;
 
-import java.util.InputMismatchException;
-
 
 /**
  * Contains some utility console functions.

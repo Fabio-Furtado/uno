@@ -28,8 +28,11 @@ import org.uno.exceptions.engineExceptions.InvalidOptionException;
 import org.uno.exceptions.engineExceptions.MissingColourForWildCardException;
 import org.uno.util.Stack;
 
-import java.util.*;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * @see UnoGame
@@ -298,8 +301,9 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * Cheks if the given command is valid. Throws exceptions in case problems are
-     * found
+     * Cheks if the given command is valid. Throws exceptions if problems are
+     * found.
+     * 
      * @param command command to be checked
      * @throws MissingColourForWildCardException if the command plays a wild card
      *                                           but does not have a chosen colour
@@ -378,7 +382,7 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * If the deck size is under 5, the cards from the table will be reshuffled
+     * If the deck size is less than 5, the cards from the table will be reshuffled
      * and passed the the deck so it doesn't get empty.
      */
     private void makeSureDeckDoesNotGetEmpty() {
@@ -474,7 +478,7 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * Moves the turn how many times as requested
+     * Moves the turn as many times as requested.
      *
      * @param repeat number of times to repeat this operation
      */
@@ -497,7 +501,7 @@ public final class Game implements UnoGame {
     }
 
     /**
-     * Reverts the game. Usually done when someone plays a revert card
+     * Reverts the turn direction. Usually done when someone plays a revert card
      */
     private void revert() {
         direction *= -1;

@@ -37,7 +37,7 @@ public final class Booter {
     }
 
     /**
-     * Boots the cli
+     * Boots the cli.
      */
     public static void boot() {
         final String userName;
