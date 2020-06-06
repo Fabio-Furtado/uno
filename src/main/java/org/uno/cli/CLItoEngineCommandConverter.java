@@ -29,7 +29,6 @@ import org.uno.exceptions.CommandFormatException;
  */
 class CLItoEngineCommandConverter {
 
-    private static final String SEPARATOR_SYMBOL = " ";
     private static final String UNKNOWN_COMMAND_ERROR_MESSAGE =
             "Unknown command: %s";
     private static final String NOT_INDEX_ERROR_MESSAGE =
@@ -59,10 +58,6 @@ class CLItoEngineCommandConverter {
     }
 
     static GameCommand convert(String[] cliCommand) throws CommandFormatException {
-        int option;
-        int index;
-        CardColour colour;
-
         if (cliCommand[0].equals(CommandValuesKeeper.getValue(Command.DRAW))) {
             if (cliCommand.length > 1)
                 throw new CommandFormatException(

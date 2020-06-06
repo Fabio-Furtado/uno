@@ -43,12 +43,12 @@ final class CliUtils implements CommandLineReader {
         int choice = 0;
         do {
             try {
-                choice = reader.nextInt();
+                choice = Integer.parseInt(reader.next());
                 if (choice < beginning || choice > end)
                     System.out.printf(
                             "Invalid value, insert a number between %d and %d: ",
                             beginning, end);
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.printf(
                         "Invalid input, insert a number between %d and %d: ",
                         beginning, end);

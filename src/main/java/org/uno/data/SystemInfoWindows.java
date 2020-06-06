@@ -37,6 +37,6 @@ public class SystemInfoWindows implements SystemInfo {
      */
     @Override
     public String getUserName() {
-        return System.getenv("USERNAME");
+        return userName;
     }
 }

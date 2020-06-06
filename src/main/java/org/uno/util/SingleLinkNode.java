@@ -26,7 +26,7 @@ class SingleLinkNode<E> {
     private final E element;
     private final SingleLinkNode<E> next;
 
-    public SingleLinkNode(E element, SingleLinkNode next) {
+    public SingleLinkNode(E element, SingleLinkNode<E> next) {
         this.element = element;
         this.next = next;
     }

@@ -189,7 +189,7 @@ public final class CLI implements CommandLineReader {
             if (e.getMessage().equals(
                     String.format(
                             CLItoEngineCommandConverter.getInsufficientArgumentsErrorMessage(),
-                            cliCommand
+                            cliCommand[0]
                     ))
             ) {
                 String[] corrected = Arrays.copyOf(cliCommand, cliCommand.length + 1);

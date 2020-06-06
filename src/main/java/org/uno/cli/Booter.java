@@ -52,7 +52,7 @@ public final class Booter {
         } else if (os == OS.UNIX) {
             system = new SystemInfoUnix();
             userName = system.getUserName();
-        } else if (os == os.WINDOWS) {
+        } else if (os == OS.WINDOWS) {
             system = new SystemInfoWindows();
             userName = system.getUserName();
         } else
