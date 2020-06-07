@@ -22,25 +22,26 @@ import org.uno.engine.UnoGame;
 import org.uno.enums.CardColour;
 import org.uno.enums.CardType;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
 /**
- * An abstraction for a bot player
+ * An abstraction for a bot player.
  *
  * @author Fábio Furtado
  */
 public final class BotPlayer implements Player, Bot {
 
     /**
-     * A String to identify this player
+     * A String to identify this player.
      */
     private final String id;
 
     /**
-     * An ADT with the cards on the player's hand
+     * An ADT with the cards on the player's hand.
      */
     private final List<Card> hand;
 
@@ -105,33 +106,18 @@ public final class BotPlayer implements Player, Bot {
      */
     @Override
     public GameCommand makeMove(UnoGame game) {
-        int option = 0;
         int index = -1;
         CardColour colour = null;
-        GameCommand command;
 
         for (int i = 0; i < hand.size(); i++) {
             if (game.isCardValid(hand.get(i))) {
-                if (hand.get(i).getType() == CardType.WILD) {
-                    // wild card
-                    option = 1;
-                    index = i;
+                index = i;
+                if (hand.get(i).getType() == CardType.WILD)
                     colour = chooseColour();
-                } else {
-
-                    // non-wild card
-                    option = 1;
-                    index = i;
-                }
-                break;
+                return new GameCommand(index, colour);
             }
         }
-        if (option == 0)
-            command = new GameCommand();
-        else
-            command = colour == null ? new GameCommand(index) :
-                    new GameCommand(index, colour);
-        return command;
+        return new GameCommand();
     }
 
     private CardColour chooseColour() {
@@ -139,41 +125,25 @@ public final class BotPlayer implements Player, Bot {
         int redsInHand = 0;
         int greensInHand = 0;
         int yellowsInHand = 0;
-        CardColour chosenColour = pickRandomColour();
-
-        for (int i = 0; i < hand.size(); i++) {
-            CardType type = hand.get(i).getType();
-
-            switch (type) {
-                case NUMERIC:
-                    NumericCard card = (NumericCard) hand.get(i);
-                    if (card.getColour() == CardColour.BLUE)
-                        bluesInHand++;
-                    else if (card.getColour() == CardColour.RED)
-                        redsInHand++;
-                    else if (card.getColour() == CardColour.GREEN)
-                        greensInHand++;
-                    else if (card.getColour() == CardColour.YELLOW)
-                        yellowsInHand++;
-                    break;
-
-                case SPECIAL:
-                    SpecialCard card_2 = (SpecialCard) hand.get(i);
-                    if (card_2.getColour() == CardColour.BLUE)
-                        bluesInHand++;
-                    else if (card_2.getColour() == CardColour.RED)
-                        redsInHand++;
-                    else if (card_2.getColour() == CardColour.GREEN)
-                        greensInHand++;
-                    else if (card_2.getColour() == CardColour.YELLOW)
-                        yellowsInHand++;
-                    break;
-
-                default: // Wild
-                    break;
+        
+        for (Card card : hand) {
+            if (card instanceof Colourful) {
+                CardColour colour = ((Colourful) card).getColour();
+                switch(colour) {
+                    case BLUE:
+                    bluesInHand++;
+                    case RED:
+                    redsInHand++;
+                    case GREEN:
+                    greensInHand++;
+                    case YELLOW:
+                    yellowsInHand++;
+                }
+                
             }
         }
-
+        
+        CardColour chosenColour = pickRandomColour();
         int[] arr = {bluesInHand, redsInHand, greensInHand, yellowsInHand};
         int biggerValue = arr[new Random().nextInt(4)];
 

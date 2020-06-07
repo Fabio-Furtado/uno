@@ -33,11 +33,11 @@ public final class GameCommand {
     private final CardColour colour;
 
     /**
-     * Creates a new instance for a command to play a wild card.
+     * Creates a new instance for a command to play a wild card or a non-wild
+     * if {@code colour == null}.
      *
      * @param index  index of the card to play
      * @param colour colour to choose for the wild card
-     * @requires {@code colour != null && index > -1}
      */
     public GameCommand(int index, CardColour colour) {
         this.option = 1;
@@ -59,7 +59,6 @@ public final class GameCommand {
      * index.
      *
      * @param index index of the card to play
-     * @requires {@code index > -1}
      */
     public GameCommand(int index) {
         this.option = 1;
