@@ -17,13 +17,20 @@
 
 package org.uno.cli;
 
+import java.util.Scanner;
+
 
 /**
- * Contains some utility console functions.
- *
+ * Contains util functions for cli user interaction.
+ * 
  * @author Fábio Furtado
  */
-final class CliUtils implements CommandLineReader {
+final class CliUtils {
+
+    /**
+     * Used by this class to read user keyboard input on the console
+     */
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
      * Not to be instantiated.
@@ -41,7 +48,7 @@ final class CliUtils implements CommandLineReader {
         int choice = 0;
         do {
             try {
-                choice = Integer.parseInt(reader.next());
+                choice = Integer.parseInt(scanner.nextLine().strip());
                 if (choice < beginning || choice > end)
                     System.out.printf(
                             "Invalid value, insert a number between %d and %d: ",
@@ -50,7 +57,7 @@ final class CliUtils implements CommandLineReader {
                 System.out.printf(
                         "Invalid input, insert a number between %d and %d: ",
                         beginning, end);
-                readValueInRange(beginning, end);
+                return readValueInRange(beginning, end);
             }
         } while (choice < beginning || choice > end);
         return choice;
@@ -63,11 +70,11 @@ final class CliUtils implements CommandLineReader {
      * @return chosen valid option
      */
     static String readValidOption(String... valid) {
-        String choice;
+        String choice = "";
         boolean isValid = false;
 
         do {
-            choice = reader.next();
+            choice = scanner.next();
             for (String element : valid) {
                 if (element.equals(choice)) {
                     isValid = true;
