@@ -84,4 +84,24 @@ public class Stack<E> implements org.uno.util.MutableStack<E> {
     public boolean isEmpty() {
         return top == null;
     }
+
+    /**
+     * @see MutableStack#clone()
+     */
+    @Override
+    public Stack<E> clone() {
+        if (isEmpty())
+            return new Stack<>();
+
+        var next = top;
+        Stack<E> aux = new Stack<>();
+        Stack<E> clone = new Stack<>();
+        while(next != null) {
+            aux.push(next.getNodeContent());
+            next = next.next();
+        }
+        while(!aux.isEmpty())
+            clone.push(aux.pop());
+        return clone;
+    }
 }

@@ -89,17 +89,46 @@ public final class Game implements UnoGame {
      * Creates a new instance.
      *
      * @param players players for this game
+     * @requires players != null
      */
     Game(Player[] players) {
+        this.players = Arrays.copyOf(players, players.length);
         this.deck = new DeckGenerator().next();
         this.table = new Stack<>();
-        this.players = new Player[players.length];
-        System.arraycopy(players, 0, this.players, 0, players.length);
         this.turn = new Random().nextInt(players.length);
-        this.direction = 1;
         this.previous = turn;
+        this.direction = 1;
         this.winner = null;
         distributeAndFlip();
+    }
+
+    /**
+     * This constructor is to be used only and in no other situation other than:
+     * to create a game with a previous state or to create a clone.
+     * Appliance in other situations may produce unexpected behaviour. This
+     * shouldn't be used especially to create a Game in a initial state.
+     * 
+     * @param players   players for this instance
+     * @param deck      deck for this instance
+     * @param table     table for this instance
+     * @param turn      turn for this instance
+     * @param direction direction for this instance (1 or -1)
+     * @requires {@code players != null && players.length > 0 && deck != null &&
+     *           table != null && deck.size() + table.size() == 108 && turn > 0
+     *           && turn < players.length && (direction == 1 || direction == -1)}
+     */
+    Game(Player[] players, Stack<Card> deck, Stack<Card> table, int turn, int direction) {
+        this.players = players;
+        this.deck = deck;
+        this.table = table;
+        this.turn = turn;
+        this.direction = direction;
+        this.winner = null;
+
+        for (Player player : players) {
+            if (player.getHand().isEmpty())
+                this.winner = player;
+        }
     }
 
     /**
@@ -505,5 +534,20 @@ public final class Game implements UnoGame {
      */
     private void revert() {
         direction *= -1;
+    }
+
+    /**
+     * @see UnoGame#clone()
+     */
+    @Override
+    public UnoGame clone() {
+        var clone = new Game(
+            players.clone(), 
+            deck.clone(),
+            table.clone(),
+            turn,
+            direction
+        );
+        return clone;
     }
 }

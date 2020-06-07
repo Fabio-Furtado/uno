@@ -148,4 +148,11 @@ public interface UnoGame {
      * @return command with the bot's move.
      */
     GameCommand goBot();
+
+    /**
+     * Returns a copy of this instance.
+     * 
+     * @return copy of this game
+     */
+    UnoGame clone();
 }

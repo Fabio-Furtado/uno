@@ -62,7 +62,14 @@ interface MutableStack<E> {
     boolean isEmpty();
 
     /**
-     * Returns a String representation of the Stack
+     * Returns a String representation of the Stack.
      */
     String toString();
+
+    /**
+     * Returns a clone of this instance.
+     * 
+     * @return clone of this instance
+     */
+    MutableStack<E> clone();
 }
