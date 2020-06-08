@@ -99,6 +99,9 @@ public final class HumanPlayer implements Player {
      */
     @Override
     public Player clone() {
-        return new HumanPlayer(this.id, new ArrayList<>(this.hand));
+        List<Card> handCopy = new ArrayList<>(hand.size());
+        for (Card card : hand)
+            handCopy.add(card);
+        return new HumanPlayer(this.id, handCopy);
     }
 }

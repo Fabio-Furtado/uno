@@ -178,6 +178,9 @@ public final class BotPlayer implements Player, Bot {
      */
     @Override
     public Player clone() {
-        return new BotPlayer(this.id, new ArrayList<>(this.hand));
+        List<Card> handCopy = new ArrayList<>(hand.size());
+        for (Card card : hand)
+            handCopy.add(card);
+        return new BotPlayer(this.id, handCopy);
     }
 }
