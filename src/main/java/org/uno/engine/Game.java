@@ -112,16 +112,18 @@ public final class Game implements UnoGame {
      * @param deck      deck for this instance
      * @param table     table for this instance
      * @param turn      turn for this instance
+     * @param previous  previous for this instance
      * @param direction direction for this instance (1 or -1)
      * @requires {@code players != null && players.length > 0 && deck != null &&
      *           table != null && deck.size() + table.size() == 108 && turn > 0
      *           && turn < players.length && (direction == 1 || direction == -1)}
      */
-    Game(Player[] players, Stack<Card> deck, Stack<Card> table, int turn, int direction) {
+    Game(Player[] players, Stack<Card> deck, Stack<Card> table, int turn, int previous, int direction) {
         this.players = players;
         this.deck = deck;
         this.table = table;
         this.turn = turn;
+        this.previous = previous;
         this.direction = direction;
         this.winner = null;
 
@@ -546,6 +548,7 @@ public final class Game implements UnoGame {
             deck.clone(),
             table.clone(),
             turn,
+            previous,
             direction
         );
         return clone;
