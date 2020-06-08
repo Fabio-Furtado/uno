@@ -17,14 +17,16 @@
 
 package org.uno.util;
 
-import org.uno.exceptions.EmptyStackException;
+import java.util.Iterator;
 
+
+import org.uno.exceptions.EmptyStackException;
 
 /**
  * @author Fábio Furtado
  * @see org.uno.util.MutableStack
  */
-public class Stack<E> implements org.uno.util.MutableStack<E> {
+public class Stack<E> implements org.uno.util.MutableStack<E>, Iterable<E> {
 
     private SingleLinkNode<E> top;
     private int size;
@@ -85,6 +87,21 @@ public class Stack<E> implements org.uno.util.MutableStack<E> {
         return top == null;
     }
 
+
+    /**
+     * @see MutableStack#toArray()
+     */
+    @Override
+    public Object[] toArray() {
+        Object[] arr = new Object[size];
+        int i = size - 1;
+        for (E element : this) {
+            arr[i] = element;
+            i--;
+        }
+        return arr;
+    }
+
     /**
      * @see MutableStack#clone()
      */
@@ -103,5 +120,45 @@ public class Stack<E> implements org.uno.util.MutableStack<E> {
         while(!aux.isEmpty())
             clone.push(aux.pop());
         return clone;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new StackIterator();
+    }
+
+    /**
+     * Iterator for this class.
+     * <p> The element at the top is the first iteration and the element at the
+     * bottom the last.
+     */
+    private class StackIterator implements Iterator<E> {
+
+        private SingleLinkNode<E> next;
+
+        /**
+         * Creates an instance.
+         */
+        private StackIterator() {
+            this.next = top;
+        }
+
+        /**
+         * @see Iterator#hasNext()
+         */
+        @Override
+        public boolean hasNext() {
+            return next != null;
+        }
+
+        /**
+         * @see Iterator#next()
+         */
+        @Override
+        public E next() {
+            var returnValue = next.getNodeContent();
+            next = next.next();
+            return returnValue;
+        }
     }
 }

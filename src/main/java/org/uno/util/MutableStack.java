@@ -17,6 +17,8 @@
 
 package org.uno.util;
 
+import org.w3c.dom.Document;
+
 /**
  * A a collection of objects that are inserted and removed according to the
  * last-in first-out principle.
@@ -66,6 +68,15 @@ interface MutableStack<E> {
      */
     String toString();
 
+    /**
+     * Returns an array with all elements of this Stack.
+     * <p>The element at the top of the Stack will be placed at the last index
+     * and the element at the bottom at the first.
+     * 
+     * @return array with all elements
+     */
+    Object[] toArray();
+    
     /**
      * Returns a clone of this instance.
      * 
