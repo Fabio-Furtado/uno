@@ -146,6 +146,8 @@ final class DeckGenerator {
      * @return deck with shuffled cards
      */
     public Stack<Card> next() {
+
+        // When merging with master keep master
         List<Card> deckList = new ArrayList<>(DECK_SIZE);
         addWilds(deckList);
         addNumerals(deckList);

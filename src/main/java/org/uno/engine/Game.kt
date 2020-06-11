@@ -453,7 +453,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
 
             var winner:Player? = null
             for (player in players) {
-                if (player.hand.size == 0) winner = player
+                if (player.hand.isEmpty()) winner = player
             }
             return Game(players, deck, table, turn, previous, direction, winner)
         }
