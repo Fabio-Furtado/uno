@@ -14,17 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno
 
-package org.uno;
-
-import org.uno.cli.Booter;
+import org.uno.cli.Booter.boot
 
 /**
  * @author Fábio Furtado
  */
-public class Main {
 
-    public static void main(String[] args) {
-        Booter.boot();
-    }
+fun main() {
+    boot()
 }

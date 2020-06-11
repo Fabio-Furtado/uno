@@ -42,7 +42,7 @@ String deploymentDir = getBuildDir().getPath() + '/' + project.name + '/'
 jar {
     manifest {
         attributes(
-                'Main-Class': 'org.uno.Main',
+                'Main-Class': 'org.uno.MainKt',
                 'Class-Path': libsDir.concat(configurations.runtimeClasspath.
                         files.collect { it.getName() }.join(' '))
         )
