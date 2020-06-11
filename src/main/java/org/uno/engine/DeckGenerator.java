@@ -21,9 +21,6 @@ import org.uno.engine.objects.Card;
 import org.uno.engine.objects.NumericCard;
 import org.uno.engine.objects.SpecialCard;
 import org.uno.engine.objects.WildCard;
-import org.uno.enums.CardColour;
-import org.uno.enums.SpecialCardSymbol;
-import org.uno.enums.WildCardSymbol;
 import org.uno.util.Stack;
 
 import java.util.ArrayList;

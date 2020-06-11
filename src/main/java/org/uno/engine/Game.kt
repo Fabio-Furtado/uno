@@ -18,9 +18,6 @@
 package org.uno.engine
 
 import org.uno.engine.objects.*
-import org.uno.enums.CardType
-import org.uno.enums.SpecialCardSymbol
-import org.uno.enums.WildCardSymbol
 import org.uno.engine.engineExceptions.GameRulesException
 import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
 import org.uno.engine.engineExceptions.InvalidOptionException

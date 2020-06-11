@@ -17,8 +17,6 @@
 
 package org.uno.engine
 
-import org.uno.enums.CardColour
-
 
 /**
  * Abstraction of a command which can be passed to {@link UnoGame#executeMove(GameCommand)}

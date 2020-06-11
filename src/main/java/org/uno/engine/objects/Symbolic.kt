@@ -16,7 +16,7 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardSymbol
+import org.uno.engine.CardSymbol
 
 /**
  * This interface must be applied to cards which hold symbols instead of numbers

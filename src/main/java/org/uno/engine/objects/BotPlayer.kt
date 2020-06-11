@@ -18,8 +18,8 @@ package org.uno.engine.objects
 
 import org.uno.engine.GameCommand
 import org.uno.engine.UnoGame
-import org.uno.enums.CardColour
-import org.uno.enums.CardType
+import org.uno.engine.CardColour
+import org.uno.engine.CardType
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 

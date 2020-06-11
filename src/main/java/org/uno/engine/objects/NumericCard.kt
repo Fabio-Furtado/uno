@@ -16,8 +16,8 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardColour
-import org.uno.enums.CardType
+import org.uno.engine.CardColour
+import org.uno.engine.CardType
 
 /**
  * Immutable abstraction of a numeric card.

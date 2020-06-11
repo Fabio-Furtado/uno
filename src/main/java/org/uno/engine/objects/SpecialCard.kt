@@ -16,9 +16,9 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardColour
-import org.uno.enums.CardType
-import org.uno.enums.SpecialCardSymbol
+import org.uno.engine.CardColour
+import org.uno.engine.CardType
+import org.uno.engine.SpecialCardSymbol
 
 /**
  * Immutable abstraction of a special card.

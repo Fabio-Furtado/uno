@@ -16,7 +16,7 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardColour
+import org.uno.engine.CardColour
 
 /**
  * Wild cards must implement this interface.

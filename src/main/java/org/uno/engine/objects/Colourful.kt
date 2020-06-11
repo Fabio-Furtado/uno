@@ -16,7 +16,7 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardColour
+import org.uno.engine.CardColour
 
 /**
  * This interface must be applied to all cards which hold a colour (not wilds).

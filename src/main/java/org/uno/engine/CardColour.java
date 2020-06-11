@@ -15,7 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine;
 
-public interface CardSymbol {
+public enum CardColour {
+
+    RED, BLUE, GREEN, YELLOW;
 }

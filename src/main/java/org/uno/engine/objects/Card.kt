@@ -16,7 +16,7 @@
  */
 package org.uno.engine.objects
 
-import org.uno.enums.CardType
+import org.uno.engine.CardType
 
 /**
  * All cards must implement this interface

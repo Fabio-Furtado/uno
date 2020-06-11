@@ -21,8 +21,8 @@ import org.uno.data.ConfigReader
 import org.uno.engine.Game
 import org.uno.engine.GameCommand
 import org.uno.engine.objects.HumanPlayer
-import org.uno.enums.CardColour
-import org.uno.enums.CardType
+import org.uno.engine.CardColour
+import org.uno.engine.CardType
 import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
 import org.uno.engine.engineExceptions.InvalidOptionException
 import org.uno.engine.engineExceptions.MissingColourForWildCardException

@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine;
 
-public enum CardColour {
+public enum SpecialCardSymbol implements CardSymbol {
 
-    RED, BLUE, GREEN, YELLOW;
+    REVERSE, SKIP, DRAW_2;
 }

@@ -17,7 +17,7 @@
 
 package org.uno.cli;
 
-import org.uno.enums.CardColour;
+import org.uno.engine.CardColour;
 
 import java.util.HashMap;
 import java.util.Map;

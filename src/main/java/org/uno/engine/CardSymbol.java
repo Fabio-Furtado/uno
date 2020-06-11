@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.enums;
+package org.uno.engine;
 
-public enum SpecialCardSymbol implements CardSymbol {
-
-    REVERSE, SKIP, DRAW_2;
+public interface CardSymbol {
 }
