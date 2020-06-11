@@ -22,6 +22,4 @@ import org.uno.cli.Booter.boot
  * @author Fábio Furtado
  */
 
-fun main() {
-    boot()
-}
+fun main() = boot()

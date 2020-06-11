@@ -14,15 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package org.uno.cli;
+package org.uno.cli
 
 /**
  * @author Fábio Furtado
  */
-public class CommandFormatException extends Exception {
-
-    public CommandFormatException(String detailMessage) {
-        super(detailMessage);
-    }
+internal enum class Command {
+    PRINT_HAND, PLAY_A_CARD, DRAW, PRINT_RIVALS_HAND_LENGTH, HELP, RESTART, EXIT
 }

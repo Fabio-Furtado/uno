@@ -34,7 +34,6 @@ dependencies {
 group = 'org.uno'
 version = '0.0.1-SNAPSHOT'
 description = 'An uno game engine with a CLI interface.'
-sourceCompatibility = '11'
 
 String libsDir = 'lib/'
 String deploymentDir = getBuildDir().getPath() + '/' + project.name + '/'
@@ -43,8 +42,8 @@ jar {
     manifest {
         attributes(
                 'Main-Class': 'org.uno.MainKt',
-                'Class-Path': libsDir.concat(configurations.runtimeClasspath.
-                        files.collect { it.getName() }.join(' '))
+                'Class-Path': configurations.runtimeClasspath.
+                        files.collect { libsDir.concat(it.getName()) }.join(' ')
         )
     }
 }

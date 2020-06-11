@@ -18,27 +18,26 @@
 package org.uno.cli
 
 import org.uno.data.ConfigReader
-import org.uno.engine.Game
-import org.uno.engine.GameCommand
-import org.uno.engine.objects.HumanPlayer
 import org.uno.engine.CardColour
 import org.uno.engine.CardType
+import org.uno.engine.Game
+import org.uno.engine.GameCommand
 import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.engine.engineExceptions.InvalidOptionException
 import org.uno.engine.engineExceptions.MissingColourForWildCardException
-import java.util.*
+import org.uno.engine.objects.*
+import kotlin.random.Random
 
 /**
  * A command line interface for the uno game.
  *
  * @author Fábio Furtado
  */
-class CLI(humanPlayerName: String) : CommandLineReader {
+class CLI(_humanPlayerName: String) {
 
-    private val humanPlayerName = humanPlayerName
-    private var game = Game.instance(askForNumberOfPlayers() - 1, humanPlayerName)
+    private val humanPlayerName = _humanPlayerName
+    private var game = Game.instance(askForNumberOfPlayers() - 1, _humanPlayerName)
 
-    companion object {
+    private companion object {
 
         private var PROMPT_SYMBOL: String
         private var ENABLE_BOT_DELAY: Boolean
@@ -52,7 +51,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
             ENABLE_BOT_DELAY = if (delay != null) delay as Boolean else true
         }
 
-        private fun buildCommandsHelpString(): String {
+        fun buildCommandsHelpString(): String {
             val columnsForPrefix = 18
             val sb = StringBuilder()
             val commands = arrayOf(
@@ -74,12 +73,78 @@ class CLI(humanPlayerName: String) : CommandLineReader {
             }
             return sb.toString()
         }
+
+        /**
+         * Makes sure the user inserts a value within the given range.
+         *
+         * @param beginning beginning of the range
+         * @param end       end of the range
+         * @return valid value imputed by user
+         */
+        fun readValueInRange(beginning: Int, end: Int): Int {
+            var choice: Int
+            do {
+                try {
+                    choice = readLine()!!.trim().toInt()
+                    if (choice < beginning || choice > end)
+                        print("Invalid value, insert a number between $beginning and $end: ")
+                } catch (e: NumberFormatException) {
+                    print("Invalid input, insert a number between $beginning and $end: ")
+                    return readValueInRange(beginning, end)
+                }
+            } while (choice < beginning || choice > end)
+            return choice
+        }
+
+        /**
+         * Reads a valid option from the standard input.
+         *
+         * The given strings define which options are valid.
+         *
+         * @param valid valid options
+         * @return chosen valid option
+         */
+        fun readValidOption(vararg valid: String): String {
+            do {
+                val choice = readLine()!!
+                for (element in valid) {
+                    if (element == choice) {
+                        return element
+                    }
+                }
+            } while (true)
+        }
+
+        /**
+         * Prints a String description of given `card`.
+         */
+        fun printCard(card: Card) {
+            when (card.type) {
+                CardType.NUMERIC -> printNumerical(card as NumericCard)
+                CardType.WILD -> printWild(card as WildCard)
+                CardType.SPECIAL -> printSpecial(card as SpecialCard)
+            }
+        }
+
+        fun printNumerical(numCard: NumericCard):
+                Unit = print("${numCard.colour} ${numCard.number}")
+
+        fun printSpecial(specialCard: SpecialCard):
+                Unit = print("${specialCard.colour} ${specialCard.symbol}")
+
+
+        fun printWild(wildCard: WildCard) {
+            when (wildCard.pickedColour) {
+                null -> print("Wild ${wildCard.symbol}")
+                else -> print("${wildCard.pickedColour} ${wildCard.symbol}")
+            }
+        }
     }
 
     private fun askForNumberOfPlayers(): Int {
         println("\nWelcome to UNO!!\n")
         print("How many players will your game have?: ")
-        return CliUtils.readValueInRange(
+        return readValueInRange(
                 Game.MIN_NUMBER_OF_PLAYERS,
                 Game.MAX_NUMBER_OF_PLAYERS
         )
@@ -100,7 +165,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
                 reportMove(move)
             }
             warnIfRivalIsAboutToWin()
-            if (game.isOver()) {
+            if (game.isOver) {
                 println("\nGAME OVER!!!\n${game.winner!!.id} Won!")
                 run = false
             }
@@ -110,7 +175,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
     private fun prompt(): Boolean {
         var keepPlaying = true
         print(PROMPT_SYMBOL)
-        val cliCommand = CommandLineReader.reader.nextLine().strip().split(" ").toTypedArray()
+        val cliCommand = readLine()!!.trim().split(" ").toTypedArray()
         println()
         if (cliCommand.isNotEmpty() && cliCommand[0].isNotEmpty()) {
             if (CommandValuesKeeper.isEngineConvertible(cliCommand[0]))
@@ -169,10 +234,6 @@ class CLI(humanPlayerName: String) : CommandLineReader {
                 println(e.message)
                 println()
             }
-        } catch (e: InvalidOptionException) {
-
-            // The exception catch above already prevents this exception
-            e.printStackTrace()
         } catch (cardIndexOutOfHandBoundsException: CardIndexOutOfHandBoundsException) {
             println("Invalid card index\n")
         } catch (e: MissingColourForWildCardException) {
@@ -188,7 +249,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
         println("You have to choose the index of the card you wish to play")
         printHand(playerInTurn.id)
         print("Choose please: ")
-        index = CliUtils.readValueInRange(1, playerInTurn.hand.size)
+        index = readValueInRange(1, playerInTurn.hand.size)
         return index
     }
 
@@ -197,7 +258,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
         print("You have to pick a colour for your wild card,\n"
                 + "1) Blue\n" + "2) Red\n" + "3) Green\n"
                 + "4) Yellow\n" + "please choose a colour: ")
-        val choice = CliUtils.readValueInRange(1, 4)
+        val choice = readValueInRange(1, 4)
         println()
         colour = when (choice) {
             1 -> CommandValuesKeeper.getValue(CardColour.BLUE)
@@ -210,7 +271,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
 
     private fun printTableTop() {
         print("Table Top: ")
-        CardPrinter.printCard(game.getTableTop())
+        printCard(game.tableTop)
     }
 
     private fun printTurn() {
@@ -227,7 +288,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
         val hand = game.getPlayer(playerID)!!.hand
         for (i in hand.indices) {
             print("${i + 1} - ")
-            CardPrinter.printCard(hand[i])
+            printCard(hand[i])
             println()
         }
         println()
@@ -239,9 +300,9 @@ class CLI(humanPlayerName: String) : CommandLineReader {
             println("$playerID has drawn a card")
         else if (move.option == 1) {
             print("$playerID has played a ")
-            CardPrinter.printCard(game.getTableTop())
+            printCard(game.tableTop)
             println()
-            if (game.getTableTop().type == CardType.WILD) {
+            if (game.tableTop.type == CardType.WILD) {
                 println("and has chosen ${move.colour}")
             }
         }
@@ -249,7 +310,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
     }
 
     private fun printNumberOfCardsEachRivalPlayerHas() {
-        val numberOfPlayers = game.getNumberOfPlayers()
+        val numberOfPlayers = game.numberOfPlayers
         val card = "card"
         val cards = "cards"
         for (i in 0 until numberOfPlayers) {
@@ -278,7 +339,7 @@ class CLI(humanPlayerName: String) : CommandLineReader {
 
     private fun addBotThinkingDelay() {
         try {
-            Thread.sleep((Random().nextInt(4) - 2 + 2) * 1000.toLong())
+            Thread.sleep(Random.nextLong(1, 4) * 1000.toLong())
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }

@@ -17,11 +17,10 @@
 
 package org.uno.engine
 
-import org.uno.engine.objects.*
-import org.uno.engine.engineExceptions.GameRulesException
 import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.engine.engineExceptions.InvalidOptionException
+import org.uno.engine.engineExceptions.GameRulesException
 import org.uno.engine.engineExceptions.MissingColourForWildCardException
+import org.uno.engine.objects.*
 import org.uno.util.Stack
 import kotlin.random.Random
 
@@ -71,27 +70,35 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * The players of this game
      */
-    override val players = _players
-        /**
-         * Returns a copy of the players array.
-         */
-        get() = field.copyOf()
+    private val players = _players
 
     override var winner: Player? = _winner
         private set
+        get() = field?.clone()
 
     /**
      * @see UnoGame.playerInTurn
      */
-    override var playerInTurn: Player = players[turn]
-        private set
+    override val playerInTurn
+        get() = players[turn].clone()
 
     /**
      * @see UnoGame.previousPlayer
      */
-    override var previousPlayer: Player = playerInTurn
-        private set
+    override val previousPlayer
+        get() = players[previous].clone()
 
+    override val deckTop: Card
+        get() = deck.peek().clone()
+
+    override val tableTop: Card
+        get() = table.peek().clone()
+
+    override val numberOfPlayers: Int
+        get() = players.size
+
+    override val isOver: Boolean
+        get() = winner != null
     /**
      * Distributes the cards to the players and puts the first
      * card on the table.
@@ -113,11 +120,6 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
         for (card in aux)
             deck.push(card)
     }
-
-    /**
-     * @see UnoGame#getNumberOfPlayers()
-     */
-    override fun getNumberOfPlayers(): Int = players.size
 
     /**
      * @see UnoGame#getPlayer(int)
@@ -145,21 +147,6 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
         }
         return -1
     }
-
-    /**
-     * @see UnoGame#getDeckTop()
-     */
-    override fun getDeckTop(): Card = deck.peek().clone()
-
-    /**
-     * @see UnoGame#getTableTop()
-     */
-    override fun getTableTop(): Card = table.peek().clone()
-
-    /**
-     * @see UnoGame#isOver()
-     */
-    override fun isOver(): Boolean = winner != null
 
     /**
      * @see UnoGame#isCardValid(Card)
@@ -201,21 +188,20 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * @see UnoGame.executeMove
      */
-    @Throws(InvalidOptionException::class,
-            CardIndexOutOfHandBoundsException::class,
+    @Throws(CardIndexOutOfHandBoundsException::class,
             MissingColourForWildCardException::class)
     override fun executeMove(command: GameCommand): Int {
-        return if (!isOver()) {
+        return if (!isOver) {
+            checkMoveValidity(command)
             makeSureDeckDoesNotGetEmpty()
             var returnValue = 1
-            checkCommandValidity(command)
             if (command.option == 0) {
                 draw()
                 returnValue = 0
             } else if (command.option == 1) {
                 returnValue = play(command)
                 if (previousPlayer.hand.isEmpty())
-                    winner = previousPlayer
+                    winner = players[turn]
             }
             returnValue
         } else throw IllegalStateException("This game is already over!")
@@ -230,29 +216,18 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      * @throws CardIndexOutOfHandBoundsException if the command plays a card out
      *                                           of the player in turn hand's
      *                                           index bounds
-     * @throws InvalidOptionException            If the given option is not valid
-     *
-     * @throws IllegalStateException             if an index and/or colour were given
-     * when the option is to draw
      */
     @Throws(MissingColourForWildCardException::class,
-            CardIndexOutOfHandBoundsException::class,
-            InvalidOptionException::class)
-    private fun checkCommandValidity(command: GameCommand) {
-        if (command.option == 0) {
-            check(!(command.index != -1 || command.colour != null)) {
-                "Not expecting values for index and/or colour" +
-                        "when option is 0"
-            }
-        } else if (command.option == 1) {
-            if (command.index > playerInTurn.hand.size - 1 || command.index < 0)
+            CardIndexOutOfHandBoundsException::class)
+    private fun checkMoveValidity(command: GameCommand) {
+        if (command.option == 1) {
+            if (command.index > players[turn].hand.size - 1)
                 throw CardIndexOutOfHandBoundsException(
-                        "${command.index} is out of hand range of ${playerInTurn.hand.size}"
+                        "${command.index} is out of hand range of ${players[turn].hand.size}"
                 )
-            if (playerInTurn.hand[command.index] is Wild && command.colour == null) {
+            else if (players[turn].hand[command.index] is Wild && command.colour == null)
                 throw MissingColourForWildCardException()
-            }
-        } else throw InvalidOptionException("Invalid option")
+        }
     }
 
     /**
@@ -278,16 +253,14 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     }
 
     private fun draw() {
-        playerInTurn.addToHand(deck.pop())
+        players[turn].addToHand(deck.pop())
         updatePrevious()
-        moveToNextPlayer()
+        move()
     }
 
     private fun play(command: GameCommand): Int {
-        var returnValue = 1
-        val card = playerInTurn.hand[command.index]
-
-        if (isCardValid(card)) {
+        val card = players[turn].hand[command.index]
+        return if (isCardValid(card)) {
             updatePrevious()
             when (card.type) {
                 CardType.SPECIAL -> playSpecial(command)
@@ -296,23 +269,26 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
                 // Numeric card
                 else -> playNumeric(command)
             }
-            returnValue = 0
+            0
         }
-        return returnValue
+        else 1
     }
 
     private fun playSpecial(command: GameCommand) {
-        table.push(playerInTurn.takeFromHand(command.index))
-        val tableTop = table.peek() as SpecialCard
-        if (tableTop.symbol === SpecialCardSymbol.DRAW_2) {
-            moveToNextPlayer()
-            for (i in 0..1) playerInTurn.addToHand(deck.pop())
-            moveToNextPlayer()
-        } else if (tableTop.symbol === SpecialCardSymbol.REVERSE) {
-            revert()
-            if (players.size > 2) moveToNextPlayer()
-        } else { // skip card
-            jumpAPlayer()
+        table.push(players[turn].takeFromHand(command.index))
+        when ((table.peek() as Symbolic).symbol) {
+            SpecialCardSymbol.DRAW_2 -> {
+                move()
+                for (i in 0..1) players[turn].addToHand(deck.pop())
+                move()
+            }
+            SpecialCardSymbol.REVERSE -> {
+                revert()
+                if (players.size > 2) move()
+            }
+
+            // Skip card
+            else -> move(2)
         }
     }
 
@@ -323,48 +299,35 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      * @param command command of the move
      */
     private fun playWild(command: GameCommand) {
-        (playerInTurn.hand[command.index] as Wild).pickedColour = command.colour
-        table.push(playerInTurn.takeFromHand(command.index))
-        val tableTop = table.peek() as WildCard
-        if (tableTop.symbol === WildCardSymbol.DRAW_4) {
-            moveToNextPlayer()
-            for (i in 0 until 4)
-                playerInTurn.addToHand(deck.pop())
-            moveToNextPlayer()
-        } else {
-            moveToNextPlayer()
+        (players[turn].hand[command.index] as Wild).pickedColour = command.colour
+        table.push(players[turn].takeFromHand(command.index))
+
+        when ((table.peek() as Symbolic).symbol) {
+            WildCardSymbol.DRAW_4 -> {
+                move()
+                for (i in 0 until 4)
+                    players[turn].addToHand(deck.pop())
+                move()
+            }
+            else -> move()
         }
     }
 
     private fun playNumeric(command: GameCommand) {
-        table.push(playerInTurn.takeFromHand(command.index))
-        moveToNextPlayer()
+        table.push(players[turn].takeFromHand(command.index))
+        move()
     }
 
     /**
      * @see UnoGame#goBot()
      */
     override fun goBot(): GameCommand {
-        if (playerInTurn is Bot) {
+        if (players[turn] is Bot) {
             val move = (players[turn] as Bot).makeMove(this)
             executeMove(move)
             return move
         }
         throw IllegalStateException()
-    }
-
-    /**
-     * Moves the turn to the next player.
-     */
-    private fun moveToNextPlayer() {
-        move(1)
-    }
-
-    /**
-     * Jumps a player.
-     */
-    private fun jumpAPlayer() {
-        move(2)
     }
 
     /**
@@ -374,18 +337,26 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      */
     private fun move(repeat: Int) {
         for (i in 0 until repeat) {
-            if (direction > 0 && turn == players.size - 1)
+            if (direction == 1 && turn == players.size - 1)
                 turn = 0
-            else if (direction < 0 && turn == 0)
+            else if (direction == -1 && turn == 0)
                 turn = players.size - 1
             else turn += direction
         }
-        playerInTurn = players[turn]
     }
 
+    /**
+     * Moves the turn to the next player.
+     */
+    private fun move() = move(1)
+
+    /**
+     * Updates the previous and previousPlayer properties. Should be called
+     * whenever a move is about to be executed so it updates those values based
+     * on the current turn and player in turn.
+     */
     private fun updatePrevious() {
         previous = turn
-        previousPlayer = players[previous]
     }
 
     /**
@@ -398,9 +369,11 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * @see UnoGame#clone()
      */
-    override fun clone(): UnoGame {
-        TODO("To be implemented")
-    }
+    override fun clone() = instance(
+            players.copyOf(),
+            deck.clone(),
+            table.clone(),
+            turn, previous, direction )
 
     /**
      * Creates instances of [Game] class.
@@ -423,7 +396,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
         const val MAX_NUMBER_OF_PLAYERS = 8
 
         /**
-         * This instantiator is to be used only and in no other situation other than:
+         * This is to be used only and in no other situation other than:
          * to create a game with a previous state or to create a clone.
          * Appliance in other situations may produce unexpected behaviour. This
          * shouldn't be used especially to create a Game in a initial state.

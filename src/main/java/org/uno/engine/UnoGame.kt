@@ -16,71 +16,68 @@
  */
 package org.uno.engine
 
+import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
+import org.uno.engine.engineExceptions.MissingColourForWildCardException
 import org.uno.engine.objects.Card
 import org.uno.engine.objects.Player
-import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.engine.engineExceptions.InvalidOptionException
-import org.uno.engine.engineExceptions.MissingColourForWildCardException
 
 /**
- * A uno game abstraction. Use the [Game.Factory] class the get instances.
+ * A uno game abstraction. Use [Game.instance]  the get instances.
  *
  * @author Fábio Furtado
  */
 interface UnoGame {
 
     /**
-     * Gets an array with a copy of all the players in this game.
+     * The player who's in turn.
      *
-     * @return all players in this game
-     */
-    val players: Array<Player>
-
-    /**
-     * Gets a copy of the player in turn.
-     *
-     * @return Player class with the abstraction of the player in turn
+     * The getter will return a copy
      */
     val playerInTurn: Player
 
     /**
-     * Gets a copy of the player which played previously. Notice that this method
-     * does not return the player at index `turn - 1`, but the player which
+     * The player which played previously.
+     *
+     * This is not the player at index `turn - 1`, but the player which
      * indeed made the last move.
      * if called when the game just started and no moves have been made, the
-     * return type is meaningless.
-     *
-     * @return Player class with the abstraction of the previous player.
+     * return value is meaningless.
      */
     val previousPlayer: Player
 
     /**
-     * Gets a copy of this game's winner.
+     * This game's winner.
      *
-     * @return player which won the game or null if the game is not over yet
+     * The getter will return a copy of the player or null if the game is
+     * still not finished
      */
     val winner: Player?
 
     /**
-     * Gets a copy of the card on the top of the deck.
+     * The card on the top of the deck.
      *
-     * @return copy of the card on the the top of the deck
+     * The getter will return a copy
      */
-    fun getDeckTop(): Card
+    val deckTop: Card
 
     /**
-     * Gets a copy of the card at the top of the table.
+     * The card at the top of the table.
      *
-     * @return copy of the card on the the top of the table
+     * The getter will return a copy
      */
-    fun getTableTop(): Card
+    val tableTop: Card
 
     /**
-     * Gets the number of players of this game.
+     * Number of players in this game.
      *
-     * @return number of players
+     * It is a redundancy to `Game.players.size`
      */
-    fun getNumberOfPlayers(): Int
+    val numberOfPlayers: Int
+
+    /**
+     * True if this game is over, false if not
+     */
+    val isOver: Boolean
 
     /**
      * Gets a copy of the player by index.
@@ -99,6 +96,7 @@ interface UnoGame {
      */
     fun getPlayer(id: String?): Player?
 
+
     /**
      * Returns the index of the player.
      *
@@ -109,18 +107,8 @@ interface UnoGame {
 
 
     /**
-     * Checks if the game is over.
+     * Checks if it's valid to play the given `card`.
      *
-     * @return true if the game is over, false if not
-     */
-    fun isOver(): Boolean
-
-
-    /**
-     * Checks if it's valid to play the given card taking into account what's on
-     * top of the table.
-     *
-     * @param card card to check validity
      * @return true if the card is valid, false if not
      */
     fun isCardValid(card: Card): Boolean
@@ -130,16 +118,13 @@ interface UnoGame {
      *
      * @param command command of the move
      * @return 0 if the play was successfully executed, 1 if the move is invalid
-     * @throws InvalidOptionException            if the command option given is
-     * not valid
      * @throws CardIndexOutOfHandBoundsException if the index of the card chosen
      * in the command is not valid
      * @throws MissingColourForWildCardException if no colour was specified when
      * trying to play a wild card
      * @throws IllegalStateException             if the game is already over
      */
-    @Throws(InvalidOptionException::class,
-            CardIndexOutOfHandBoundsException::class,
+    @Throws(CardIndexOutOfHandBoundsException::class,
             MissingColourForWildCardException::class)
     fun executeMove(command: GameCommand): Int
 

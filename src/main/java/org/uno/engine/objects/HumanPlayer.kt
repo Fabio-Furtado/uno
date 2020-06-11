@@ -16,8 +16,6 @@
  */
 package org.uno.engine.objects
 
-import kotlin.collections.ArrayList
-
 /**
  * An Abstraction for a human player.
  *

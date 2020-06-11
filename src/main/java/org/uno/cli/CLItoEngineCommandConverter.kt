@@ -16,8 +16,8 @@
  */
 package org.uno.cli
 
-import org.uno.engine.GameCommand
 import org.uno.engine.CardColour
+import org.uno.engine.GameCommand
 
 /**
  * Translates cli commands into engine commands.
@@ -42,9 +42,8 @@ internal object CLItoEngineCommandConverter {
 
     @Throws(CommandFormatException::class)
     private fun doIfLikelyPlayingFromHand(cliCommand: Array<String>): GameCommand {
-        val index: Int
         var colour: CardColour? = null
-        index = if (cliCommand[0] == CommandValuesKeeper.getValue(Command.PLAY_A_CARD)) {
+        val index: Int = if (cliCommand[0] == CommandValuesKeeper.getValue(Command.PLAY_A_CARD)) {
             try {
                 cliCommand[1].toInt() - 1
             } catch (e: NumberFormatException) {
@@ -60,8 +59,18 @@ internal object CLItoEngineCommandConverter {
         }
         if (cliCommand.size == 3) {
             var engineCardColourCode: CardColour? = null
-            if (cliCommand[2] == CommandValuesKeeper.getValue(CardColour.BLUE)) engineCardColourCode = CardColour.BLUE else if (cliCommand[2] == CommandValuesKeeper.getValue(CardColour.RED)) engineCardColourCode = CardColour.RED else if (cliCommand[2] == CommandValuesKeeper.getValue(CardColour.GREEN)) engineCardColourCode = CardColour.GREEN else if (cliCommand[2] == CommandValuesKeeper.getValue(CardColour.YELLOW)) engineCardColourCode = CardColour.YELLOW
-            if (engineCardColourCode != null) colour = engineCardColourCode
+            when {
+                cliCommand[2] == CommandValuesKeeper.getValue(CardColour.BLUE) ->
+                    engineCardColourCode = CardColour.BLUE
+                cliCommand[2] == CommandValuesKeeper.getValue(CardColour.RED) ->
+                    engineCardColourCode = CardColour.RED
+                cliCommand[2] == CommandValuesKeeper.getValue(CardColour.GREEN) ->
+                    engineCardColourCode = CardColour.GREEN
+                cliCommand[2] == CommandValuesKeeper.getValue(CardColour.YELLOW) ->
+                    engineCardColourCode = CardColour.YELLOW
+            }
+            if (engineCardColourCode != null)
+                colour = engineCardColourCode
         } else if (cliCommand.size > 3) throw CommandFormatException(String.format(
                 tooManyArgumentsErrorMessage, cliCommand[0]))
         return GameCommand(index, colour)

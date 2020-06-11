@@ -24,8 +24,8 @@ import java.util.Map;
 
 
 /**
- * Contains string values associated with cli commands and colours. This strings is what the
- * cli user will enter to give a command
+ * Contains string values associated with cli commands and colours. This strings
+ * is what the cli user will enter to give a command
  *
  * @author Fábio Furtado
  */

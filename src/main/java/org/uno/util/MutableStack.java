@@ -17,8 +17,6 @@
 
 package org.uno.util;
 
-import org.w3c.dom.Document;
-
 /**
  * A a collection of objects that are inserted and removed according to the
  * last-in first-out principle.

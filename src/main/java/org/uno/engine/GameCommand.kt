@@ -27,6 +27,13 @@ package org.uno.engine
 class GameCommand private constructor(val option: Int, val index: Int,
                                       val colour: CardColour?) {
 
+
+    init {
+        when (option) {
+            1 -> if (index < 0) throw IllegalArgumentException("Index can't be " +
+                        "lesser than 0")
+        }
+    }
     /**
      * Creates a new instance for a command to draw a card.
      */
