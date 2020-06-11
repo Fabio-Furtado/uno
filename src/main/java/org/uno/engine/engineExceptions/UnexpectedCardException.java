@@ -15,14 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions;
+package org.uno.engine.engineExceptions;
 
 /**
- * @author Fábio Furtado
+ * This Exception expresses the expectation of a different card than the found
+ * one.
  */
-public class CommandFormatException extends Exception {
+public class UnexpectedCardException extends EngineException {
 
-    public CommandFormatException(String detailMessage) {
-        super(detailMessage);
+    public UnexpectedCardException(String msg) {
+        super(msg);
     }
 }

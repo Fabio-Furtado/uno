@@ -20,8 +20,6 @@ package org.uno.util;
 import java.util.Iterator;
 
 
-import org.uno.exceptions.EmptyStackException;
-
 /**
  * @author Fábio Furtado
  * @see org.uno.util.MutableStack

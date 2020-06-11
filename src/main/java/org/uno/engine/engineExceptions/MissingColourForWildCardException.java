@@ -15,15 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions.engineExceptions;
+package org.uno.engine.engineExceptions;
 
 /**
- * This Exception expresses the expectation of a different card than the found
- * one.
+ * @author Fábio Furtado
  */
-public class UnexpectedCardException extends EngineException {
+public class MissingColourForWildCardException extends EngineException {
 
-    public UnexpectedCardException(String msg) {
-        super(msg);
+    public MissingColourForWildCardException() {
+        super();
     }
 }

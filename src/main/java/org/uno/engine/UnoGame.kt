@@ -18,9 +18,9 @@ package org.uno.engine
 
 import org.uno.engine.objects.Card
 import org.uno.engine.objects.Player
-import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.exceptions.engineExceptions.InvalidOptionException
-import org.uno.exceptions.engineExceptions.MissingColourForWildCardException
+import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
+import org.uno.engine.engineExceptions.InvalidOptionException
+import org.uno.engine.engineExceptions.MissingColourForWildCardException
 
 /**
  * A uno game abstraction. Use the [Game.Factory] class the get instances.

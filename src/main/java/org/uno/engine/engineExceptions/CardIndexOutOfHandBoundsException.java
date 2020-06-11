@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions.engineExceptions;
+package org.uno.engine.engineExceptions;
 
 /**
  * @author Fábio Furtado

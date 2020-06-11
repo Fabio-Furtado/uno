@@ -15,18 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions;
+package org.uno.engine.engineExceptions;
 
 /**
+ * Thrown when a invalid game command is passed to the engine for execution.
+ *
  * @author Fábio Furtado
  */
-public class InvalidCommandException extends Exception {
+public class EngineException extends Exception {
 
-    public InvalidCommandException() {
+    public EngineException() {
         super();
     }
 
-    public InvalidCommandException(String detailMessage) {
+    public EngineException(String detailMessage) {
         super(detailMessage);
     }
 }

@@ -18,7 +18,6 @@ package org.uno.cli
 
 import org.uno.engine.GameCommand
 import org.uno.enums.CardColour
-import org.uno.exceptions.CommandFormatException
 
 /**
  * Translates cli commands into engine commands.

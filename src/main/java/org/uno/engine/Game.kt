@@ -21,10 +21,10 @@ import org.uno.engine.objects.*
 import org.uno.enums.CardType
 import org.uno.enums.SpecialCardSymbol
 import org.uno.enums.WildCardSymbol
-import org.uno.exceptions.GameRulesException
-import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.exceptions.engineExceptions.InvalidOptionException
-import org.uno.exceptions.engineExceptions.MissingColourForWildCardException
+import org.uno.engine.engineExceptions.GameRulesException
+import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
+import org.uno.engine.engineExceptions.InvalidOptionException
+import org.uno.engine.engineExceptions.MissingColourForWildCardException
 import org.uno.util.Stack
 import kotlin.random.Random
 

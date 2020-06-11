@@ -20,15 +20,12 @@ package org.uno.cli
 import org.uno.data.ConfigReader
 import org.uno.engine.Game
 import org.uno.engine.GameCommand
-import org.uno.engine.UnoGame
 import org.uno.engine.objects.HumanPlayer
 import org.uno.enums.CardColour
 import org.uno.enums.CardType
-import org.uno.exceptions.CommandFormatException
-import org.uno.exceptions.GameRulesException
-import org.uno.exceptions.engineExceptions.CardIndexOutOfHandBoundsException
-import org.uno.exceptions.engineExceptions.InvalidOptionException
-import org.uno.exceptions.engineExceptions.MissingColourForWildCardException
+import org.uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
+import org.uno.engine.engineExceptions.InvalidOptionException
+import org.uno.engine.engineExceptions.MissingColourForWildCardException
 import java.util.*
 
 /**

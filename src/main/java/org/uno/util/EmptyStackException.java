@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions;
+package org.uno.util;
 
 public class EmptyStackException extends RuntimeException {
 

@@ -15,14 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.uno.exceptions.engineExceptions;
+package org.uno.engine.engineExceptions;
 
 /**
+ * Thrown when a game rule is broken.
+ *
  * @author Fábio Furtado
  */
-public class MissingColourForWildCardException extends EngineException {
+public class GameRulesException extends Exception {
 
-    public MissingColourForWildCardException() {
+    /**
+     * Create a new GameRulesException
+     */
+    public GameRulesException() {
         super();
+    }
+
+    /**
+     * Create a new GameRulesException with the given detail message.
+     *
+     * @param message detail message
+     */
+    public GameRulesException(String message) {
+        super(message);
     }
 }
