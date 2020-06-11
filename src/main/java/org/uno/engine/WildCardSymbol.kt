@@ -14,10 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine
 
-package org.uno.engine;
-
-public enum WildCardSymbol implements CardSymbol {
-
-    CHANGE_COLOUR, DRAW_4;
+enum class WildCardSymbol : CardSymbol {
+    CHANGE_COLOUR, DRAW_4
 }
