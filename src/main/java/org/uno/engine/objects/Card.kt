@@ -14,31 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine.objects
 
-package org.uno.engine.objects;
-
-import org.uno.enums.CardColour;
-
+import org.uno.enums.CardType
 
 /**
- * Wild cards must implement this interface.
+ * All cards must implement this interface
  *
  * @author Fábio Furtado
  */
-public interface Wild {
+interface Card {
 
     /**
-     * Returns the colour picked for the wild card.
+     * Returns the type of the card.
      *
-     * @return colour which was picked for this wild card, null if no colour has
-     *         been picked yet
+     * @return type of the card
      */
-    CardColour getPickedColour();
+    val type: CardType
 
     /**
-     * Sets a picked colour for the wild card
-     *
-     * @param colour picked colour to set for the wild card
+     * @see Any.equals
      */
-    void setPickedColour(CardColour colour);
+    override fun equals(other: Any?): Boolean
+
+    /**
+     * Returns a copy of this card.
+     */
+    fun clone(): Card
 }

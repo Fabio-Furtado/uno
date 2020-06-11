@@ -14,19 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine.objects
 
-package org.uno.engine.objects;
-
-import org.uno.engine.GameCommand;
-import org.uno.engine.UnoGame;
-
+import org.uno.engine.GameCommand
+import org.uno.engine.UnoGame
 
 /**
  * This interface must be applied to bot players
  *
  * @author Fábio Furtado
  */
-public interface Bot {
+interface Bot {
 
     /**
      * The bot will choose his next move based on the info it gets from the given
@@ -35,5 +33,5 @@ public interface Bot {
      * @param game game class to which to bot will base it's decision on.
      * @return Command class with the bots decision
      */
-    GameCommand makeMove(UnoGame game);
+    fun makeMove(game: UnoGame): GameCommand
 }

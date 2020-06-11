@@ -82,7 +82,7 @@ public final class WildCard implements Card, Wild, Symbolic {
     public boolean equals(Card other) {
         if (this == other)
             return true;
-        if (this.getType() != other.getType())
+        if (this.getType() != other.type)
             return false;
         Symbolic symbolicOther = (Symbolic) other;
         return this.symbol == symbolicOther.getSymbol();

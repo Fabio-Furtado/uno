@@ -14,23 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package org.uno.engine.objects;
-
-import org.uno.enums.CardColour;
-
+package org.uno.engine.objects
 
 /**
- * This interface must be applied to all cards which hold a colour (not wilds).
+ * This interface must be applied to all cards which hold a numeric value.
  *
  * @author Fábio Furtado
  */
-public interface Colourful {
+interface Numeric {
 
     /**
-     * Returns the card's colour
+     * Returns the card's number.
      *
-     * @return colour of the card
+     * @return number of the card
      */
-    CardColour getColour();
+    val number: Int
+
+    companion object {
+        /**
+         * The minimal numeric value a card can hold.
+         */
+        const val MIN_VALUE = 0
+
+        /**
+         * The maximal numeric value a card can hold.
+         */
+        const val MAX_VALUE = 9
+    }
 }

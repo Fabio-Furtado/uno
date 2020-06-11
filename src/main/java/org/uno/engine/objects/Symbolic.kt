@@ -14,30 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine.objects
 
-package org.uno.engine.objects;
+import org.uno.enums.CardSymbol
 
 /**
- * This interface must be applied to all cards which hold a numeric value.
+ * This interface must be applied to cards which hold symbols instead of numbers
+ * (wilds and specials).
  *
  * @author Fábio Furtado
  */
-public interface Numeric {
+interface Symbolic {
 
     /**
-     * The minimal numeric value a card can hold.
-     */
-    int MIN_VALUE = 0;
-
-    /**
-     * The maximal numeric value a card can hold.
-     */
-    int MAX_VALUE = 9;
-
-    /**
-     * Returns the card's number.
+     * Returns the symbol the card is holding
      *
-     * @return number of the card
+     * @return symbol the card is holding
      */
-    int getNumber();
+    val symbol: CardSymbol
 }

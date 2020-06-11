@@ -14,24 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine.objects
 
-package org.uno.engine.objects;
-
-import org.uno.enums.CardSymbol;
-
+import org.uno.enums.CardColour
 
 /**
- * This interface must be applied to cards which hold symbols instead of numbers
- * (wilds and specials).
+ * Wild cards must implement this interface.
  *
  * @author Fábio Furtado
  */
-public interface Symbolic {
-
+interface Wild {
     /**
-     * Returns the symbol the card is holding
+     * Returns the colour picked for the wild card.
      *
-     * @return symbol the card is holding
+     * @return colour which was picked for this wild card, null if
+     * no colour has been picked yet
      */
-    CardSymbol getSymbol();
+    /**
+     * Sets a picked colour for the wild card
+     *
+     * @param colour picked colour to set for the wild card
+     */
+    var pickedColour: CardColour?
+
 }

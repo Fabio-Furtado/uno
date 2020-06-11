@@ -77,7 +77,7 @@ public final class NumericCard implements Card, Numeric, Colourful {
     public boolean equals(Card other) {
         if (this == other)
             return true;
-        if (this.getType() != other.getType())
+        if (this.getType() != other.type)
             return false;
         NumericCard numOther = (NumericCard) other;
         return

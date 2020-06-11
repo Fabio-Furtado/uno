@@ -79,7 +79,7 @@ public final class SpecialCard implements Card, Colourful, Symbolic {
     public boolean equals(Card other) {
         if (this == other)
             return true;
-        if (this.getType() != other.getType())
+        if (this.getType() != other.type)
             return false;
         SpecialCard specialOther = (SpecialCard) other;
         return

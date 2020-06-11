@@ -14,36 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package org.uno.engine.objects
 
-package org.uno.engine.objects;
-
-import org.uno.enums.CardType;
-
+import org.uno.enums.CardColour
 
 /**
- * All cards must implement this interface
+ * This interface must be applied to all cards which hold a colour (not wilds).
  *
  * @author Fábio Furtado
  */
-public interface Card {
+interface Colourful {
 
     /**
-     * Returns the type of the card.
+     * Returns the card's colour
      *
-     * @return type of the card
+     * @return colour of the card
      */
-    CardType getType();
-
-    /**
-     * Checks the equality between this card and the given one.
-     *
-     * @param other other object to compare.
-     * @return true if the cards are equal, false if not
-     */
-    boolean equals(Card other);
-
-    /**
-     * Returns a clone of tis card.
-     */
-    Card clone();
+    val colour: CardColour
 }

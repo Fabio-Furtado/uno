@@ -112,7 +112,7 @@ public final class BotPlayer implements Player, Bot {
         for (int i = 0; i < hand.size(); i++) {
             if (game.isCardValid(hand.get(i))) {
                 index = i;
-                if (hand.get(i).getType() == CardType.WILD)
+                if (hand.get(i).type == CardType.WILD)
                     colour = chooseColour();
                 return new GameCommand(index, colour);
             }
@@ -128,7 +128,7 @@ public final class BotPlayer implements Player, Bot {
         
         for (Card card : hand) {
             if (card instanceof Colourful) {
-                CardColour colour = ((Colourful) card).getColour();
+                CardColour colour = ((Colourful) card).colour;
                 switch(colour) {
                     case BLUE:
                     bluesInHand++;
