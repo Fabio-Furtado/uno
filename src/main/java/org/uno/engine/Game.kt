@@ -39,7 +39,6 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      * empty.
      */
     private val deck = _deck
-
     /**
      * Cards which have been played
      */
@@ -71,6 +70,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      * The players of this game
      */
     private val players = _players
+
 
     override var winner: Player? = _winner
         private set
@@ -428,6 +428,14 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             return Game(players, deck, table, turn, previous, direction, winner)
         }
 
+        fun instance(players: Array<Player>): Game {
+            checkIfNumberOfPlayersIsLegal(players.size)
+            val game = Game(players, DeckGenerator().next(),
+                    Stack(), Random.nextInt(0, players.size), 0, 1, null)
+            game.distributeAndFlip()
+            return game
+        }
+
         /**
          * Creates a new Game with [numberOfBots] defining how many bot player's
          * it'll have and [humanPlayersNames] defining the number of human players.
@@ -448,10 +456,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             for (i in numberOfBots until players.size)
                 players[i] = HumanPlayer(humanPlayersNames[j++])
 
-            val game = Game(players as Array<Player>, DeckGenerator().next(),
-                    Stack(), Random.nextInt(0, players.size), 0, 1, null)
-            game.distributeAndFlip()
-            return game
+            return instance(players as Array<Player>)
         }
 
         /**

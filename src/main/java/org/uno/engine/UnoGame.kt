@@ -83,7 +83,7 @@ interface UnoGame {
      * Gets a copy of the player by index.
      *
      * @param index index of the player
-     * @requires `index > 0 && index < this.getNumberOfPlayers - 1`
+     * @requires `index > -1 && index < this.getNumberOfPlayers`
      * @return Player object, null if no player with this index was found
      */
     fun getPlayer(index: Int): Player?
