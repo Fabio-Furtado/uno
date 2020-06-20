@@ -108,7 +108,7 @@ public class Stack<E> implements org.uno.util.MutableStack<E>, Iterable<E> {
         if (isEmpty())
             return new Stack<>();
 
-        var next = top;
+        SingleLinkNode<E> next = top;
         Stack<E> aux = new Stack<>();
         Stack<E> clone = new Stack<>();
         while(next != null) {
@@ -154,7 +154,7 @@ public class Stack<E> implements org.uno.util.MutableStack<E>, Iterable<E> {
          */
         @Override
         public E next() {
-            var returnValue = next.getNodeContent();
+            E returnValue = next.getNodeContent();
             next = next.next();
             return returnValue;
         }
