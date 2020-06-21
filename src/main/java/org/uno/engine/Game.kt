@@ -231,11 +231,11 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     }
 
     /**
-     * If the deck size is lesser than 5, the cards from the table will be
+     * If the deck size is lesser than 4, the cards from the table will be
      * reshuffled and passed the the deck so it doesn't get empty.
      */
     private fun makeSureDeckDoesNotGetEmpty() {
-        if (deck.size() < 5) {
+        if (deck.size() < 4) {
             val lastInDeck = Stack<Card>()
             val tableList = ArrayList<Card>()
             val tableTop = table.pop()
