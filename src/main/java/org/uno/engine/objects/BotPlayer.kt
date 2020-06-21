@@ -86,50 +86,26 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
         for (card in hand) {
             if (card is Colourful) {
                 when ((card as Colourful).colour) {
-                    CardColour.BLUE -> {
-                        bluesInHand++
-                        redsInHand++
-                        greensInHand++
-                        yellowsInHand++
-                    }
-                    CardColour.RED -> {
-                        redsInHand++
-                        greensInHand++
-                        yellowsInHand++
-                    }
-                    CardColour.GREEN -> {
-                        greensInHand++
-                        yellowsInHand++
-                    }
+                    CardColour.BLUE -> bluesInHand++
+                    CardColour.RED -> redsInHand++
+                    CardColour.GREEN -> greensInHand++
                     CardColour.YELLOW -> yellowsInHand++
                 }
             }
         }
-        var chosenColour = pickRandomColour()
-        val arr = intArrayOf(bluesInHand, redsInHand, greensInHand, yellowsInHand)
-        var biggerValue = arr[Random.nextInt(4)]
-        if (bluesInHand > biggerValue) {
-            biggerValue = bluesInHand
-            chosenColour = CardColour.BLUE
-        }
-        if (redsInHand > biggerValue) {
-            biggerValue = redsInHand
-            chosenColour = CardColour.RED
-        }
-        if (greensInHand > biggerValue) {
-            biggerValue = greensInHand
-            chosenColour = CardColour.GREEN
-        }
-        if (yellowsInHand > biggerValue) {
-            biggerValue = yellowsInHand
-            chosenColour = CardColour.YELLOW
-        }
-        return chosenColour
-    }
 
-    private fun pickRandomColour(): CardColour {
-        val colours = CardColour.values()
-        return colours[Random.nextInt(colours.size)]
+        val arr = intArrayOf(bluesInHand, redsInHand, greensInHand, yellowsInHand)
+        var biggerIndex = Random.nextInt(4)
+        for ((index, value) in arr.withIndex()) {
+            if (value > arr[biggerIndex])
+                biggerIndex = index
+        }
+        return when (biggerIndex) {
+            0 -> CardColour.BLUE
+            1 -> CardColour.RED
+            2 -> CardColour.GREEN
+            else -> CardColour.YELLOW
+        }
     }
 
     /**
