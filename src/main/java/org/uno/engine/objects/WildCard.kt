@@ -47,13 +47,4 @@ class WildCard(_symbol: WildCardSymbol) : Card, Wild, Symbolic {
             else -> false
         }
     }
-
-    /**
-     * @see Card.clone
-     */
-    override fun clone(): Card {
-        val clone = WildCard(symbol)
-        clone.pickedColour = pickedColour
-        return clone
-    }
 }

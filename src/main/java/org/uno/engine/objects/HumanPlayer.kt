@@ -69,7 +69,7 @@ class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
      */
     override fun clone(): Player {
         val handCopy: MutableList<Card> = ArrayList(hand.size)
-        for (card in hand) handCopy.add(card.clone())
+        for (card in hand) handCopy.add(card)
         return HumanPlayer(id, handCopy)
     }
 }

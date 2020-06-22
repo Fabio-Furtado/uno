@@ -89,10 +89,10 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
         get() = players[previous].clone()
 
     override val deckTop: Card
-        get() = deck.peek().clone()
+        get() = deck.peek()
 
     override val tableTop: Card
-        get() = table.peek().clone()
+        get() = table.peek()
 
     override val numberOfPlayers: Int
         get() = players.size

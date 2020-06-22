@@ -80,11 +80,4 @@ class SpecialCard private constructor(_colour: CardColour, _symbol: SpecialCardS
             else -> false
         }
     }
-
-    /**
-     * @see Card.clone
-     */
-    override fun clone(): Card {
-        return SpecialCard(colour, symbol)
-    }
 }

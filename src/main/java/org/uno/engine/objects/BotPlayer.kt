@@ -113,7 +113,7 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
      */
     override fun clone(): Player {
         val handCopy: MutableList<Card> = ArrayList(hand.size)
-        for (card in hand) handCopy.add(card.clone())
+        for (card in hand) handCopy.add(card)
         return BotPlayer(id, handCopy)
     }
 

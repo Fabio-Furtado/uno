@@ -36,9 +36,4 @@ interface Card {
      * @see Any.equals
      */
     override fun equals(other: Any?): Boolean
-
-    /**
-     * Returns a copy of this card.
-     */
-    fun clone(): Card
 }

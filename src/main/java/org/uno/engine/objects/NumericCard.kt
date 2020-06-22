@@ -98,13 +98,6 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
                 number == numOther.number
     }
 
-    /**
-     * @see Card.clone
-     */
-    override fun clone(): Card {
-        return NumericCard(colour, number)
-    }
-
     override fun equals(other: Any?): Boolean {
         return when {
             this === other -> true
