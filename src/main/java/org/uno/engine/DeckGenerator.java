@@ -39,17 +39,14 @@ final class DeckGenerator {
     private static final int N_ZEROS_PER_COLOUR = 1;
     private static final int N_NUMERALS_PER_COLOUR = 2;
     private static final int N_EACH_SPECIAL_PER_COLOUR = 2;
-    private Stack<Card> deck;
     private static final int DECK_SIZE = 108;
 
-    public DeckGenerator() {
-        deck = new Stack<>();
-    }
+    private DeckGenerator(){}
 
     /**
      * Adds the wild cards the temporary deck.
      */
-    private void addWilds(List<Card> listDeck) {
+    private static void addWilds(List<Card> listDeck) {
         for (int i = 0; i < N_WILD_EACH; i++)
             listDeck.add(WildCard.of(WildCardSymbol.CHANGE_COLOUR));
 
@@ -60,7 +57,7 @@ final class DeckGenerator {
     /**
      * Adds numerals to the temporary deck.
      */
-    private void addNumerals(List<Card> listDeck) {
+    private static void addNumerals(List<Card> listDeck) {
 
         for (int i = 1; i < 10; i++) {
             // blue
@@ -82,7 +79,7 @@ final class DeckGenerator {
     /**
      * Adds the zeros to the temporary deck
      */
-    private void addZeros(List<Card> listDeck) {
+    private static void addZeros(List<Card> listDeck) {
 
         // blue
         for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
@@ -104,7 +101,7 @@ final class DeckGenerator {
     /**
      * Adds th especial cards to the temporary deck.
      */
-    private void addSpecials(List<Card> listDeck) {
+    private static void addSpecials(List<Card> listDeck) {
         // blue
         for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
             listDeck.add(SpecialCard.of(CardColour.BLUE, SpecialCardSymbol.SKIP));
@@ -140,8 +137,8 @@ final class DeckGenerator {
      *
      * @return deck with shuffled cards
      */
-    public Stack<Card> next() {
-        deck = new Stack<>();
+    public static Stack<Card> next() {
+        Stack<Card> deck = new Stack<>();
         List<Card> deckList = new ArrayList<>(DECK_SIZE);
         addWilds(deckList);
         addNumerals(deckList);

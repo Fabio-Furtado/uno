@@ -24,7 +24,6 @@ import org.uno.engine.WildCardSymbol
  *
  * @author Fábio Furtado
  */
-// Todo(implement internment)
 class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
 
     /**

@@ -433,7 +433,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
 
         fun instance(players: Array<Player>): Game {
             checkIfNumberOfPlayersIsLegal(players.size)
-            val game = Game(players, DeckGenerator().next(),
+            val game = Game(players, DeckGenerator.next(),
                     Stack(), Random.nextInt(0, players.size), 0, 1, null)
             game.distributeAndFlip()
             return game
