@@ -21,11 +21,12 @@ import org.uno.engine.CardType
 import org.uno.engine.SpecialCardSymbol
 
 /**
- * Immutable abstraction of a special card.
+ * Immutable abstraction of a special card which implements internment.
  *
  * @author Fábio Furtado
  */
-class SpecialCard(_colour: CardColour, _symbol: SpecialCardSymbol): Card, Colourful, Symbolic {
+class SpecialCard private constructor(_colour: CardColour, _symbol: SpecialCardSymbol):
+                                                     Card, Colourful, Symbolic {
 
     /**
      * @see Card.type
@@ -41,6 +42,35 @@ class SpecialCard(_colour: CardColour, _symbol: SpecialCardSymbol): Card, Colour
      * @see Symbolic.symbol
      */
     override val symbol: SpecialCardSymbol = _symbol
+
+    companion object {
+        private val pool = HashMap<SpecialCard, SpecialCard>()
+
+        /**
+         * Creates a new instance.
+         */
+        @JvmStatic
+        fun of(_colour: CardColour, _symbol: SpecialCardSymbol): SpecialCard {
+            val candidate = SpecialCard(_colour, _symbol)
+            return if (pool.containsKey(candidate)) pool[candidate]!!
+            else {
+                pool[candidate] = candidate
+                candidate
+            }
+        }
+    }
+
+    /**
+     * Returns a instance with identical characteristics to this one except for
+     * the new colour.
+     */
+    fun withColour(_colour: CardColour) = of(_colour, symbol)
+
+    /**
+     * Returns a instance with identical characteristics to this one except for
+     * the new symbol.
+     */
+    fun withSymbol(_symbol: SpecialCardSymbol) = of(colour, _symbol)
 
     override fun equals(other: Any?): Boolean {
         return when {

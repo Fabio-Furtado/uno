@@ -18,13 +18,43 @@ package org.uno.engine.objects
 
 import org.uno.engine.CardColour
 import org.uno.engine.CardType
+import kotlin.IllegalArgumentException
 
 /**
- * Immutable abstraction of a numeric card.
+ * Immutable abstraction of a numeric card which implements internment.
  *
  * @author Fábio Furtado
  */
-class NumericCard(_colour: CardColour, _number: Int) : Card, Numeric, Colourful {
+class NumericCard private constructor(_colour: CardColour, _number: Int) :
+                                                      Card, Numeric, Colourful {
+
+    companion object {
+        private val pool = HashMap<NumericCard, NumericCard>()
+
+        /**
+         * Creates a new instance
+         *
+         * @throws IllegalArgumentException if the number is not valid. A valid
+         * one must be no shorter than [Numeric.MIN_VALUE] and no
+         * longer than [Numeric.MAX_VALUE].
+         */
+        @JvmStatic
+        fun of(_colour: CardColour, _number: Int): NumericCard {
+
+            // validate the number
+            if (_number < Numeric.MIN_VALUE || _number > Numeric.MAX_VALUE)
+                throw IllegalArgumentException("$_number is not a valid number." +
+                        "A valid one must be no shorter than ${Numeric.MIN_VALUE}" +
+                        "and no longer than ${Numeric.MAX_VALUE}")
+
+            val candidate = NumericCard(_colour, _number)
+            return if (pool.containsKey(candidate)) pool[candidate]!!
+            else {
+                pool[candidate] = candidate
+                candidate
+            }
+        }
+    }
 
     /**
      * @see Card.type
@@ -40,6 +70,19 @@ class NumericCard(_colour: CardColour, _number: Int) : Card, Numeric, Colourful 
      * @see Numeric.number
      */
     override val number = _number
+
+    /**
+     * Returns an instance with identical characteristics to this one except
+     * for the new number.
+     */
+    fun withNumber(_number: Int) = of(colour, _number)
+
+
+    /**
+     * Returns an instance with identical characteristics to this one except
+     * for the new colour.
+     */
+    fun withColour(_colour: CardColour) = of(_colour, number)
 
     /**
      * To be equal to this numeric card, the other card needs to also be numeric,
