@@ -133,12 +133,7 @@ class CLI(_humanPlayerName: String) {
                 Unit = print("${specialCard.colour} ${specialCard.symbol}")
 
 
-        fun printWild(wildCard: WildCard) {
-            when (wildCard.pickedColour) {
-                null -> print("Wild ${wildCard.symbol}")
-                else -> print("${wildCard.pickedColour} ${wildCard.symbol}")
-            }
-        }
+        fun printWild(wildCard: WildCard) = print("Wild ${wildCard.symbol}")
     }
 
     private fun askForNumberOfPlayers(): Int {

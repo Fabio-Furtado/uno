@@ -80,6 +80,13 @@ interface UnoGame {
     val isOver: Boolean
 
     /**
+     * This is the colour chosen when the last wild card was played
+     *
+     * It's value means nothing if no wild card has been played yet in this game
+     */
+    val lastPickedColour: CardColour
+
+    /**
      * Gets a copy of the player by index.
      *
      * @param index index of the player

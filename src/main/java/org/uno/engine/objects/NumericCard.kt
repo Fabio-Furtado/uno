@@ -32,7 +32,7 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
         private val pool = HashMap<NumericCard, NumericCard>()
 
         /**
-         * Creates a new instance
+         * Returns an instance
          *
          * @throws IllegalArgumentException if the number is not valid. A valid
          * one must be no shorter than [Numeric.MIN_VALUE] and no

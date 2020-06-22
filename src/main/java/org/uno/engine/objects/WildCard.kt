@@ -21,11 +21,12 @@ import org.uno.engine.CardType
 import org.uno.engine.WildCardSymbol
 
 /**
- * Immutable abstraction of a wild card
+ * Immutable abstraction of a wild card which implements internment.
  *
  * @author Fábio Furtado
  */
-class WildCard(_symbol: WildCardSymbol) : Card, Wild, Symbolic {
+// Todo(implement internment)
+class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
 
     /**
      * @see Card.type
@@ -34,10 +35,22 @@ class WildCard(_symbol: WildCardSymbol) : Card, Wild, Symbolic {
 
     override val symbol: WildCardSymbol = _symbol
 
-    /**
-     * @see Wild.pickedColour
-     */
-    override var pickedColour: CardColour? = null
+    companion object {
+        private val pool = HashMap<WildCard, WildCard>()
+
+        /**
+         * Returns an instance
+         */
+        @JvmStatic
+        fun of(_symbol: WildCardSymbol): WildCard {
+            val candidate = WildCard(_symbol)
+            return if (pool.containsKey(candidate)) pool[candidate]!!
+            else {
+                pool[candidate] = candidate
+                candidate
+            }
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         return when {

@@ -64,17 +64,17 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * The number of cards each player starts with
      */
-    private val startingCards = 7
+    private val startingCards = 30
 
     /**
      * The players of this game
      */
     private val players = _players
 
-
     override var winner: Player? = _winner
         private set
         get() = field?.clone()
+
 
     /**
      * @see UnoGame.playerInTurn
@@ -99,6 +99,9 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
 
     override val isOver: Boolean
         get() = winner != null
+
+    override var lastPickedColour = CardColour.RED
+        private set
     /**
      * Distributes the cards to the players and puts the first
      * card on the table.
@@ -168,7 +171,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             isValid = true
         if (top is Colourful && card.colour === (top as Colourful).colour)
             isValid = true
-        if (top is Wild && card.colour === (top as Wild).pickedColour)
+        if (top is WildCard && card.colour === lastPickedColour)
             isValid = true
         return isValid
     }
@@ -180,7 +183,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             isValid = true
         if (top is Symbolic && card.symbol === (top as Symbolic).symbol)
             isValid = true
-        if (top is Wild && card.colour === (top as Wild).pickedColour)
+        if (top is WildCard && card.colour === lastPickedColour)
             isValid = true
         return isValid
     }
@@ -225,7 +228,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
                 throw CardIndexOutOfHandBoundsException(
                         "${command.index} is out of hand range of ${players[turn].hand.size}"
                 )
-            else if (players[turn].hand[command.index] is Wild && command.colour == null)
+            else if (players[turn].hand[command.index] is WildCard && command.colour == null)
                 throw MissingColourForWildCardException()
         }
     }
@@ -299,7 +302,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      * @param command command of the move
      */
     private fun playWild(command: GameCommand) {
-        (players[turn].hand[command.index] as Wild).pickedColour = command.colour
+        lastPickedColour = command.colour!!
         table.push(players[turn].takeFromHand(command.index))
 
         when ((table.peek() as Symbolic).symbol) {

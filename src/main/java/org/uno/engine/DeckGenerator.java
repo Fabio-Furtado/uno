@@ -51,10 +51,10 @@ final class DeckGenerator {
      */
     private void addWilds(List<Card> listDeck) {
         for (int i = 0; i < N_WILD_EACH; i++)
-            listDeck.add(new WildCard(WildCardSymbol.CHANGE_COLOUR));
+            listDeck.add(WildCard.of(WildCardSymbol.CHANGE_COLOUR));
 
         for (int i = 0; i < N_WILD_EACH; i++)
-            listDeck.add(new WildCard(WildCardSymbol.DRAW_4));
+            listDeck.add(WildCard.of(WildCardSymbol.DRAW_4));
     }
 
     /**
