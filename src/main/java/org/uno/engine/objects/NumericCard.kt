@@ -18,7 +18,6 @@ package org.uno.engine.objects
 
 import org.uno.engine.CardColour
 import org.uno.engine.CardType
-import kotlin.IllegalArgumentException
 
 /**
  * Immutable abstraction of a numeric card which implements internment.
@@ -84,20 +83,6 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
      */
     fun withColour(_colour: CardColour) = of(_colour, number)
 
-    /**
-     * To be equal to this numeric card, the other card needs to also be numeric,
-     * to have the same colour and number or to be a reference to this exact same
-     * object.
-     * @see Card.equals
-     */
-    fun equals(other: Card): Boolean {
-        if (this == other) return true
-        if (type != other.type) return false
-        val numOther = other as NumericCard
-        return colour == numOther.colour &&
-                number == numOther.number
-    }
-
     override fun equals(other: Any?): Boolean {
         return when {
             this === other -> true
@@ -105,5 +90,17 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
             this.colour == (other as NumericCard).colour && this.number == other.number -> true
             else -> false
         }
+    }
+
+    override fun hashCode(): Int {
+        var hash = 586740
+        hash *= when (colour) {
+            CardColour.BLUE -> 2
+            CardColour.RED -> 3
+            CardColour.GREEN -> 4
+            CardColour.YELLOW -> 5
+        }
+        hash *= number + 1
+        return hash
     }
 }

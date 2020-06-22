@@ -80,4 +80,20 @@ class SpecialCard private constructor(_colour: CardColour, _symbol: SpecialCardS
             else -> false
         }
     }
+
+    override fun hashCode(): Int {
+        var hash = 586741
+        hash *= when (colour) {
+            CardColour.BLUE -> 1
+            CardColour.RED -> 2
+            CardColour.GREEN -> 3
+            CardColour.YELLOW -> 4
+        }
+        hash *= when (symbol) {
+            SpecialCardSymbol.REVERSE -> 2
+            SpecialCardSymbol.SKIP -> 3
+            SpecialCardSymbol.DRAW_2 -> 4
+        }
+        return hash
+    }
 }

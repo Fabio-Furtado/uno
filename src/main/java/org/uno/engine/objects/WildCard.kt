@@ -16,7 +16,6 @@
  */
 package org.uno.engine.objects
 
-import org.uno.engine.CardColour
 import org.uno.engine.CardType
 import org.uno.engine.WildCardSymbol
 
@@ -59,5 +58,11 @@ class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
             this.symbol == (other as WildCard).symbol -> true
             else -> false
         }
+    }
+
+    override fun hashCode(): Int {
+        var hash = 586742
+        hash *= if (symbol == WildCardSymbol.CHANGE_COLOUR) 2 else 3
+        return hash
     }
 }

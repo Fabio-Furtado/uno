@@ -64,7 +64,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * The number of cards each player starts with
      */
-    private val startingCards = 30
+    private val startingCards = 7
 
     /**
      * The players of this game
