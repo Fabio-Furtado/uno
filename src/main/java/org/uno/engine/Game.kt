@@ -203,8 +203,8 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
                 returnValue = 0
             } else if (command.option == 1) {
                 returnValue = play(command)
-                if (previousPlayer.hand.isEmpty())
-                    winner = players[turn]
+                if (players[previous].hand.isEmpty())
+                    winner = players[previous]
             }
             returnValue
         } else throw IllegalStateException("This game is already over!")

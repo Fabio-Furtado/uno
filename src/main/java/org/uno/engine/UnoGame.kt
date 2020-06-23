@@ -69,8 +69,6 @@ interface UnoGame {
 
     /**
      * Number of players in this game.
-     *
-     * It is a redundancy to `Game.players.size`
      */
     val numberOfPlayers: Int
 
