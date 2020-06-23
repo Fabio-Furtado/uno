@@ -37,103 +37,104 @@ class CLI(_humanPlayerName: String) {
     private val humanPlayerName = _humanPlayerName
     private var game = Game.instance(askForNumberOfPlayers() - 1, _humanPlayerName)
 
-    private companion object {
+    private var PROMPT_SYMBOL: String
+    private var ENABLE_BOT_DELAY: Boolean
+    private val COMMANDS_HELP = buildCommandsHelpString()
+    private val INVALID_MOVE_ERROR_MESSAGE = "The move you chose is not valid"
 
-        private var PROMPT_SYMBOL: String
-        private var ENABLE_BOT_DELAY: Boolean
-        private val COMMANDS_HELP = buildCommandsHelpString()
-        private const val INVALID_MOVE_ERROR_MESSAGE = "The move you chose is not valid"
+    init {
+        val sym = ConfigReader.get("cli", "prompt_symbol")
+        PROMPT_SYMBOL = if (sym != null) sym as String else "> "
+        val delay = ConfigReader.get("bot_delay")
+        ENABLE_BOT_DELAY = if (delay != null) delay as Boolean else true
+    }
 
-        init {
-            val sym = ConfigReader.get("cli", "prompt_symbol")
-            PROMPT_SYMBOL = if (sym != null) sym as String else "> "
-            val delay = ConfigReader.get("bot_delay")
-            ENABLE_BOT_DELAY = if (delay != null) delay as Boolean else true
+    private fun buildCommandsHelpString(): String {
+        val columnsForPrefix = 18
+        val sb = StringBuilder()
+        val commands = arrayOf(
+                Command.PRINT_HAND, Command.PLAY_A_CARD, Command.DRAW,
+                Command.PRINT_RIVALS_HAND_LENGTH, Command.RESTART, Command.EXIT,
+                Command.HELP)
+        val messages = arrayOf(
+                "Print your hand\n", "Play a card\n", "Draw a card\n",
+                "Check how many cards your opponents have\n", "Restart the game\n",
+                "Exit the game\n", "Print this helper\n")
+        for (i in commands.indices) {
+            val commandValue = CommandValuesKeeper.getValue(commands[i])
+            sb.append(commandValue +
+                    ".".repeat(columnsForPrefix - commandValue.length))
+
+            // The IDE may say this String.format is redundant although it's
+            // necessary to format the line breaks
+            sb.append(String.format(messages[i]))
         }
+        return sb.toString()
+    }
 
-        fun buildCommandsHelpString(): String {
-            val columnsForPrefix = 18
-            val sb = StringBuilder()
-            val commands = arrayOf(
-                    Command.PRINT_HAND, Command.PLAY_A_CARD, Command.DRAW,
-                    Command.PRINT_RIVALS_HAND_LENGTH, Command.RESTART, Command.EXIT,
-                    Command.HELP)
-            val messages = arrayOf(
-                    "Print your hand\n", "Play a card\n", "Draw a card\n",
-                    "Check how many cards your opponents have\n", "Restart the game\n",
-                    "Exit the game\n", "Print this helper\n")
-            for (i in commands.indices) {
-                val commandValue = CommandValuesKeeper.getValue(commands[i])
-                sb.append(commandValue +
-                        ".".repeat(columnsForPrefix - commandValue.length))
-
-                // The IDE may say this String.format is redundant although it's
-                // necessary to format the line breaks
-                sb.append(String.format(messages[i]))
+    /**
+     * Makes sure the user inserts a value within the given range.
+     *
+     * @param beginning beginning of the range
+     * @param end       end of the range
+     * @return valid value imputed by user
+     */
+    private fun readValueInRange(beginning: Int, end: Int): Int {
+        var choice: Int
+        do {
+            try {
+                choice = readLine()!!.trim().toInt()
+                if (choice < beginning || choice > end)
+                    print("Invalid value, insert a number between $beginning and $end: ")
+            } catch (e: NumberFormatException) {
+                print("Invalid input, insert a number between $beginning and $end: ")
+                return readValueInRange(beginning, end)
             }
-            return sb.toString()
-        }
+        } while (choice < beginning || choice > end)
+        return choice
+    }
 
-        /**
-         * Makes sure the user inserts a value within the given range.
-         *
-         * @param beginning beginning of the range
-         * @param end       end of the range
-         * @return valid value imputed by user
-         */
-        fun readValueInRange(beginning: Int, end: Int): Int {
-            var choice: Int
-            do {
-                try {
-                    choice = readLine()!!.trim().toInt()
-                    if (choice < beginning || choice > end)
-                        print("Invalid value, insert a number between $beginning and $end: ")
-                } catch (e: NumberFormatException) {
-                    print("Invalid input, insert a number between $beginning and $end: ")
-                    return readValueInRange(beginning, end)
+    /**
+     * Reads a valid option from the standard input.
+     *
+     * The given strings define which options are valid.
+     *
+     * @param valid valid options
+     * @return chosen valid option
+     */
+    fun readValidOption(vararg valid: String): String {
+        do {
+            val choice = readLine()!!
+            for (element in valid) {
+                if (element == choice) {
+                    return element
                 }
-            } while (choice < beginning || choice > end)
-            return choice
-        }
-
-        /**
-         * Reads a valid option from the standard input.
-         *
-         * The given strings define which options are valid.
-         *
-         * @param valid valid options
-         * @return chosen valid option
-         */
-        fun readValidOption(vararg valid: String): String {
-            do {
-                val choice = readLine()!!
-                for (element in valid) {
-                    if (element == choice) {
-                        return element
-                    }
-                }
-            } while (true)
-        }
-
-        /**
-         * Prints a String description of given `card`.
-         */
-        fun printCard(card: Card) {
-            when (card.type) {
-                CardType.NUMERIC -> printNumerical(card as NumericCard)
-                CardType.WILD -> printWild(card as WildCard)
-                CardType.SPECIAL -> printSpecial(card as SpecialCard)
             }
+        } while (true)
+    }
+
+    /**
+     * Prints a String description of given `card`.
+     */
+    private fun printCard(card: Card) {
+        when (card.type) {
+            CardType.NUMERIC -> printNumerical(card as NumericCard)
+            CardType.WILD -> printWild(card as WildCard)
+            CardType.SPECIAL -> printSpecial(card as SpecialCard)
         }
+    }
 
-        fun printNumerical(numCard: NumericCard):
-                Unit = print("${numCard.colour} ${numCard.number}")
+    private fun printNumerical(numCard: NumericCard):
+            Unit = print("${numCard.colour} ${numCard.number}")
 
-        fun printSpecial(specialCard: SpecialCard):
-                Unit = print("${specialCard.colour} ${specialCard.symbol}")
+    private fun printSpecial(specialCard: SpecialCard):
+            Unit = print("${specialCard.colour} ${specialCard.symbol}")
 
 
-        fun printWild(wildCard: WildCard) = print("Wild ${wildCard.symbol}")
+    private fun printWild(wildCard: WildCard) {
+        print("Wild ${wildCard.symbol}")
+        if (game.tableTop is WildCard)
+            print(" -> ${game.lastPickedColour}")
     }
 
     private fun askForNumberOfPlayers(): Int {
@@ -297,9 +298,6 @@ class CLI(_humanPlayerName: String) {
             print("$playerID has played a ")
             printCard(game.tableTop)
             println()
-            if (game.tableTop.type == CardType.WILD) {
-                println("and has chosen ${move.colour}")
-            }
         }
         println()
     }
