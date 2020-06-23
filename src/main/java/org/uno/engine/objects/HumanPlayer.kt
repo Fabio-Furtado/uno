@@ -59,7 +59,7 @@ class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
         return when {
             this === other -> true
             other == null || this.javaClass.kotlin != other.javaClass.kotlin -> false
-            this.id == (other as Player).id && this.hand == other.hand -> true
+            this.id == (other as Player).id -> true
             else -> false
         }
     }
