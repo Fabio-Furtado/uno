@@ -125,4 +125,6 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
             else -> false
         }
     }
+
+    override fun hashCode() = Player.hashCode(this)
 }

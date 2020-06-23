@@ -66,4 +66,14 @@ interface Player {
      * @return clone of this player
      */
     fun clone(): Player
+
+    companion object {
+
+        @JvmStatic
+        fun hashCode(player: Player): Int {
+            var hash = 1
+            for (letter in player.id) hash *= letter.toInt()
+            return if (hash > 0) hash else hash * -1
+        }
+    }
 }

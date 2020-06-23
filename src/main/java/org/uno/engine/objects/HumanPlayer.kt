@@ -72,4 +72,6 @@ class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
         for (card in hand) handCopy.add(card)
         return HumanPlayer(id, handCopy)
     }
+
+    override fun hashCode() = Player.hashCode(this)
 }
