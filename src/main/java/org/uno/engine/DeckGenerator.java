@@ -47,32 +47,21 @@ final class DeckGenerator {
      * Adds the wild cards the temporary deck.
      */
     private static void addWilds(List<Card> listDeck) {
-        for (int i = 0; i < N_WILD_EACH; i++)
-            listDeck.add(WildCard.of(WildCardSymbol.CHANGE_COLOUR));
-
-        for (int i = 0; i < N_WILD_EACH; i++)
-            listDeck.add(WildCard.of(WildCardSymbol.DRAW_4));
+        for (int i = 0; i < N_WILD_EACH; i++) {
+            for (WildCardSymbol symbol : WildCardSymbol.values())
+                listDeck.add(WildCard.of(symbol));
+        }
     }
 
     /**
      * Adds numerals to the temporary deck.
      */
     private static void addNumerals(List<Card> listDeck) {
-
         for (int i = 1; i < 10; i++) {
-            // blue
-            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                listDeck.add(NumericCard.of(CardColour.BLUE, i));
-            // red
-            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                listDeck.add(NumericCard.of(CardColour.RED, i));
-            // green
-            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++) {
-                listDeck.add(NumericCard.of(CardColour.GREEN, i));
+            for (CardColour colour : CardColour.values()) {
+                for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
+                    listDeck.add(NumericCard.of(colour, i));
             }
-            // yellow
-            for (int j = 0; j < N_NUMERALS_PER_COLOUR; j++)
-                listDeck.add(NumericCard.of(CardColour.YELLOW, i));
         }
     }
 
@@ -80,56 +69,22 @@ final class DeckGenerator {
      * Adds the zeros to the temporary deck
      */
     private static void addZeros(List<Card> listDeck) {
-
-        // blue
-        for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            listDeck.add(NumericCard.of(CardColour.BLUE, 0));
-
-        // red
-        for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            listDeck.add(NumericCard.of(CardColour.RED, 0));
-
-        // green
-        for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            listDeck.add(NumericCard.of(CardColour.GREEN, 0));
-
-        // yellow
-        for (int j = 0; j < N_ZEROS_PER_COLOUR; j++)
-            listDeck.add(NumericCard.of(CardColour.YELLOW, 0));
+        for (CardColour colour : CardColour.values()) {
+            for (int i = 0; i < N_ZEROS_PER_COLOUR; i++)
+                listDeck.add(NumericCard.of(colour, 0));
+        }
     }
 
     /**
      * Adds th especial cards to the temporary deck.
      */
     private static void addSpecials(List<Card> listDeck) {
-        // blue
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.BLUE, SpecialCardSymbol.SKIP));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.BLUE, SpecialCardSymbol.REVERSE));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.BLUE, SpecialCardSymbol.DRAW_2));
-        // red
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.RED, SpecialCardSymbol.SKIP));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.RED, SpecialCardSymbol.REVERSE));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.RED, SpecialCardSymbol.DRAW_2));
-        // green
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.GREEN, SpecialCardSymbol.SKIP));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.GREEN, SpecialCardSymbol.REVERSE));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.GREEN, SpecialCardSymbol.DRAW_2));
-        // yellow
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.YELLOW, SpecialCardSymbol.SKIP));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.YELLOW, SpecialCardSymbol.REVERSE));
-        for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++)
-            listDeck.add(SpecialCard.of(CardColour.YELLOW, SpecialCardSymbol.DRAW_2));
+        for (CardColour colour : CardColour.values()) {
+            for (int i = 0; i < N_EACH_SPECIAL_PER_COLOUR; i++) {
+                for (SpecialCardSymbol symbol : SpecialCardSymbol.values())
+                    listDeck.add(SpecialCard.of(colour, symbol));
+            }
+        }
     }
 
     /**
