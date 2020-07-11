@@ -37,16 +37,16 @@ class CLI(_humanPlayerName: String) {
     private val humanPlayerName = _humanPlayerName
     private var game = Game.instance(askForNumberOfPlayers() - 1, _humanPlayerName)
 
-    private var PROMPT_SYMBOL: String
-    private var ENABLE_BOT_DELAY: Boolean
-    private val COMMANDS_HELP = buildCommandsHelpString()
-    private val INVALID_MOVE_ERROR_MESSAGE = "The move you chose is not valid"
+    private val promptSymbol: String
+    private val enableBotDelay: Boolean
+    private val commandsHelp = buildCommandsHelpString()
+    private val invalidMoveErrorMessage = "The move you chose is not valid"
 
     init {
         val sym = ConfigReader.get("cli", "prompt_symbol")
-        PROMPT_SYMBOL = if (sym != null) sym as String else "> "
+        promptSymbol = if (sym != null) sym as String else "> "
         val delay = ConfigReader.get("bot_delay")
-        ENABLE_BOT_DELAY = if (delay != null) delay as Boolean else true
+        enableBotDelay = if (delay != null) delay as Boolean else true
     }
 
     private fun buildCommandsHelpString(): String {
@@ -157,7 +157,7 @@ class CLI(_humanPlayerName: String) {
                 if (!prompt()) run = false
             } else {
                 val move = game.goBot()
-                if (ENABLE_BOT_DELAY) addBotThinkingDelay()
+                if (enableBotDelay) addBotThinkingDelay()
                 reportMove(move)
             }
             warnIfRivalIsAboutToWin()
@@ -170,7 +170,7 @@ class CLI(_humanPlayerName: String) {
 
     private fun prompt(): Boolean {
         var keepPlaying = true
-        print(PROMPT_SYMBOL)
+        print(promptSymbol)
         val cliCommand = readLine()!!.trim().split(" ").toTypedArray()
         println()
         if (cliCommand.isNotEmpty() && cliCommand[0].isNotEmpty()) {
@@ -197,7 +197,7 @@ class CLI(_humanPlayerName: String) {
         var keepPlaying = true
         when (cliCommand) {
             CommandValuesKeeper.getValue(Command.HELP)
-                          -> println(COMMANDS_HELP)
+                          -> println(commandsHelp)
             CommandValuesKeeper.getValue(Command.PRINT_HAND)
                           -> printHand(game.playerInTurn.id)
             CommandValuesKeeper.getValue(Command.PRINT_RIVALS_HAND_LENGTH)
@@ -217,7 +217,7 @@ class CLI(_humanPlayerName: String) {
             if (executionResult == 0)
                 reportMove(move)
             else if (executionResult == 1)
-                println(INVALID_MOVE_ERROR_MESSAGE)
+                println(invalidMoveErrorMessage)
         } catch (e: CommandFormatException) {
             if (e.message == String.format(
                         CLItoEngineCommandConverter.insufficientArgumentsErrorMessage,
