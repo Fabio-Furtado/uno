@@ -34,7 +34,7 @@ internal object CLItoEngineCommandConverter {
     fun convert(cliCommand: Array<String>): GameCommand {
         return if (cliCommand[0] == CommandValuesKeeper.getValue(Command.DRAW)) {
             if (cliCommand.size > 1) throw CommandFormatException(String.format(tooManyArgumentsErrorMessage, cliCommand[0]))
-            GameCommand()
+            GameCommand.of()
         } else {
             doIfLikelyPlayingFromHand(cliCommand)
         }
@@ -73,6 +73,6 @@ internal object CLItoEngineCommandConverter {
                 colour = engineCardColourCode
         } else if (cliCommand.size > 3) throw CommandFormatException(String.format(
                 tooManyArgumentsErrorMessage, cliCommand[0]))
-        return GameCommand(index, colour)
+        return GameCommand.of(index, colour)
     }
 }

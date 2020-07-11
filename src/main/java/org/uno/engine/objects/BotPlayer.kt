@@ -72,10 +72,10 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
             if (game.isCardValid(hand[i])) {
                 index = i
                 if (hand[i].type === CardType.WILD) colour = chooseColour()
-                return GameCommand(index, colour)
+                return GameCommand.of(index, colour)
             }
         }
-        return GameCommand()
+        return GameCommand.of()
     }
 
     private fun chooseColour(): CardColour {
