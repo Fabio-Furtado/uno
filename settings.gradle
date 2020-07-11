@@ -3,3 +3,8 @@
  */
 
 rootProject.name = 'uno'
+
+include 'cli'
+include 'engine'
+include 'data'
+include 'util'

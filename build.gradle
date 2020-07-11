@@ -15,69 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
-}
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
 
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.yaml:snakeyaml:1.4'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0-M1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 group = 'org.uno'
 version = '0.0.1-SNAPSHOT'
-description = 'An uno game engine with a CLI interface.'
-
-String libsDir = 'lib/'
-String deploymentDir = getBuildDir().getPath() + '/' + project.name + '/'
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'org.uno.MainKt',
-                'Class-Path': configurations.runtimeClasspath.
-                        files.collect { libsDir.concat(it.getName()) }.join(' ')
-        )
-    }
-}
-
-test {
-    useJUnitPlatform()
-}
-
-task copyDependencies(type: Copy) {
-    Set<File> files = configurations.runtimeClasspath.getFiles()
-    for (File file : files) {
-        from(file)
-        into(new File(deploymentDir + libsDir))
-    }
-}
-
-task deploy() {
-    doFirst {
-        jar {
-            destinationDirectory = new File(deploymentDir)
-            archiveFileName = project.name + '.' + jar.archiveExtension.get()
-        }
-    }
-}
-
-deploy.finalizedBy('copyDependencies', 'jar')
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+description = 'An uno game engine with a CLI interface'
