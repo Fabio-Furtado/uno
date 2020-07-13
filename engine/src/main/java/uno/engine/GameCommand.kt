@@ -31,13 +31,13 @@ class GameCommand private constructor(val option: Int, val index: Int,
 
     companion object {
 
-        val pool = HashMap<GameCommand, GameCommand>()
+        private val pool = HashMap<GameCommand, GameCommand>()
 
         /**
          * Creates a new instance for a command to draw a card.
          */
         @JvmStatic
-        fun of() = GameCommand(0, -1, null)
+        fun of() = intern(GameCommand(0, -1, null))
 
         /**
          * Creates a new instance for a command to play a non wild from the given
@@ -46,7 +46,7 @@ class GameCommand private constructor(val option: Int, val index: Int,
          * @param index index of the card to play
          */
         @JvmStatic
-        fun of(index: Int) = GameCommand(1, index, null)
+        fun of(index: Int) = intern(GameCommand(1, index, null))
 
         /**
          * Creates a new instance for a command to play a wild card or a non-wild
@@ -56,7 +56,18 @@ class GameCommand private constructor(val option: Int, val index: Int,
          * @param colour colour to choose for the wild card
          */
         @JvmStatic
-        fun of(index: Int, colour: CardColour?) = GameCommand(1, index, colour)
+        fun of(index: Int, colour: CardColour?) = intern(GameCommand(1, index, colour))
+
+        /**
+         * Makes the internment
+         */
+        private fun intern(candidate: GameCommand): GameCommand {
+            return if (pool.containsKey(candidate)) pool[candidate]!!
+            else {
+                pool[candidate] = candidate
+                candidate
+            }
+        }
     }
 
     init {
