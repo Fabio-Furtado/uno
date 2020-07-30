@@ -25,7 +25,7 @@ import uno.engine.SpecialCardSymbol
  *
  * @author Fábio Furtado
  */
-class SpecialCard private constructor(_colour: CardColour, _symbol: SpecialCardSymbol):
+class SpecialCard  private constructor(_colour: CardColour, _symbol: SpecialCardSymbol):
                                                      Card, Colourful, Symbolic {
 
     /**
@@ -96,4 +96,6 @@ class SpecialCard private constructor(_colour: CardColour, _symbol: SpecialCardS
         }
         return hash
     }
+
+    override fun toString(): String = "$colour $symbol"
 }

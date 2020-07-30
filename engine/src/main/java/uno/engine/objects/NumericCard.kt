@@ -103,4 +103,6 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
         hash *= number + 1
         return hash
     }
+
+    override fun toString(): String = "$colour $number"
 }

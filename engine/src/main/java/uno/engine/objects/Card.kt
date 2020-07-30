@@ -36,4 +36,6 @@ interface Card {
      * @see Any.equals
      */
     override fun equals(other: Any?): Boolean
+
+    override fun toString(): String
 }

@@ -64,4 +64,6 @@ class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
         hash *= if (symbol == WildCardSymbol.CHANGE_COLOUR) 2 else 3
         return hash
     }
+
+    override fun toString(): String = "Wild $symbol"
 }
