@@ -35,7 +35,7 @@ import kotlin.random.Random
 class CLI(_humanPlayerName: String) {
 
     private val humanPlayerName = _humanPlayerName
-    private var game = Game.instance(askForNumberOfPlayers() - 1, _humanPlayerName)
+    private var game = Game.createGame(askForNumberOfPlayers() - 1, _humanPlayerName)
 
     private val promptSymbol: String
     private val enableBotDelay: Boolean
@@ -117,19 +117,9 @@ class CLI(_humanPlayerName: String) {
      * Prints a String description of given `card`.
      */
     private fun printCard(card: Card) {
-        when (card.type) {
-            CardType.NUMERIC -> printNumerical(card as NumericCard)
-            CardType.WILD -> printWild(card as WildCard)
-            CardType.SPECIAL -> printSpecial(card as SpecialCard)
-        }
+        if (card.type == CardType.WILD) printWild(card as WildCard)
+        else print(card.toString())
     }
-
-    private fun printNumerical(numCard: NumericCard):
-            Unit = print("${numCard.colour} ${numCard.number}")
-
-    private fun printSpecial(specialCard: SpecialCard):
-            Unit = print("${specialCard.colour} ${specialCard.symbol}")
-
 
     private fun printWild(wildCard: WildCard) {
         print("Wild ${wildCard.symbol}")
@@ -326,7 +316,7 @@ class CLI(_humanPlayerName: String) {
     }
 
     private fun restart() {
-        game = Game.instance(askForNumberOfPlayers() - 1, humanPlayerName)
+        game = Game.createGame(askForNumberOfPlayers() - 1, humanPlayerName)
         start()
     }
 
