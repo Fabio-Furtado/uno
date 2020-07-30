@@ -22,7 +22,7 @@ import uno.engine.objects.Card
 import uno.engine.objects.Player
 
 /**
- * A uno game abstraction. Use [Game.instance]  the get instances.
+ * A uno game abstraction. Use [Game.createGame]  the get instances.
  *
  * @author Fábio Furtado
  */

@@ -372,7 +372,7 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * @see UnoGame#clone()
      */
-    override fun clone() = instance(
+    override fun clone() = createGame(
             players.copyOf(),
             deck.clone(),
             table.clone(),
@@ -399,6 +399,33 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
         const val MAX_NUMBER_OF_PLAYERS = 8
 
         /**
+         * Creates a new Game with [numberOfBots] defining how many bot player's
+         * it'll have and [humanPlayersNames] defining the number of human players.
+         *
+         * The sum of those parameters can't be lesser than [MIN_NUMBER_OF_PLAYERS]
+         * or greater than [MAX_NUMBER_OF_PLAYERS].
+         *
+         * @param numberOfBots      number of bot's to add
+         * @param humanPlayersNames array with the name of each human player
+         * @return a new `Game` instance
+         */
+        fun createGame(numberOfBots: Int, vararg humanPlayersNames: String) : Game {
+            val numberOfPlayers = numberOfBots + humanPlayersNames.size
+            checkIfNumberOfPlayersIsLegal(numberOfPlayers)
+            var botsMade = 0
+            var humansMade = 0
+
+            fun makePlayer(index: Int): Player {
+                return if (botsMade++ < numberOfBots)
+                    BotPlayer(BOT_PLAYER_NAME_PREFIX.plus(botsMade))
+                else HumanPlayer(humanPlayersNames[humansMade++])
+            }
+
+            val players = Array(numberOfPlayers, ::makePlayer)
+            return createGame(players)
+        }
+
+        /**
          * This is to be used only and in no other situation other than:
          * to create a game with a previous state or to create a clone.
          * Appliance in other situations may produce unexpected behaviour. This
@@ -417,12 +444,12 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
          * @param previous  previous for this instance
          * @param direction direction for this instance (1 or -1)
          */
-        fun instance(players: Array<Player>,
-                     deck: Stack<Card>,
-                     table: Stack<Card>,
-                     turn: Int,
-                     previous: Int,
-                     direction: Int) : Game {
+        private fun createGame(players: Array<Player>,
+                               deck: Stack<Card>,
+                               table: Stack<Card>,
+                               turn: Int,
+                               previous: Int,
+                               direction: Int) : Game {
 
             var winner: Player? = null
             for (player in players) {
@@ -431,35 +458,12 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             return Game(players, deck, table, turn, previous, direction, winner)
         }
 
-        fun instance(players: Array<Player>): Game {
+        private fun createGame(players: Array<Player>): Game {
             checkIfNumberOfPlayersIsLegal(players.size)
             val game = Game(players, DeckGenerator.next(),
                     Stack(), Random.nextInt(0, players.size), 0, 1, null)
             game.distributeAndFlip()
             return game
-        }
-
-        /**
-         * Creates a new Game with [numberOfBots] defining how many bot player's
-         * it'll have and [humanPlayersNames] defining the number of human players.
-         *
-         * The sum of those parameters can't be lesser than [MIN_NUMBER_OF_PLAYERS]
-         * or greater than [MAX_NUMBER_OF_PLAYERS].
-         *
-         * @param numberOfBots      number of bot's to add
-         * @param humanPlayersNames array with the name of each human player
-         * @return a new `Game` instance
-         */
-        fun instance(numberOfBots: Int, vararg humanPlayersNames: String) : Game {
-            val players = arrayOfNulls<Player>(numberOfBots + humanPlayersNames.size)
-            checkIfNumberOfPlayersIsLegal(players.size)
-            for (i in 0 until numberOfBots)
-                players[i] = BotPlayer(BOT_PLAYER_NAME_PREFIX.plus(i + 1))
-            var j = 0
-            for (i in numberOfBots until players.size)
-                players[i] = HumanPlayer(humanPlayersNames[j++])
-
-            return instance(players as Array<Player>)
         }
 
         /**
