@@ -39,5 +39,5 @@ compileTestKotlin {
 }
 
 application {
-    mainClassName = 'org.uno.MainKt'
+    mainClassName = 'uno.cli.MainKt'
 }
