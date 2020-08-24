@@ -17,19 +17,37 @@
 
 package uno.data;
 
+
 /**
  * This class should be used to store useful information about the running
- * unix-like System.
+ * unix-like System. It is a singleton.
  */
 public class SystemInfoUnix implements SystemInfo {
 
     private final String userName;
+    private final String userHome;
+    private final String userConfigHome;
+    private final String programConfigHome;
+    private static final SystemInfo instance = new SystemInfoUnix();
+
 
     /**
      * Creates a new instance.
      */
-    public SystemInfoUnix() {
+    private SystemInfoUnix() {
         this.userName = System.getenv("USER");
+        this.userHome = System.getProperty("user.home");
+        String customConfigHome = System.getenv("XDG_CONFIG_HOME");
+        userConfigHome = customConfigHome != null? customConfigHome : userHome;
+        String programConfigFolderName = "uno";
+        programConfigHome = userConfigHome + "/" + programConfigFolderName;
+    }
+
+    /**
+     * Returns the singleton instance.
+     */
+    public static SystemInfo getInstance() {
+        return instance;
     }
 
     /**
@@ -39,4 +57,30 @@ public class SystemInfoUnix implements SystemInfo {
     public String getUserName() {
         return userName;
     }
+
+    /**
+     * @see SystemInfo#getUserHome()
+     */
+    @Override
+    public String getUserHome() {
+        return userHome;
+    }
+
+    /**
+     * @see SystemInfo#getUserConfigHome()
+     */
+    @Override
+    public String getUserConfigHome() {
+        return userConfigHome;
+    }
+
+    /**
+     * @see SystemInfo#getProgramConfigHome()
+     */
+    @Override
+    public String getProgramConfigHome() {
+        return programConfigHome;
+    }
+
+
 }

@@ -45,12 +45,8 @@ object Booter {
                 userName = configFileUserName
             }
             os == OS.UNIX -> {
-                system = SystemInfoUnix()
-                userName = system.getUserName()
-            }
-            os == OS.WINDOWS -> {
-                system = SystemInfoWindows()
-                userName = system.getUserName()
+                system = SystemInfoUnix.getInstance()
+                userName = system.userName
             }
             else -> userName = DEFAULT_USER_NAME
         }

@@ -21,15 +21,25 @@ package uno.data;
  * This class should be used to store useful information about the running
  * windows System.
  */
+@Deprecated
 public class SystemInfoWindows implements SystemInfo {
 
     private final String userName;
 
+    private static final SystemInfo instance = new SystemInfoWindows();
+
     /**
      * Creates a new instance.
      */
-    public SystemInfoWindows() {
+    private SystemInfoWindows() {
         this.userName = System.getenv("USERNAME");
+    }
+
+    /**
+     * Returns the singleton instance.
+     */
+    public static SystemInfo getInstance() {
+        return instance;
     }
 
     /**
@@ -38,5 +48,32 @@ public class SystemInfoWindows implements SystemInfo {
     @Override
     public String getUserName() {
         return userName;
+    }
+
+    /**
+     * @see SystemInfo#getUserHome()
+     */
+    @Override
+    public String getUserHome() {
+        // TODO("To be implemented")
+        return null;
+    }
+
+    /**
+     * @see SystemInfo#getUserConfigHome()
+     */
+    @Override
+    public String getUserConfigHome() {
+        // TODO("To be implemented")
+        return null;
+    }
+
+    /**
+     * @see SystemInfo#getProgramConfigHome()
+     */
+    @Override
+    public String getProgramConfigHome() {
+        // TODO("To be implemented")
+        return null;
     }
 }

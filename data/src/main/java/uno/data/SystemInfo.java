@@ -20,9 +20,22 @@ package uno.data;
 public interface SystemInfo {
 
     /**
-     * Gets current logged user of the System.
-     *
-     * @return String with the user
+     * Returns the name of the current system user.
      */
     String getUserName();
+
+    /**
+     * Returns the home folder for the current system user.
+     */
+    String getUserHome();
+
+    /**
+     * Returns the config home for the current system user.
+     */
+    String getUserConfigHome();
+
+    /**
+     * Returns the folder where the program stores it's config files.
+     */
+    String getProgramConfigHome();
 }
