@@ -280,9 +280,9 @@ class CLI(_humanPlayerName: String) {
         println()
     }
 
-    private fun reportMove(move: GameCommand?) {
+    private fun reportMove(move: GameCommand) {
         val playerID = game.previousPlayer.id
-        if (move!!.option == 0)
+        if (move.option == 0)
             println("$playerID has drawn a card")
         else if (move.option == 1) {
             print("$playerID has played a ")
