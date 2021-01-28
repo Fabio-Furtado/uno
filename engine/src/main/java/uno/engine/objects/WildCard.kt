@@ -27,10 +27,10 @@ import java.util.Optional
  * @author Fábio Furtado
  */
 class WildCard private constructor(
-    override val symbol: WildCardSymbol,
-    val colour: Optional<CardColour>
 
-    ) : Card, Symbolic {
+    override val symbol: WildCardSymbol,
+    override val colour: Optional<CardColour>
+    ) : Card, Symbolic, Wild {
 
 
     /**
@@ -38,8 +38,8 @@ class WildCard private constructor(
      */
     override val type:  CardType = CardType.WILD
 
-
     companion object {
+
         private val pool = HashMap<WildCard, WildCard>()
 
         /**
@@ -71,6 +71,16 @@ class WildCard private constructor(
     }
 
     /**
+     * Returns an instance similar to this one but with the given colour
+     */
+    fun withColour(_colour: CardColour) = of(symbol, _colour)
+
+    fun withSymbol(_symbol: WildCardSymbol) =
+        if (colour.isPresent)
+            of(_symbol, colour.get())
+        else of(_symbol) // with empty colour
+
+    /**
      * This object equals another object if the other object is a `WildCard`
      * with the same symbol and colour as this one
      */
@@ -85,6 +95,9 @@ class WildCard private constructor(
         }
     }
 
+    /**
+     * @see Object.hashCode
+     */
     override fun hashCode(): Int {
         var hash = 586742
         hash *= if (symbol == WildCardSymbol.CHANGE_COLOUR) 2 else 3
@@ -103,5 +116,9 @@ class WildCard private constructor(
         return hash
     }
 
-    override fun toString(): String = if (colour.isPresent) "${colour.get()} Wild $symbol" else "Wild $symbol"
+    /**
+     * @see Object.toString
+     */
+    override fun toString() = if (colour.isPresent) "${colour.get()} Wild $symbol"
+                              else "Wild $symbol"
 }
