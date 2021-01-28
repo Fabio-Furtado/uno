@@ -19,9 +19,10 @@ package uno.engine.objects
 /**
  * An Abstraction for a human player.
  *
+ * @constructor creates an instance with the given `id` and starting `hand`
  * @author Fábio Furtado
  */
-class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
+class HumanPlayer(_id: String, _hand: List<Card>): Player {
 
     /**
      * @see Player.id
@@ -29,12 +30,13 @@ class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
     override val id: String = _id
 
     /**
-     * An ADT with the cards on the player's hand
+     * This player's cards
      */
-    override val hand: MutableList<Card> = _hand
+    override val hand: MutableList<Card> = _hand.toMutableList()
 
     /**
-     * Creates a new instance.
+     * Creates a player with an empty hand.
+     *
      * @param id a String to identify this player
      */
     constructor(id: String): this(id, ArrayList())
@@ -55,23 +57,28 @@ class HumanPlayer(_id: String, _hand: MutableList<Card>): Player {
         return returnValue
     }
 
-    override fun equals(other: Any?): Boolean {
-        return when {
+    /**
+     * @see Object.equals
+     */
+    override fun equals(other: Any?) =
+        when {
             this === other -> true
             other == null || this.javaClass.kotlin != other.javaClass.kotlin -> false
             this.id == (other as Player).id -> true
             else -> false
         }
-    }
 
     /**
      * @see Player.clone
      */
     override fun clone(): Player {
-        val handCopy: MutableList<Card> = ArrayList(hand.size)
+        val handCopy = ArrayList<Card>(hand.size)
         for (card in hand) handCopy.add(card)
         return HumanPlayer(id, handCopy)
     }
 
+    /**
+     * @see Object.hashCode
+     */
     override fun hashCode() = Player.hashCode(this)
 }

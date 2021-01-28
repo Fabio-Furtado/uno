@@ -25,9 +25,11 @@ import kotlin.random.Random
 /**
  * An abstraction for a bot player.
  *
+ * @constructor creates an instance with the given id and starting hand
  * @author Fábio Furtado
  */
-class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Player, Bot {
+class BotPlayer private constructor(_id: String,
+                                    _hand: List<Card>) : Player, Bot {
 
     /**
      * @see Player.id
@@ -37,7 +39,7 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
     /**
      * An ADT with the cards on the player's hand.
      */
-    override val hand: MutableList<Card> = _hand
+    override val hand: MutableList<Card> = _hand.toMutableList()
 
     /**
      * Creates a new instance.
@@ -117,6 +119,9 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
         return BotPlayer(id, handCopy)
     }
 
+    /**
+     * @see Object.equals
+     */
     override fun equals(other: Any?): Boolean {
         return when {
             this === other -> true
@@ -126,5 +131,8 @@ class BotPlayer private constructor(_id: String, _hand: MutableList<Card>) : Pla
         }
     }
 
+    /**
+     * @see Object.hashCode
+     */
     override fun hashCode() = Player.hashCode(this)
 }
