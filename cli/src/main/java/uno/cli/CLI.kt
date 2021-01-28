@@ -271,7 +271,7 @@ class CLI(_humanPlayerName: String) {
      */
     private fun printHand(playerID: String) {
         println("${playerID}'s hand: \n")
-        val hand = game.getPlayer(playerID)!!.hand
+        val hand = game.getPlayer(playerID).orElseThrow().hand
         for (i in hand.indices) {
             print("${i + 1} - ")
             printCard(hand[i])
@@ -297,7 +297,7 @@ class CLI(_humanPlayerName: String) {
         val card = "card"
         val cards = "cards"
         for (i in 0 until numberOfPlayers) {
-            val player = game.getPlayer(i)
+            val player = game.getPlayer(i).orElseThrow()
             if (player.id != humanPlayerName) {
                 val hand = player.hand
                 if (hand.size > 1)

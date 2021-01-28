@@ -20,6 +20,7 @@ import uno.engine.engineExceptions.CardIndexOutOfHandBoundsException
 import uno.engine.engineExceptions.MissingColourForWildCardException
 import uno.engine.objects.Card
 import uno.engine.objects.Player
+import java.util.*
 
 /**
  * A uno game abstraction. Use [Game.createGame]  the get instances.
@@ -55,20 +56,16 @@ interface UnoGame {
 
     /**
      * The card on the top of the deck.
-     *
-     * The getter will return a copy
      */
     val deckTop: Card
 
     /**
      * The card at the top of the table.
-     *
-     * The getter will return a copy
      */
     val tableTop: Card
 
     /**
-     * Number of players in this game.
+     * Number of players in this game
      */
     val numberOfPlayers: Int
 
@@ -85,25 +82,28 @@ interface UnoGame {
     val lastPickedColour: CardColour
 
     /**
-     * Gets a copy of the player by index.
+     * Returns an `Optional` with a **copy** of the player by index if it exists
      *
-     * @param index index of the player
-     * @requires `index > -1 && index < this.getNumberOfPlayers`
-     * @return Player object, null if no player with this index was found
+     * The `Optional` will have no value if the `index` is invalid
      */
-    fun getPlayer(index: Int): Player?
+    fun getPlayer(index: Int): Optional<Player>
 
     /**
-     * Gets a copy of the player by id.
+     * Returns an Optional with **copy** of the player by id if it exists
      *
      * @param id id of the player
-     * @return Player object, null if no player with this id was found
      */
-    fun getPlayer(id: String?): Player?
-
+    fun getPlayer(id: String?): Optional<Player>
 
     /**
-     * Returns the index of the player.
+     * Returns a List with **copies** of all the players in this game
+     *
+     * The list will be empty if the game has no players
+     */
+    fun getPlayers(): List<Player>
+
+    /**
+     * Returns the index of the player
      *
      * @param id player identification
      * @return index of the player, -1 if there's no player with the given id
@@ -112,7 +112,7 @@ interface UnoGame {
 
 
     /**
-     * Checks if it's valid to play the given `card`.
+     * Checks if it's valid to play the given `card`
      *
      * @return true if the card is valid, false if not
      */

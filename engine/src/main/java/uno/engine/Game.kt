@@ -22,6 +22,8 @@ import uno.engine.engineExceptions.GameRulesException
 import uno.engine.engineExceptions.MissingColourForWildCardException
 import uno.engine.objects.*
 import uno.util.Stack
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 /**
@@ -127,18 +129,26 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
     /**
      * @see UnoGame#getPlayer(int)
      */
-    override fun getPlayer(index: Int): Player = players[index].clone()
+    override fun getPlayer(index: Int) =
+        if (index < 0 || index > numberOfPlayers)
+            Optional.of(players[index].clone())
+        else Optional.empty()
 
     /**
      * @see UnoGame.getPlayer
      */
-    override fun getPlayer(id: String?): Player? {
+    override fun getPlayer(id: String?): Optional<Player> {
         for (player in players) {
             if (id.equals(player.id))
-                return player.clone()
+                return Optional.of(player.clone())
         }
-        return null
+        return Optional.empty()
     }
+
+    /**
+     * @see UnoGame.getPlayers
+     */
+    override fun getPlayers(): List<Player> = players.map(Player::clone)
 
     /**
      * @see UnoGame.getIndex
