@@ -16,32 +16,52 @@
  */
 package uno.engine.objects
 
+import uno.engine.CardColour
 import uno.engine.CardType
 import uno.engine.WildCardSymbol
+import java.util.Optional
 
 /**
  * Immutable abstraction of a wild card which implements internment.
  *
  * @author Fábio Furtado
  */
-class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
+class WildCard private constructor(
+    override val symbol: WildCardSymbol,
+    val colour: Optional<CardColour>
+
+    ) : Card, Symbolic {
+
 
     /**
      * @see Card.type
      */
-    override val type: CardType = CardType.WILD
+    override val type:  CardType = CardType.WILD
 
-    override val symbol: WildCardSymbol = _symbol
 
     companion object {
         private val pool = HashMap<WildCard, WildCard>()
 
         /**
-         * Returns an instance
+         * Returns an instance with the given `symbol` and whose `::colour`
+         * will be and empty Optional
          */
         @JvmStatic
         fun of(_symbol: WildCardSymbol): WildCard {
-            val candidate = WildCard(_symbol)
+            val candidate = WildCard(_symbol, Optional.empty())
+            return if (pool.containsKey(candidate)) pool[candidate]!!
+            else {
+                pool[candidate] = candidate
+                candidate
+            }
+        }
+
+        /**
+         * Returns an instance with the given `symbol` and `colour`
+         */
+        @JvmStatic
+        fun of(_symbol: WildCardSymbol, _colour: CardColour): WildCard {
+            val candidate = WildCard(_symbol, Optional.of(_colour))
             return if (pool.containsKey(candidate)) pool[candidate]!!
             else {
                 pool[candidate] = candidate
@@ -50,11 +70,17 @@ class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
         }
     }
 
+    /**
+     * This object equals another object if the other object is a `WildCard`
+     * with the same symbol and colour as this one
+     */
     override fun equals(other: Any?): Boolean {
         return when {
             this === other -> true
             other == null || this.javaClass.kotlin != other.javaClass.kotlin -> false
             this.symbol == (other as WildCard).symbol -> true
+            this.colour.isEmpty -> other.colour.isEmpty
+            this.colour.isPresent -> this.colour.get() == other.colour.get()
             else -> false
         }
     }
@@ -62,8 +88,20 @@ class WildCard private constructor(_symbol: WildCardSymbol) : Card, Symbolic {
     override fun hashCode(): Int {
         var hash = 586742
         hash *= if (symbol == WildCardSymbol.CHANGE_COLOUR) 2 else 3
+        hash += when {
+            colour.isPresent -> {
+                when {
+                    colour.get() == CardColour.BLUE -> 1
+                    colour.get() == CardColour.GREEN -> 2
+                    colour.get() == CardColour.RED -> 3
+                    colour.get() == CardColour.YELLOW -> 4
+                    else -> 5
+                }
+            }
+            else -> 6
+        }
         return hash
     }
 
-    override fun toString(): String = "Wild $symbol"
+    override fun toString(): String = if (colour.isPresent) "${colour.get()} Wild $symbol" else "Wild $symbol"
 }
