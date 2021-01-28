@@ -257,7 +257,13 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
             while (!table.isEmpty)
                 tableList.add(table.pop())
             tableList.shuffle()
-            for (card in tableList)
+
+            // replace wild cards with colour with wild cards with empty colour
+            val tableListWithNeutralWilds = tableList.map {
+                if (it is WildCard) WildCard.of(it.symbol) else it
+            }
+
+            for (card in tableListWithNeutralWilds)
                 deck.push(card)
             for (card in lastInDeck)
                 deck.push(card)
@@ -313,7 +319,8 @@ class Game private constructor(_players: Array<Player>, _deck: Stack<Card>,
      */
     private fun playWild(command: GameCommand) {
         lastPickedColour = command.colour!!
-        table.push(players[turn].takeFromHand(command.index))
+        table.push(((playerInTurn.takeFromHand(command.index)) as WildCard)
+            .withColour(command.colour))
 
         when ((table.peek() as Symbolic).symbol) {
             WildCardSymbol.DRAW_4 -> {
