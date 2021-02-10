@@ -122,9 +122,7 @@ class CLI(_humanPlayerName: String) {
     }
 
     private fun printWild(wildCard: WildCard) {
-        print("Wild ${wildCard.symbol}")
-        if (game.tableTop is WildCard)
-            print(" -> ${game.lastPickedColour}")
+        print(wildCard.toString())
     }
 
     private fun askForNumberOfPlayers(): Int {
