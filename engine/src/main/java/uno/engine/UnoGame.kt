@@ -79,6 +79,8 @@ interface UnoGame {
      *
      * It's value means nothing if no wild card has been played yet in this game
      */
+    @Deprecated(message = "reference table top colour ",
+        level = DeprecationLevel.WARNING)
     val lastPickedColour: CardColour
 
     /**
