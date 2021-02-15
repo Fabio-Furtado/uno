@@ -43,6 +43,8 @@ class SpecialCard  private constructor(_colour: CardColour, _symbol: SpecialCard
      */
     override val symbol: SpecialCardSymbol = _symbol
 
+    private val hash = calcHash()
+
     companion object {
         private val pool = HashMap<SpecialCard, SpecialCard>()
 
@@ -80,7 +82,9 @@ class SpecialCard  private constructor(_colour: CardColour, _symbol: SpecialCard
      */
     override fun equals(other: Any?) = this === other
 
-    override fun hashCode(): Int {
+    override fun hashCode() = hash
+
+    private fun calcHash(): Int {
         var hash = 586741
         hash *= when (colour) {
             CardColour.BLUE -> 1

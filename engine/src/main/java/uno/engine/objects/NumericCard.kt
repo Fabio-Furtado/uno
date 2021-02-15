@@ -70,6 +70,8 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
      */
     override val number = _number
 
+    private val hash = calcHash()
+
     /**
      * Returns an instance with identical characteristics to this one except
      * for the new number.
@@ -91,16 +93,18 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
      */
     override fun equals(other: Any?) = this === other
 
-    override fun hashCode(): Int {
-        var hash = 586740
-        hash *= when (colour) {
+    override fun hashCode() = hash;
+
+    private fun calcHash(): Int {
+        var hashCode = 586740
+        hashCode *= when (colour) {
             CardColour.BLUE -> 2
             CardColour.RED -> 3
             CardColour.GREEN -> 4
             CardColour.YELLOW -> 5
         }
-        hash *= number + 1
-        return hash
+        hashCode *= number + 1
+        return hashCode
     }
 
     override fun toString(): String = "$colour $number"

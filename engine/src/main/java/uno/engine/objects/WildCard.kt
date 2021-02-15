@@ -38,6 +38,9 @@ class WildCard private constructor(
      */
     override val type:  CardType = CardType.WILD
 
+    private val hash = calcHash()
+
+
     companion object {
 
         private val pool = HashMap<WildCard, WildCard>()
@@ -91,7 +94,7 @@ class WildCard private constructor(
     /**
      * @see Object.hashCode
      */
-    override fun hashCode(): Int {
+    private fun calcHash(): Int {
         var hash = 586742
         hash *= if (symbol == WildCardSymbol.CHANGE_COLOUR) 2 else 3
         hash += when {
@@ -108,6 +111,8 @@ class WildCard private constructor(
         }
         return hash
     }
+
+    override fun hashCode() = hash
 
     /**
      * @see Object.toString
