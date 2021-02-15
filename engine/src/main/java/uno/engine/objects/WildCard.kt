@@ -81,19 +81,12 @@ class WildCard private constructor(
         else of(_symbol) // with empty colour
 
     /**
-     * This object equals another object if the other object is a `WildCard`
-     * with the same symbol and colour as this one
+     * Checks if this object is equal `other`
+     *
+     * As this object is immutable and implements internment this only
+     * equals `other` if they're actually the same reference.
      */
-    override fun equals(other: Any?): Boolean {
-        return when {
-            this === other -> true
-            other == null || this.javaClass.kotlin != other.javaClass.kotlin -> false
-            this.symbol == (other as WildCard).symbol -> true
-            this.colour.isEmpty -> other.colour.isEmpty
-            this.colour.isPresent -> this.colour.get() == other.colour.get()
-            else -> false
-        }
-    }
+    override fun equals(other: Any?) = this === other
 
     /**
      * @see Object.hashCode

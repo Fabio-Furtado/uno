@@ -83,14 +83,13 @@ class NumericCard private constructor(_colour: CardColour, _number: Int) :
      */
     fun withColour(_colour: CardColour) = of(_colour, number)
 
-    override fun equals(other: Any?): Boolean {
-        return when {
-            this === other -> true
-            other == null || this.javaClass.kotlin != other.javaClass.kotlin -> false
-            this.colour == (other as NumericCard).colour && this.number == other.number -> true
-            else -> false
-        }
-    }
+    /**
+     * Checks if this object is equal `other`
+     *
+     * As this object is immutable and implements internment this only
+     * equals `other` if they're actually the same reference.
+     */
+    override fun equals(other: Any?) = this === other
 
     override fun hashCode(): Int {
         var hash = 586740
